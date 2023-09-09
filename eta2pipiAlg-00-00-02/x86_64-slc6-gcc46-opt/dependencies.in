@@ -1,0 +1,5 @@
+include_path none
+macro Boost_header_file_filter /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/ExternalLib/external/Boost/1.50.0_python2.7/x86_64-slc6-gcc46-opt/include/boost-1_50
+macro Boost_header_file_stamp /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/ExternalLib/external/Boost/1.50.0_python2.7/x86_64-slc6-gcc46-opt/include/boost-1_50/boost/any.hpp
+macro ROOT_header_file_filter /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/ExternalLib/external/ROOT/5.34.09/x86_64-slc6-gcc46-opt/root/include
+macro ROOT_header_file_stamp /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/ExternalLib/external/ROOT/5.34.09/x86_64-slc6-gcc46-opt/root/include/Type.h

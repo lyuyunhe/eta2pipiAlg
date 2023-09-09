@@ -1,0 +1,1816 @@
+Job 557371.0 submitted at 2023-07-28 17:43:16
+Sent to RemoteHost = "slot1@ihep_glidein_11138@htc077.csns.ihep.ac.cn"
+
+**************************************************
+               BOSS version: 7.0.8
+************** BESIII Collaboration **************
+
+the jobOptions file is : jobOptions_sim_rhopi_0.txt
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Control/OfflineEventLoopMgr/OfflineEventLoopMgr-00-00-15/share/OfflineEventLoopMgr_Option.txt
+JobOptionsSvc        INFO # (1,1): ApplicationMgr.DLLs += ["DummyLoadOldROOT"]
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.TopAlg += ["DummyLoadOldROOTAlg"]
+JobOptionsSvc        INFO # (3,1): DummyLoadOldROOTAlg.OldRootList = ["$DUMMYLOADOLDROOTROOT/share/ROOT-version-52400.root"]
+JobOptionsSvc        INFO # (5,1): ApplicationMgr.DLLs += ["OfflineEventLoopMgr"]
+JobOptionsSvc        INFO # (6,1): ApplicationMgr.EventLoop = "OfflineEventLoopMgr"
+JobOptionsSvc     WARNING # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Utilities/MeasuredEcmsSvc/MeasuredEcmsSvc-00-01-04/share/anaOptions.txt
+JobOptionsSvc     WARNING # (1,1): File /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Control/OfflineEventLoopMgr/OfflineEventLoopMgr-00-00-15/share/OfflineEventLoopMgr_Option.txt already included from /tmp/67492015/dir_9091/boss/jobOptions_sim_rhopi_0.txt: (1, 1)
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.DLLs += ["MeasuredEcmsSvc"]
+JobOptionsSvc        INFO # (4,1): ApplicationMgr.ExtSvc += ["MeasuredEcmsSvc"]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Generator/KKMC/KKMC-00-00-62/share/jobOptions_KKMC.txt
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.DLLs += ["KKMC", "BesServices"]
+JobOptionsSvc        INFO # (4,1): ApplicationMgr.TopAlg += ["KKMC"]
+JobOptionsSvc        INFO # (6,1): BesRndmGenSvc.ReadFromFile = 0
+JobOptionsSvc        INFO # (7,1): BesRndmGenSvc.FileToRead = "BesRndmGenSvc.out"
+JobOptionsSvc        INFO # (9,1): KKMC.InitializedSeed = [11111, 1, 0]
+JobOptionsSvc        INFO # (10,1): KKMC.CMSEnergy = 3.773
+JobOptionsSvc        INFO # (11,1): KKMC.BeamEnergySpread = 0.0013
+JobOptionsSvc        INFO # (13,1): KKMC.NumberOfEventPrinted = 100
+JobOptionsSvc        INFO # (16,1): KKMC.GenerateResonance = 1
+JobOptionsSvc        INFO # (17,1): KKMC.GenerateContinuum = 0
+JobOptionsSvc        INFO # (18,1): KKMC.GenerateDownQuark = 0
+JobOptionsSvc        INFO # (19,1): KKMC.GenerateUpQuark = 0
+JobOptionsSvc        INFO # (20,1): KKMC.GenerateStrangeQuark = 0
+JobOptionsSvc        INFO # (21,1): KKMC.GenerateCharmQuark = 1
+JobOptionsSvc        INFO # (22,1): KKMC.GenerateBottomQuark = 0
+JobOptionsSvc        INFO # (23,1): KKMC.GenerateMuonPair = 0
+JobOptionsSvc        INFO # (24,1): KKMC.GenerateTauPair = 0
+JobOptionsSvc        INFO # (25,1): KKMC.GenerateRho = 0
+JobOptionsSvc        INFO # (26,1): KKMC.GenerateOmega = 0
+JobOptionsSvc        INFO # (27,1): KKMC.GeneratePhi = 0
+JobOptionsSvc        INFO # (28,1): KKMC.GenerateJPsi = 0
+JobOptionsSvc        INFO # (29,1): KKMC.GeneratePsiPrime = 0
+JobOptionsSvc        INFO # (30,1): KKMC.GeneratePsi3770 = 0
+JobOptionsSvc        INFO # (31,1): KKMC.GeneratePsi4030 = 0
+JobOptionsSvc        INFO # (32,1): KKMC.GeneratePsi4160 = 0
+JobOptionsSvc        INFO # (33,1): KKMC.GeneratePsi4415 = 0
+JobOptionsSvc        INFO # (34,1): KKMC.GeneratePsi4260 = 0
+JobOptionsSvc        INFO # (39,1): KKMC.ResParameterRho = [0.77549e0, 147.1e-3, 7.04e-6]
+JobOptionsSvc        INFO # (41,1): KKMC.ResParameterRh2 = [1.465e0, 310e-3, 0.0e-6]
+JobOptionsSvc        INFO # (43,1): KKMC.ResParameterRh3 = [1.720e0, 250e-3, 0.0e-6]
+JobOptionsSvc        INFO # (45,1): KKMC.ResParameterOme = [0.78265e0, 8.49e-3, 0.60e-6]
+JobOptionsSvc        INFO # (47,1): KKMC.ResParameterOm2 = [1.419e0, 174e-3, 0.00e-6]
+JobOptionsSvc        INFO # (49,1): KKMC.ResParameterOm3 = [1.649e0, 220e-3, 0.00e-6]
+JobOptionsSvc        INFO # (51,1): KKMC.ResParameterPhi = [1.01942e0, 4.46e-3, 1.33e-6]
+JobOptionsSvc        INFO # (53,1): KKMC.ResParameterPh2 = [1.680e0, 150e-3, 0.00e-6]
+JobOptionsSvc        INFO # (55,1): KKMC.ResParameterPsi = [3.096916e0, 0.0929e-3, 5.55e-6]
+JobOptionsSvc        INFO # (57,1): KKMC.ResParameterPs2 = [3.686109e0, 0.304e-3, 2.35e-6]
+JobOptionsSvc        INFO # (59,1): KKMC.ResParameterPs3 = [3.77315e0, 27.2e-3, 0.262e-6]
+JobOptionsSvc        INFO # (61,1): KKMC.ResParameterPs4 = [4.039e0, 80e-3, 0.86e-6]
+JobOptionsSvc        INFO # (63,1): KKMC.ResParameterPs5 = [4.153e0, 103e-3, 0.83e-6]
+JobOptionsSvc        INFO # (65,1): KKMC.ResParameterPs6 = [4.421e0, 62e-3, 0.58e-6]
+JobOptionsSvc        INFO # (67,1): KKMC.ResParameterPs7 = [4.263e0, 95e-3, 0.47e-6]
+JobOptionsSvc        INFO # (69,1): KKMC.ResParameterPs8 = [3.872e0, 100e-3, 0.47e-6]
+JobOptionsSvc        INFO # (71,1): KKMC.ResParameterUps = [9.46030e0, 0.0525e-3, 1.32e-6]
+JobOptionsSvc        INFO # (73,1): KKMC.ResParameterUp2 = [10.02326e0, 0.044e-3, 0.52e-6]
+JobOptionsSvc        INFO # (75,1): KKMC.ResParameterUp3 = [10.3552e0, 0.026e-3, 0.00e-6]
+JobOptionsSvc        INFO # (77,1): KKMC.ResParameterUp4 = [10580e0, 14e-3, 0.248e-6]
+JobOptionsSvc        INFO # (79,1): KKMC.ResParameterUp5 = [10.865e0, 110e-3, 0.31e-6]
+JobOptionsSvc        INFO # (81,1): KKMC.ResParameterUp6 = [11.019e0, 79e-3, 0.13e-6]
+JobOptionsSvc        INFO # (83,1): KKMC.ResParameterZeta = [91.1876e0, 2.4952e0, 0.08391e0]
+JobOptionsSvc        INFO # (85,1): KKMC.ResParameterW = [80.43e0, 2.11e0]
+JobOptionsSvc        INFO # (88,1): KKMC.Psi3770toNonDDb = 0.0
+JobOptionsSvc        INFO # (89,1): KKMC.Psi3770RatioOfD0toDp = 0.563
+JobOptionsSvc        INFO # (92,1): KKMC.Psi4030toD0D0b = 0.0227
+JobOptionsSvc        INFO # (93,1): KKMC.Psi4030toDpDm = 0.0167
+JobOptionsSvc        INFO # (94,1): KKMC.Psi4030toDsDs = 0.0383
+JobOptionsSvc        INFO # (95,1): KKMC.Psi4030toD0D0Star = 0.2952
+JobOptionsSvc        INFO # (96,1): KKMC.Psi4030toDpDmStar = 0.2764
+JobOptionsSvc        INFO # (97,1): KKMC.Psi4030toD0StarD0Star = 0.2476
+JobOptionsSvc        INFO # (98,1): KKMC.Psi4030toDpStarDmStar = 0.1041
+JobOptionsSvc        INFO # (101,1): KKMC.Psi4160toD0D0b = 0.0190
+JobOptionsSvc        INFO # (102,1): KKMC.Psi4160toDpDm = 0.0180
+JobOptionsSvc        INFO # (103,1): KKMC.Psi4160toDsDs = 0.0488
+JobOptionsSvc        INFO # (104,1): KKMC.Psi4160toD0D0Star = 0.1248
+JobOptionsSvc        INFO # (105,1): KKMC.Psi4160toDpDmStar = 0.1240
+JobOptionsSvc        INFO # (106,1): KKMC.Psi4160toDsDsStar = 0.0820
+JobOptionsSvc        INFO # (107,1): KKMC.Psi4160toD0StarD0Star = 0.3036
+JobOptionsSvc        INFO # (108,1): KKMC.Psi4160toDpStarDmStar = 0.2838
+JobOptionsSvc        INFO # (112,1): KKMC.ParticleDecayThroughEvtGen = 1
+JobOptionsSvc        INFO # (113,1): KKMC.RadiationCorrection = 1
+JobOptionsSvc        INFO # =======> /tmp/67492015/dir_9091/boss/jobOptions_sim_rhopi_0.txt
+JobOptionsSvc        INFO # (3,1): KKMC.CMSEnergy = 3.097
+JobOptionsSvc        INFO # (4,1): KKMC.BeamEnergySpread = 0.0008
+JobOptionsSvc        INFO # (5,1): KKMC.NumberOfEventPrinted = 1
+JobOptionsSvc        INFO # (6,1): KKMC.GenerateJPsi = 1
+JobOptionsSvc        INFO # =======> /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/BesEvtGen.txt
+JobOptionsSvc        INFO # (1,1): ApplicationMgr.DLLs += ["BesEvtGen"]
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.TopAlg += ["EvtDecay"]
+JobOptionsSvc        INFO # (4,1): KKMC.ParticleDecayThroughEvtGen = 1
+JobOptionsSvc        INFO # (6,1): BesRndmGenSvc.ReadFromFile = 0
+JobOptionsSvc        INFO # (7,1): BesRndmGenSvc.FileToRead = "BesRndmGenSvc.out"
+JobOptionsSvc        INFO # =======> /tmp/67492015/dir_9091/boss/jobOptions_sim_rhopi_0.txt
+JobOptionsSvc        INFO # (8,1): EvtDecay.userDecayTableName = "rhopi.dec"
+JobOptionsSvc        INFO # (9,1): BesRndmGenSvc.RndmSeed = 100
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/BOOST/BesSim/BesSim-00-01-24/share/G4Svc_BesSim.txt
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.DLLs += ["BesServices"]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Database/DatabaseSvc/DatabaseSvc-00-00-26/share/DatabaseConfig.txt
+JobOptionsSvc        INFO # (1,1): ApplicationMgr.DLLs += ["DatabaseSvc"]
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.ExtSvc += ["DatabaseSvc"]
+JobOptionsSvc        INFO # (4,1): DatabaseSvc.DbType = "mysql"
+JobOptionsSvc        INFO # (5,1): DatabaseSvc.Host = "bes3db2.ihep.ac.cn"
+JobOptionsSvc        INFO # (6,1): DatabaseSvc.User = "guest"
+JobOptionsSvc        INFO # (7,1): DatabaseSvc.Passwd = "guestpass"
+JobOptionsSvc        INFO # (8,1): DatabaseSvc.SqliteDbPath = "$SITEROOT/database"
+JobOptionsSvc        INFO # (9,1): DatabaseSvc.ReuseConnection = 1
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/Realization/RealizationSvc/RealizationSvc-00-00-50/share/jobOptions_Realization.txt
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.DLLs += ["RealizationSvc"]
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.ExtSvc += ["RealizationSvc"]
+JobOptionsSvc        INFO # (5,1): RealizationSvc.RunIdList = [-8093]
+JobOptionsSvc        INFO # (6,1): RealizationSvc.IfUseDB = 1
+JobOptionsSvc        INFO # (7,1): RealizationSvc.IfReadBunch = 1
+JobOptionsSvc        INFO # (11,1): RealizationSvc.BossRelease = "7.0.8"
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/BOOST/BesSim/BesSim-00-01-24/share/Bes_Gen.txt
+JobOptionsSvc        INFO # (8,1): ApplicationMgr.DLLs += ["McEventSelector"]
+JobOptionsSvc        INFO # (9,1): ApplicationMgr.ExtSvc += ["McCnvSvc", "McEventSelector/EventSelector"]
+JobOptionsSvc        INFO # (12,1): EventPersistencySvc.CnvServices += ["McCnvSvc"]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Utilities/DetVerSvc/DetVerSvc-00-00-07/share/joboptions_DetVerSvc.txt
+JobOptionsSvc        INFO # (1,1): ApplicationMgr.DLLs += ["DetVerSvc"]
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.ExtSvc += ["DetVerSvc"]
+JobOptionsSvc        INFO # (3,1): DetVerSvc.Config = "$DETVERSVCROOT/share/config.txt"
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/BOOST/BesSim/BesSim-00-01-24/share/G4Svc_BesSim.txt
+JobOptionsSvc        INFO # (9,1): ApplicationMgr.DLLs += ["BesSim"]
+JobOptionsSvc        INFO # (10,1): ApplicationMgr.TopAlg += ["BesSim"]
+JobOptionsSvc        INFO # (13,1): G4Svc.MdcNoiseFile = "$MDCSIMROOT/share/run23096noise.root"
+JobOptionsSvc        INFO # (15,1): MdcTunningSvc.path_mdc = "$MDCTUNNINGSVCROOT/share/par/"
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/BOOST/EmcSim/EmcSim-00-00-49/share/EmcSim.txt
+JobOptionsSvc        INFO # (1,1): G4Svc.EmcIncoherentNoise = 0.27
+JobOptionsSvc        INFO # (2,1): G4Svc.EmcTime = 8
+JobOptionsSvc        INFO # (6,1): G4Svc.EmcELecSaturation = 1
+JobOptionsSvc        INFO # (10,1): G4Svc.EmcELecSatuDead = 0
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/BOOST/MucSim/MucSim-00-01-03/share/MucSim.txt
+JobOptionsSvc        INFO # (3,1): G4Svc.MucNoiseMode = 0
+JobOptionsSvc        INFO # (6,1): MucCalibConstSvc.ConfigMode = 3
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/BOOST/BesSim/BesSim-00-01-24/share/G4Svc_BesSim.txt
+JobOptionsSvc        INFO # (20,1): G4Svc.Visualize = 0
+JobOptionsSvc        INFO # (22,1): G4Svc.InteractiveG4 = 0
+JobOptionsSvc        INFO # (25,1): G4Svc.RunVerbosity = 1
+JobOptionsSvc        INFO # (26,1): G4Svc.EventVerbosity = 0
+JobOptionsSvc        INFO # (27,1): G4Svc.TrackingVerbosity = 0
+JobOptionsSvc        INFO # (29,1): G4Svc.BesGenAction = 0
+JobOptionsSvc        INFO # (31,1): G4Svc.BoostLab = 1
+JobOptionsSvc        INFO # (34,1): G4Svc.BeamPosX = 0
+JobOptionsSvc        INFO # (35,1): G4Svc.BeamPosY = 0
+JobOptionsSvc        INFO # (36,1): G4Svc.BeamPosZ = 0
+JobOptionsSvc        INFO # (39,1): G4Svc.BeamSizeX = 0.38
+JobOptionsSvc        INFO # (40,1): G4Svc.BeamSizeY = 0.0057
+JobOptionsSvc        INFO # (41,1): G4Svc.BeamSizeZ = 15
+JobOptionsSvc        INFO # (44,1): G4Svc.NBunch = 3
+JobOptionsSvc        INFO # (45,1): G4Svc.BeamStartTime = 648
+JobOptionsSvc        INFO # (46,1): G4Svc.BeamDeltaTime = 8
+JobOptionsSvc        INFO # (49,1): G4Svc.BunchTimeSigma = 0.02
+JobOptionsSvc        INFO # (52,1): G4Svc.FADSMacro = "$BESSIMROOT/share/run.mac"
+JobOptionsSvc        INFO # (55,1): BesSim.Field = 2
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/share/MagneticField.txt
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.DLLs += ["MagneticField"]
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.ExtSvc += ["MagneticFieldSvc"]
+JobOptionsSvc        INFO # (5,1): MagneticFieldSvc.IfRealField = 1
+JobOptionsSvc        INFO # (8,1): MagneticFieldSvc.OutLevel = 1
+JobOptionsSvc        INFO # (11,1): MagneticFieldSvc.GridDistance = 5
+JobOptionsSvc        INFO # (21,1): MagneticFieldSvc.RunMode = 3
+JobOptionsSvc        INFO # (24,1): MagneticFieldSvc.Cur_SCQ1_55 = 349.4
+JobOptionsSvc        INFO # (25,1): MagneticFieldSvc.Cur_SCQ1_89 = 426.2
+JobOptionsSvc        INFO # (26,1): MagneticFieldSvc.Cur_SCQ2_10 = 474.2
+JobOptionsSvc        INFO # (28,1): MagneticFieldSvc.UseDBFlag = 1
+JobOptionsSvc        INFO # (29,1): MagneticFieldSvc.TurnOffField = 0
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/BOOST/BesSim/BesSim-00-01-24/share/G4Svc_BesSim.txt
+JobOptionsSvc        INFO # (59,1): BesSim.TDSFlag = 1
+JobOptionsSvc        INFO # (63,1): BesSim.PhysicsList = 9
+JobOptionsSvc        INFO # (66,1): RealizationSvc.IfUseTrg = 0
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Event/EventNavigator/EventNavigator-00-01-03/share/EventNavigator.txt
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.DLLs += ["EventNavigator"]
+JobOptionsSvc        INFO # (6,1): ApplicationMgr.TopAlg += ["BesNavigatorInit"]
+JobOptionsSvc        INFO # (8,1): BesNavigatorInit.OutputLevel = 4
+JobOptionsSvc        INFO # (10,1): BesNavigatorInit.FillMdcInfo = 1
+JobOptionsSvc        INFO # (11,1): BesNavigatorInit.FillEmcInfo = 1
+JobOptionsSvc        INFO # (12,1): BesNavigatorInit.FillTofInfo = 1
+JobOptionsSvc        INFO # (13,1): BesNavigatorInit.FillMucInfo = 1
+JobOptionsSvc        INFO # (15,1): BesNavigatorInit.MdcCut = 7
+JobOptionsSvc     WARNING # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/job-CalibData.txt
+JobOptionsSvc     WARNING # (2,1): File /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Database/DatabaseSvc/DatabaseSvc-00-00-26/share/DatabaseConfig.txt already included from /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Simulation/Realization/RealizationSvc/RealizationSvc-00-00-50/share/jobOptions_Realization.txt: (1, 1)
+JobOptionsSvc        INFO # (4,1): ApplicationMgr.DLLs += ["CalibMySQLCnv", "CalibROOTCnv", "CalibDataSvc", "CalibTreeCnv"]
+JobOptionsSvc        INFO # (7,1): ApplicationMgr.ExtSvc += ["CalibMySQLCnvSvc", "CalibRootCnvSvc", "CalibDataSvc", "CalibTreeCnvSvc"]
+JobOptionsSvc        INFO # (10,1): DetectorPersistencySvc.CnvServices += ["CalibMySQLCnvSvc", "CalibRootCnvSvc", "CalibTreeCnvSvc"]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/calibConfig_sim.txt
+JobOptionsSvc        INFO # (3,1): CalibMySQLCnvSvc.BossRelease = "7.0.8"
+JobOptionsSvc        INFO # (4,1): DedxCurSvc.BossRelease = "7.0.8"
+JobOptionsSvc        INFO # (6,1): MdcTunningSvc.fromDB = 1
+JobOptionsSvc        INFO # (7,1): MdcTunningSvc.ParBossVer = "6.6.3"
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/MdcCalibFunSvc/MdcCalibFunSvc-00-03-16/share/job_MdcCalibFunSvc.txt
+JobOptionsSvc        INFO # (8,1): ApplicationMgr.DLLs += ["MdcGeomSvc"]
+JobOptionsSvc        INFO # (9,1): ApplicationMgr.DLLs += ["MdcCalibFunSvc"]
+JobOptionsSvc        INFO # (11,1): ApplicationMgr.ExtSvc += ["MdcGeomSvc"]
+JobOptionsSvc        INFO # (12,1): ApplicationMgr.ExtSvc += ["MdcCalibFunSvc"]
+JobOptionsSvc        INFO # (15,1): MdcCalibFunSvc.LayerInfSig = -1
+JobOptionsSvc        INFO # (18,1): MdcCalibFunSvc.LinearXT = 0
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/calibConfig_sim.txt
+JobOptionsSvc        INFO # (12,1): MdcGeomSvc.readAlignParDataBase = 1
+JobOptionsSvc        INFO # (13,1): CalibDataSvc.Mdc_CalibStorageType = 14
+JobOptionsSvc     WARNING # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/DedxCurSvc/DedxCurSvc-00-00-17/share/jobOption_DedxCurSvc.txt
+JobOptionsSvc     WARNING # (2,1): File /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Control/OfflineEventLoopMgr/OfflineEventLoopMgr-00-00-15/share/OfflineEventLoopMgr_Option.txt already included from /tmp/67492015/dir_9091/boss/jobOptions_sim_rhopi_0.txt: (1, 1)
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.DLLs += ["DedxCurSvc"]
+JobOptionsSvc        INFO # (4,1): ApplicationMgr.ExtSvc += ["DedxCurSvc"]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/calibConfig_sim.txt
+JobOptionsSvc        INFO # (26,1): CalibDataSvc.DedxSim_CalibStorageType = 14
+JobOptionsSvc        INFO # (31,1): ApplicationMgr.DLLs += ["TofSimSvc"]
+JobOptionsSvc        INFO # (32,1): ApplicationMgr.ExtSvc += ["TofSimSvc"]
+JobOptionsSvc        INFO # (33,1): CalibDataSvc.TofSim_CalibStorageType = 14
+JobOptionsSvc        INFO # (37,1): ApplicationMgr.DLLs += ["TofQElecSvc"]
+JobOptionsSvc        INFO # (38,1): ApplicationMgr.ExtSvc += ["TofQElecSvc"]
+JobOptionsSvc        INFO # (39,1): CalibDataSvc.TofQElec_CalibStorageType = 14
+JobOptionsSvc        INFO # (40,1): CalibMySQLCnvSvc.TofQElecPar = 1
+JobOptionsSvc        INFO # (41,1): CalibMySQLCnvSvc.TofQElecBossVer = "6.5.2"
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Emc/EmcCalibConstSvc/EmcCalibConstSvc-00-00-13/share/jobOptions_EmcCalibConstSvc.txt
+JobOptionsSvc        INFO # (8,1): ApplicationMgr.DLLs += ["EmcCalibConstSvc"]
+JobOptionsSvc        INFO # (10,1): ApplicationMgr.ExtSvc += ["EmcCalibConstSvc"]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/calibConfig_sim.txt
+JobOptionsSvc        INFO # (45,1): CalibDataSvc.Emc_CalibStorageType = 14
+JobOptionsSvc     WARNING # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Muc/MucCalibConstSvc/MucCalibConstSvc-00-01-10/share/MucCalibConstSvc.txt
+JobOptionsSvc     WARNING # (3,1): File /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/job-CalibData.txt already included from /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/calibConfig_sim.txt: (1, 1)
+JobOptionsSvc        INFO # (5,1): ApplicationMgr.DLLs += ["MucCalibConstSvc"]
+JobOptionsSvc        INFO # (7,1): ApplicationMgr.ExtSvc += ["MucCalibConstSvc"]
+JobOptionsSvc        INFO # (12,1): CalibRootCnvSvc.Mucrootfile = "$MUCCALIBCONSTSVCROOT/share/MucCalibConst_dimu_644.root"
+JobOptionsSvc        INFO # (28,1): MucCalibConstSvc.ConfigMode = 3
+JobOptionsSvc        INFO # (31,1): MucCalibConstSvc.UniformEff = 0.95
+JobOptionsSvc        INFO # (32,1): MucCalibConstSvc.UniformCnt = 0.05
+JobOptionsSvc        INFO # (33,1): MucCalibConstSvc.UniformNosRatio = 0.05
+JobOptionsSvc        INFO # (34,1): MucCalibConstSvc.UniformNos = 0.01
+JobOptionsSvc        INFO # (35,1): MucCalibConstSvc.UniformClst = 4
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Calibration/CalibSvc/CalibSvc-00-03-06/share/calibConfig_sim.txt
+JobOptionsSvc        INFO # (51,1): CalibDataSvc.Muc_CalibStorageType = 14
+JobOptionsSvc        INFO # (55,1): CalibDataSvc.InjSigInterval_CalibStorageType = 14
+JobOptionsSvc        INFO # (56,1): CalibDataSvc.InjSigTime_CalibStorageType = 14
+JobOptionsSvc        INFO # (57,1): CalibDataSvc.OffEvtFilter_CalibStorageType = 14
+JobOptionsSvc        INFO # (58,1): CalibDataSvc.CorrectedETS_CalibStorageType = 14
+JobOptionsSvc        INFO # =======> /tmp/67492015/dir_9091/boss/jobOptions_sim_rhopi_0.txt
+JobOptionsSvc        INFO # (12,1): RealizationSvc.RunIdList = [-9989]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Event/RootIO/RootIO-00-01-33/share/jobOptions_Digi2Root.txt
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.DLLs += ["RootCnvSvc"]
+JobOptionsSvc        INFO # (4,1): EventPersistencySvc.CnvServices += ["RootCnvSvc"]
+JobOptionsSvc        INFO # (8,1): ApplicationMgr.OutStream = ["RootWriter"]
+JobOptionsSvc        INFO # (9,1): RootWriter.Output = " TYP='ROOT'"
+JobOptionsSvc        INFO # (11,1): RootWriter.ItemList = ["/Event/EventHeader#1", "/Event/Navigator#1", "/Event/MC/McParticleCol#1", "/Event/Digi#99"]
+JobOptionsSvc        INFO # =======> /tmp/67492015/dir_9091/boss/jobOptions_sim_rhopi_0.txt
+JobOptionsSvc        INFO # (14,1): RootCnvSvc.digiRootOutputFile = "rhopi_0.rtraw"
+JobOptionsSvc        INFO # (15,1): MessageSvc.OutputLevel = 5
+JobOptionsSvc        INFO # (16,1): ApplicationMgr.EvtMax = 50
+JobOptionsSvc        INFO # (17,1): DatabaseSvc.Host = "bes3db01.csns.ihep.ac.cn"
+JobOptionsSvc        INFO # (18,1): DatabaseSvc.User = "guest"
+JobOptionsSvc        INFO # (19,1): DatabaseSvc.Passwd = "guestpass"
+JobOptionsSvc        INFO Job options successfully read in from jobOptions_sim_rhopi_0.txt
+ApplicationMgr    SUCCESS 
+====================================================================================================================================
+                                                   Welcome to ApplicationMgr (GaudiCoreSvc v1r5)
+                                          running on htc077.csns.ihep.ac.cn on Fri Jul 28 17:48:24 2023
+====================================================================================================================================
+
+[1mRooFit v3.56 -- Developed by Wouter Verkerke and David Kirkby[0m 
+                Copyright (C) 2000-2013 NIKHEF, University of California & Stanford University
+                All rights reserved, please read http://roofit.sourceforge.net/license.txt
+
+PJFRY init
+ ====================================================
+   This is QCDLoop - version 1.9                     
+   Authors: Keith Ellis and Giulia Zanderighi        
+   (ellis@fnal.gov, g.zanderighi1@physics.ox.ac.uk)  
+   For details see FERMILAB-PUB-07-633-T,OUTP-07/16P 
+   arXiv:0712.1851 [hep-ph], published in            
+   JHEP 0802:002,2008.                               
+ ====================================================
+ ====================================================
+   FF 2.0, a package to evaluate one-loop integrals
+ written by G. J. van Oldenborgh, NIKHEF-H, Amsterdam
+ ====================================================
+ for the algorithms used see preprint NIKHEF-H 89/17,
+ 'New Algorithms for One-loop Integrals', by G.J. van
+ Oldenborgh and J.A.M. Vermaseren, published in 
+ Zeitschrift fuer Physik C46(1990)425.
+ ====================================================
+ ffini: precx =   4.44089209850062616E-016
+ ffini: precc =   4.44089209850062616E-016
+ ffini: xalogm =   4.94065645841246544E-324
+ ffini: xclogm =   4.94065645841246544E-324
+ApplicationMgr       INFO Successfully loaded modules : DummyLoadOldROOT, OfflineEventLoopMgr, MeasuredEcmsSvc, KKMC, BesServices, BesEvtGen, DatabaseSvc, RealizationSvc, McEventSelector, DetVerSvc, BesSim, MagneticField, EventNavigator, CalibMySQLCnv, CalibROOTCnv, CalibDataSvc, CalibTreeCnv, MdcGeomSvc, MdcCalibFunSvc, DedxCurSvc, TofSimSvc, TofQElecSvc, EmcCalibConstSvc, MucCalibConstSvc, RootCnvSvc
+*** Read field map_Iron: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/barIronpar.txt
+*** Read field map_Air: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/barAirpar.txt
+*** Read field map_end: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/endIronpar.txt
+*** Read field map_end_air: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/endAirpar.txt
+CALIBROOT_StorageType  
+DatabaseSvc: Connected to MySQL database
+run id : -9989
+Read wireTension from file:/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/MdcGeomSvc/MdcGeomSvc-00-01-37/share/mdcWireTension.dat
+Read wirePosition from file:/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/MdcGeomSvc/MdcGeomSvc-00-01-37/share/WirePosCalib.dat
+Read alignment parameters from file:/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/MdcGeomSvc/MdcGeomSvc-00-01-37/share/MdcAlignPar.dat
+           
+            *************************************************************
+            *  ****   ****    ****  ****    ***       ***     ******    *
+            *  ****   ****    ****  ****    ****     ****   **********  *
+            *  ****   ****    ****  ****    *****   *****  *****   ***  *
+            *  **********     *********     *************  ****         *
+            *  *******        ******        *************  ****         *
+            *  **********     ********      **** *** ****  *****   ***  *
+            *  ****  *****    ****  ****    ****  *  ****   **********  *
+            *  ****   *****   ****   ****   ****     ****     *******   *
+            *************************************************************
+           
+
+
+ ***************************************************************************
+ *                         KK Monte Carlo                                  *
+ *            Version       4.17          19 Nov  2001                     *
+ *       3.09700000                 CMS energy average       CMSene     a1 *
+ *       0.00080000                 Beam energy spread       DelEne     a2 *
+ *              100                 Max. photon mult.        npmax      a3 *
+ *                0                 wt-ed or wt=1 evts.      KeyWgt     a4 *
+ *                1                 ISR switch               KeyISR     a4 *
+ *                1                 FSR switch               KeyFSR     a5 *
+ *                2                 ISR/FSR interferenc      KeyINT     a6 *
+ *                1                 New exponentiation       KeyGPS     a7 *
+ *                1                 Hadroniz.  switch        KeyHad     a7 *
+ *       0.30000000                 Hadroniz. min. mass      HadMin     a9 *
+ *       1.00000000                 Maximum weight           WTmax     a10 *
+ *              100                 Max. photon mult.        npmax     a11 *
+ *               11                 Beam ident               KFini     a12 *
+ *       0.00001549                 Manimum phot. ener.      Ene       a13 *
+ *   0.10000000E-59                 Phot.mass, IR regul      MasPho    a14 *
+ *    1.2500000                     Phot. mult. enhanc.      Xenph     a15 *
+ *   0.10000000E-08                 Vcut1                    Vcut1     a16 *
+ *   0.50000000E-01                 Vcut2                    Vcut2     a16 *
+ *   0.10000000                     Vcut3                    Vcut2     a16 *
+ *       0.00000000                    PolBeam1(1)           Pol1x     a17 *
+ *       0.00000000                    PolBeam1(2)           Pol1y     a18 *
+ *       0.00000000                    PolBeam1(3)           Pol1z     a19 *
+ *       0.00000000                    PolBeam2(1)           Pol2x     a20 *
+ *       0.00000000                    PolBeam2(2)           Pol2y     a21 *
+ *       0.00000000                    PolBeam2(3)           Pol2z     a22 *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *            BornV  Initializator                                         *
+ *      91.18700000                 Z mass     [GeV]         amz        a1 *
+ *     100.00000000                 Higgs mass [GeV]         amh        a2 *
+ *     175.00000000                 Top mass   [GeV]         amtop      a3 *
+ *       2.50072032                 Z width    [GeV]         gammz      a4 *
+ *       0.22276773                 sin(theta_w)**2          sinw2      a5 *
+ *     137.03598950                 1/alfa_QED  at  Q=0      AlfInv     a6 *
+ *       0.30000000                 MassCut light qqbar      HadMin     a6 *
+ *               11                 KF code of beam          KFini      a7 *
+ *    1.0000000                     Input vvmax              vvmax      a8 *
+ *   0.99534430                     reduced vvmax in MC      vvmax      a9 *
+ *         Test switches:                                                  *
+ *                1                 Electroweak lib.         KeyElw     10 *
+ *                1                 Z on/off   switch        KeyZet     11 *
+ *                0                 mass terms on/off        KeyWtm     12 *
+ *                1                 R for gamma* on/off      KeyRes     12 *
+ *                1                 R for psi    on/off      KeyPsi     12 *
+ *                0                 R for rho    on/off      KeyRho     12 *
+ *                1                 IHVP         on/off      KeyIHV     13 *
+ ***************************************************************************
+
+ =========== BornV_StartDZ: CHARM quark ===========
+ =========== BornV_StartDZ: CHARM quark ===========
+ DZface_Tabluj: pretabulation, basic LEP1 range
+ a: i,ww=            0  1.00000000000000002E-002
+ a: i,ww=           10  2.49903512595607696E-002
+ a: i,ww=           20  6.24517656076230485E-002
+ a: i,ww=           30  0.15606915593142559     
+ a: i,ww=           40  0.39002230275094890     
+ a: i,ww=           50  0.97467943448089644     
+ a: i,ww=           60   2.4357581433147639     
+ a: i,ww=           70   6.0870451584771494     
+ a: i,ww=           80   15.211739664315283     
+ a: i,ww=           90   38.014671748023183     
+ a: i,ww=          100   95.000000000000000     
+ DZface_Tabluj: pretabulation, near Z0:
+ b: i,ww=            0   86.186999999999998     
+ b: i,ww=           10   91.186999999999998     
+ b: i,ww=           20   96.186999999999998     
+ DZface_Tabluj: LEP2 energy zone: pretabulation starts: it will take a bit time
+ DZface_Tabluj: m_poTh3=          30
+ c: i,ww=            0   95.000000000000000     
+ c: i,ww=           10   105.00006896551724     
+ c: i,ww=           20   115.00013793103449     
+ c: i,ww=           30   125.00020689655173     
+ c: i,ww=           40   135.00027586206897     
+ c: i,ww=           50   145.00034482758622     
+ c: i,ww=           60   155.00041379310346     
+ c: i,ww=           70   165.00048275862071     
+ c: i,ww=           80   175.00055172413795     
+ c: i,ww=           90   185.00062068965519     
+ c: i,ww=          100   195.00068965517244     
+ c: i,ww=          110   205.00075862068965     
+ c: i,ww=          120   215.00082758620690     
+ c: i,ww=          130   225.00089655172414     
+ c: i,ww=          140   235.00096551724138     
+ DZface_Tabluj: NLC energy range: pretabulation starts: it will take a bit time
+ d: i,ww=            0   240.00100000000000     
+ d: i,ww=           10   340.00099999999998     
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ You have requested SQRT(S).GE.350 GeV.
+ d: i,ww=           20   440.00099999999998     
+ d: i,ww=           30   540.00099999999998     
+ d: i,ww=           40   640.00099999999998     
+ d: i,ww=           50   740.00099999999998     
+ d: i,ww=           60   840.00099999999998     
+ d: i,ww=           70   940.00099999999998     
+ d: i,ww=           80   1040.0010000000000     
+ DZface_Tabluj: pretabulatin finished  now !
+
+
+ ***************************************************************************
+ *                         KarLud_Initialize START                         *
+ *       3.09700000                  CMS energy average      CMSene     == *
+ *       0.00080000                  Beam energy spread      DelEne     == *
+ *                1                  ISR on/off switch       KeyISR     == *
+ *                0                  Type of ISR             KeyFix     == *
+ *                1                  Elect_weak switch       KeyZet     == *
+ *                0                  Fixed nphot mult.       MltISR     == *
+ *               50                  Max. photon mult.       nmax       == *
+ ***************************************************************************
+
+===================== user decay card ========================
+
+Decay J/psi
+  0.3333 rho0 pi0 HELAMP 1.0 0.0 0.0 0.0 -1.0 0.0;
+  0.3333 rho+ pi- HELAMP 1.0 0.0 0.0 0.0 -1.0 0.0;
+  0.3333 rho- pi+ HELAMP 1.0 0.0 0.0 0.0 -1.0 0.0;
+Enddecay
+
+End
+
+
+
+
+
+--------- Ranlux engine status ---------
+ Initial seed = 36010
+ float_seed_table[] = 0.884579 0.696938 0.344683 0.311247 0.253357 0.972054 0.783167 0.821526 0.568441 0.781708 0.268381 0.0649871 0.43205 0.17653 0.810395 0.19839 0.419212 0.481195 0.677384 0.0226264 0.444074 0.269366 0.448192 0.0979914 
+ i_lag = 23, j_lag = 9
+ carry = 0, count24 = 0
+ luxury = 3 nskip = 199
+----------------------------------------
+EvtGen:Initializing EvtGen
+EvtGen:Storing known decay models
+Will register EvtPythia
+EvtGen:Main decay file name  :/tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/DECAY.DEC
+EvtGen:PDT table file name   :/tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/pdt.table
+EvtGen:Initializing RadCorr=PHOTOS
+EvtGen:No RadCorr engine given in EvtGen::EvtGen constructor, will use default EvtPHOTOS.
+EvtGen:In readDecayFile, reading:/tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/DECAY.DEC
+EvtGen:As requested, PHOTOS will be turned on.
+mypdg= /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/r_pdg.dat
+EvtGen:VSS_BMIXCPT will generate mixing and CPT/CP effects in mixing:
+
+    Upsilon(4S) --> B0 + anti-B0
+
+using parameters:
+
+  delta(m)  = 0.489 hbar/ps
+  _freq     = 1.63113 hbar/mm
+  dgog      = 0
+  dGamma    = 0 hbar/mm
+  q/p       = (1,0)
+  z         = (0,0)
+  tau       = 1.54107 ps
+  x         = 0.753581
+ chi(B0->B0bar) = 0.181099
+ chi(B0bar->B0) = 0.181099
+ Af         = (1,0)
+ Abarf      = (0,0)
+ Afbar      = (0,0)
+ Abarfbar   = (1,0)
+
+EvtGen:Warning, sum of branching fractions for tau- is 0.998711
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for D0 is 0.990992
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for phi_A is 0.509
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_0_A is 0.11
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f'_0_A is 0.185
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_2_A is 0.977
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-K*0_A is 0.3343
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K*0_A is 0.3343
+EvtGen:rescaled to one! 
+EvtGen:Redefined Partial wave for D_1+ to D*+ pi0 (2)
+EvtGen:Redefined Partial wave for D_1+ to D*0 pi+ (2)
+EvtGen:Redefined Partial wave for D_1- to D*- pi0 (2)
+EvtGen:Redefined Partial wave for D_1- to anti-D*0 pi- (2)
+EvtGen:Redefined Partial wave for D_10 to D*0 pi0 (2)
+EvtGen:Redefined Partial wave for D_10 to D*+ pi- (2)
+EvtGen:Redefined Partial wave for anti-D_10 to anti-D*0 pi0 (2)
+EvtGen:Redefined Partial wave for anti-D_10 to D*- pi+ (2)
+EvtGen:Redefined Partial wave for D_2*+ to D*+ pi0 (2)
+EvtGen:Redefined Partial wave for D_2*+ to D*0 pi+ (2)
+EvtGen:Redefined Partial wave for D_2*- to D*- pi0 (2)
+EvtGen:Redefined Partial wave for D_2*- to anti-D*0 pi- (2)
+EvtGen:Redefined Partial wave for D_2*0 to D*0 pi0 (2)
+EvtGen:Redefined Partial wave for D_2*0 to D*+ pi- (2)
+EvtGen:Redefined Partial wave for anti-D_2*0 to anti-D*0 pi0 (2)
+EvtGen:Redefined Partial wave for anti-D_2*0 to D*- pi+ (2)
+EvtGen:Warning, sum of branching fractions for K_S0 is 1.00069
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K_2*+ is 1.0329
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K_2*- is 1.0305
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K_2*0 is 1.0305
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-K_2*0 is 1.0305
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-K''*0 is 1.0996
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K''*+ is 1.0996
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K''*- is 1.0093
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K*(1410)0 is 0.516
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-K*(1410)0 is 0.516
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K*(1410)+ is 0.516
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for K*(1410)- is 0.516
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for omega is 1.00234
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for eta' is 0.977059
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for phi is 1.00138
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for rho(3S)0 is 0.55
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for rho(3S)+ is 0.54
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for rho(3S)- is 0.54
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for omega(2S) is 0.1
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for a_2+ is 1.0027
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for a_2- is 1.0027
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for a_20 is 1.0028
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for a'_20 is 0.0560016
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for a'_2+ is 0.056
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for a'_2- is 0.056
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_0(1710) is 1.2
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for a_00 is 1.001
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f'_0 is 1.0018
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_1 is 0.8749
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_0(1500) is 1.012
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for eta(1475) is 0.582
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_1(1510) is 2
+EvtGen:rescaled to one! 
+EvtGen:Redefined decay of eta(1760)
+EvtGen:Redefined decay of f_0(1790)
+EvtGen:Redefined decay of x(1835)
+EvtGen:Warning, sum of branching fractions for f_2(1910) is 0.8
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_2(1640) is 0.7
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_2(1950) is 1.102
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for f_4(2050) is 0.1793
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for rho_30 is 0.9074
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for rho_3+ is 1.104
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for rho_3- is 1.104
+EvtGen:rescaled to one! 
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+mypdg= /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/r_pdg.dat
+EvtGen:Warning, sum of branching fractions for eta_c(2S) is 0.9905
+EvtGen:rescaled to one! 
+EvtGen:No default probmax for (J2BB2) J/psi -> Sigma*- anti-Sigma*+ 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB2) J/psi -> Sigma*+ anti-Sigma*- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) J/psi -> anti-Xi0 Xi0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB3) J/psi -> anti-Xi+ Xi*- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB3) J/psi -> anti-Xi0 Xi*0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB3) J/psi -> anti-Sigma+ Sigma*- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB3) J/psi -> anti-Sigma- Sigma*+ 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) J/psi -> p+ anti-p- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) J/psi -> n0 anti-n0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) J/psi -> Sigma+ anti-Sigma- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) J/psi -> Sigma0 anti-Sigma0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) J/psi -> Xi- anti-Xi+ 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) J/psi -> Lambda0 anti-Lambda0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (JPE) J/psi -> gamma eta_c 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+EvtGen:Warning, sum of branching fractions for J/psi is 0.9973
+EvtGen:rescaled to one! 
+EvtGen:No default probmax for (J2BB1) psi(2S) -> p+ anti-p- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB2) psi(2S) -> Delta++ anti-Delta-- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) psi(2S) -> Lambda0 anti-Lambda0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) psi(2S) -> Sigma+ anti-Sigma- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) psi(2S) -> Sigma0 anti-Sigma0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB2) psi(2S) -> Sigma*+ anti-Sigma*- 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) psi(2S) -> Xi- anti-Xi+ 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (J2BB1) psi(2S) -> Xi0 anti-Xi0 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+EvtGen:No default probmax for (JPE) psi(2S) -> gamma eta_c 
+This is fine for development, but must be provided for production.
+EvtGen:Never fear though - the decay will use the 
+EvtGen:500 iterations to build up a good probmax 
+EvtGen:before accepting a decay. 
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+EvtGen:Warning, sum of branching fractions for psi(2S) is 1.00318
+EvtGen:rescaled to one! 
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+EvtGen:Warning, sum of branching fractions for psi(4260) is 5057
+EvtGen:rescaled to one! 
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+EvtGen:Warning, sum of branching fractions for Lambda_c+ is 0.922356
+EvtGen:rescaled to one! 
+The _parity.list_ location is /tmp/67492015/dir_9091/boss/BesEvtGen-00-04-08/share/_parityC.list_
+EvtGen:Warning, sum of branching fractions for Lambda_b0 is 0.2338
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-Lambda_b0 is 0.2338
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for Xi_b- is 0.18118
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-Xi_b+ is 0.18118
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for Xi_b0 is 0.18244
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-Xi_b0 is 0.18244
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for Omega_b- is 0.1817
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for anti-Omega_b+ is 0.1817
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for B_c- is 0.93993
+EvtGen:rescaled to one! 
+EvtGen:Warning, sum of branching fractions for B_c+ is 0.93993
+EvtGen:rescaled to one! 
+EvtGen:Redefined decay of x(1835)
+EvtGen:Given allowed decays, resetting minMass a_0+ 0.4847 to 0.687423
+EvtGen:Given allowed decays, resetting minMass a_0- 0.4847 to 0.687423
+EvtGen:Given allowed decays, resetting minMass eta(1475) 1.076 to 1.12234
+EvtGen:Given allowed decays, resetting minMass eta(2225) 1.82 to 1.97692
+EvtGen:Given allowed decays, resetting minMass f_0(1370) 0.87 to 0.98736
+EvtGen:Given allowed decays, resetting minMass f'_1 1.0263 to 1.12234
+EvtGen:Given allowed decays, resetting minMass f_1(1510) 1.118 to 1.15534
+EvtGen:Given allowed decays, resetting minMass f_2(2150) 1.857 to 1.87654
+EvtGen:Given allowed decays, resetting minMass kapa0 0.594 to 0.632577
+EvtGen:Given allowed decays, resetting minMass anti-kapa0 0.594 to 0.632577
+EvtGen:Given allowed decays, resetting minMass kapa+ 0.594 to 0.628657
+EvtGen:Given allowed decays, resetting minMass kapa- 0.594 to 0.628657
+EvtGen:Given allowed decays, resetting minMass D_1+ 2.1434 to 2.14484
+EvtGen:Given allowed decays, resetting minMass D_1- 2.1434 to 2.14484
+EvtGen:Given allowed decays, resetting minMass sigma_0 0 to 0.27914
+EvtGen:Given allowed decays, resetting minMass Delta- 1.034 to 1.07914
+EvtGen:Given allowed decays, resetting minMass anti-Delta+ 1.034 to 1.07914
+EvtGen:Given allowed decays, resetting minMass Delta++ 1.031 to 1.07784
+EvtGen:Given allowed decays, resetting minMass anti-Delta-- 1.031 to 1.07784
+EvtGen:Given allowed decays, resetting minMass Sigma*0 1.0337 to 1.25066
+EvtGen:Given allowed decays, resetting minMass anti-Sigma*0 1.0337 to 1.25066
+EvtGen:Given allowed decays, resetting minMass Sigma*+ 1.0328 to 1.25525
+EvtGen:Given allowed decays, resetting minMass anti-Sigma*- 1.0328 to 1.25525
+EvtGen:Given allowed decays, resetting minMass Sigma*- 0.9872 to 1.25525
+EvtGen:Given allowed decays, resetting minMass anti-Sigma*+ 0.9872 to 1.25525
+EvtGen:Given allowed decays, resetting minMass Lambda(1405)0 0.657 to 1.32753
+EvtGen:Given allowed decays, resetting minMass anti-Lambda(1405)0 0.657 to 1.32753
+EvtGen:Given allowed decays, resetting minMass Lambda(1600)0 1.15 to 1.32753
+EvtGen:Given allowed decays, resetting minMass anti-Lambda(1600)0 1.15 to 1.32753
+EvtGen:Given allowed decays, resetting minMass Lambda(1800)0 0 to 1.12677
+EvtGen:Given allowed decays, resetting minMass anti-Lambda(1800)0 0 to 1.12677
+EvtGen:Given allowed decays, resetting minMass Lambda(1810)0 0 to 1.12677
+EvtGen:Given allowed decays, resetting minMass anti-Lambda(1810)0 0 to 1.12677
+EvtGen:Given allowed decays, resetting minMass Sigma(1660)0 0.16 to 1.25066
+EvtGen:Given allowed decays, resetting minMass anti-Sigma(1660)0 0.16 to 1.25066
+EvtGen:Given allowed decays, resetting minMass Sigma(1775)0 0 to 1.12677
+EvtGen:Given allowed decays, resetting minMass anti-Sigma(1775)0 0 to 1.12677
+EvtGen:Given allowed decays, resetting minMass Xi*- 1.035 to 1.45447
+EvtGen:Given allowed decays, resetting minMass anti-Xi*+ 1.035 to 1.45447
+EvtGen:Given allowed decays, resetting minMass Sigma_c*0 2.3225 to 2.42603
+EvtGen:Given allowed decays, resetting minMass anti-Sigma_c*0 2.3225 to 2.42603
+EvtGen:Given allowed decays, resetting minMass Sigma_c++ 2.4226 to 2.42603
+EvtGen:Given allowed decays, resetting minMass anti-Sigma_c-- 2.4226 to 2.42603
+EvtGen:Given allowed decays, resetting minMass Sigma_c*++ 2.2494 to 2.42603
+EvtGen:Given allowed decays, resetting minMass anti-Sigma_c*-- 2.2494 to 2.42603
+EvtGen:Given allowed decays, resetting minMass Zc(4020)+ 3.62 to 3.6455
+EvtGen:Given allowed decays, resetting minMass f_0_A 0.49 to 0.9952
+EvtGen:Done initializing EvtGen
+EvtGen:In readDecayFile, reading:rhopi.dec
+EvtGen:Redefined decay of J/psi
+EvtGen:Reading rhopi.dec to override decay table.
+
+*************************************************************
+ Geant4 version Name: geant4-09-03-patch-01    (9-April-2010)
+                      Copyright : Geant4 Collaboration
+                      Reference : NIM A 506 (2003), 250-303
+                            WWW : http://cern.ch/geant4
+*************************************************************
+
+=======get BesMdcGeoParameter from MdcGeomSvc=======
+before CreateStepperAndChordFinder
+G4ClassicalRK4 (default) is called
+The minimal step is equal to 0.01 mm
+LargestAcceptableStep is 1000
+field has created
+fDelta_One_Step_Value is 0.01
+fDelta_Intersection_Val is 0.001
+fEpsilonMin is 5e-05
+fEpsilonMax is 0.001
+BesTofConstruction Property:
+  UserLimits= 0.03  IonE= 20
+
+<<< Geant4 Physics List engine packaging library: PACK 5.5
+<<< Geant4 Physics List simulation engine: QGSP_BERT_CHIPS 3.3
+
+ MdcTunningSvc read from database. 
+ MdcDigitizer:: Open Mdc Tunning Service
+deadC[3][0]= 1
+deadC[3][1]= 1
+deadC[3][3]= 1
+deadC[3][5]= 1
+deadC[3][6]= 1
+deadC[3][7]= 1
+deadC[3][8]= 1
+deadC[3][9]= 1
+deadC[3][10]= 1
+deadC[3][11]= 1
+deadC[13][5]= 1
+deadC[13][7]= 1
+ETofSim: Reading nTuples of is completed.
+Fixed parameters: 
+  strip_x[0]= 91  strip_x[1]= 95.5  strip_x[2]= 100  strip_x[3]= 104.5  strip_x[4]= 109  strip_x[5]= 113.5  strip_x[6]= 118  strip_x[7]= 122.5  strip_x[8]= 127  strip_x[9]= 131.5  strip_x[10]= 136  strip_x[11]= 141  deadChannel[3][0]= 1  deadChannel[3][1]= 1  deadChannel[3][3]= 1  deadChannel[3][5]= 1  deadChannel[3][6]= 1  deadChannel[3][7]= 1  deadChannel[3][8]= 1  deadChannel[3][9]= 1  deadChannel[3][10]= 1  deadChannel[3][11]= 1  deadChannel[13][5]= 1  deadChannel[13][7]= 1  strip_z= 24  strip_gap= 3  ngap= 12  gapWidth= 0.22  nstep= 200  stepWidth= 0.0011  E_weight= 0.463427  eCharge= 1.60218e-07  E= 7000  alpha= 125.155  eta= 5.5419  v_drift= 0.198002
+Property:
+  FileName= mrpc.root  E= 7000  Threshold= 5.5e+08  nstep= -1  E_weight= -1  saturationFlag= 1  tdcRes_const= 38  adcRes_const= 27  calTdcRes_charge_flag= 0  charge2Time_flag= 0  calAdcRes_charge_flag= 0
+
+TofSim: BesTofDigitizer       You are using the old End Cap Tof (Scintillator) Digitizer!
+get the DataInfoSvc
+Using the new SftVer and ParVer (7.0.8, 1) for run 9989. 1Total 50 events need to be simulated in run -9989
+ApplicationMgr       INFO Application Manager Initialized successfully
+ApplicationMgr       INFO Application Manager Started successfully
+MeasuredEcmsSvc     ERROR RowNo can not be 0, failed to read DB for -9989
+Using the new SftVer and ParVer (7.0.8, 1) for run 9989. 1m__RunNo=-9989m_mindex=1
+Read wireTension from file:/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/MdcGeomSvc/MdcGeomSvc-00-01-37/share/mdcWireTension.dat
+Read wirePosition from file:/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/MdcGeomSvc/MdcGeomSvc-00-01-37/share/WirePosCalib.dat
+Read alignment parameters from file:/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Mdc/MdcGeomSvc/MdcGeomSvc-00-01-37/share/MdcAlignPar.dat
+Mdc runfrm,runto in getSftParVer is:9810::::10878
+@table Mdc: RunFrom is:9810 RunTo is:10878
+ SftVer is 6.6.2.bTreeMdcCalibDataCnv: CalVerSft is 1
+TreeMdcCalibDataCnv: Calib file name is MdcCalibConst_9810_10878_662b.root
+use old X-T functions 
+MdcData runfrm,runto in getSftParVer is:8093::::24177
+@table MdcData: RunFrom is:8093 RunTo is:10878
+ SftVer is 6.6.2 MdcDataConst CalVerSft is 1 File name is MdcDeadwire_8093_10878_boss662.txt
+select RunFrom, RunTo, SftVer, ParVer from CalVtxLumVer where BossRelease = '7.0.8' and RunFrom <= -9989 and RunTo >= -9989 and DataType = 'DedxCurve'
+select RunFrom, RunTo, DedxCurvePar,DedxSigmaPar from DedxCurvePar where SftVer = '6.6.2' and RunFrom <= -9989 and RunTo >= -9989 and DedxCurveParVer = 1 and Status='OK'
+TofSim runfrm,runto in getSftParVer is:-11274::::-9810
+@table TofSim: RunFrom is:-10427 RunTo is:-9810
+ SftVer is 6.6.2.b CalVerSft is 1  File name  is TofSimConst-9810-10427.root
+Read from DB TofQElec: RunFrom 7924 RunTo= 10878
+metadata ok
+ SftVer is 6.5.2 CalVerSft is 1  File name  is TofQElecConst.root
+handle: Run in handle is: 9989
+handle: EmaxVersion=111111111111111
+========== MdcTunningSvc::handle() ==========
+ Start getMdcTuningTableInfo. 
+ ==================== 
+ stmt1: select MdcRes,MdcEff from MdcTuning where RunFrom <= 9989 and RunTo >= 9989 and SftVer = "6.6.3"
+ cnt = 0
+ row = 0
+Construct Bes from GdmlFile /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/DetectorDescription/GdmlManagement/GdmlManagement-00-00-44/dat/Bes.gdml
+SAXProcessor type G4
+SAXProcessor requires type 1
+Bes TopVolume name logicalWorld
+ MdcSD: Use sampled dedx instead of Geant4 value
+DedxSim runfrm,runto in getSftParVer is:-25337::::-8093
+@table DedxSim: RunFrom is:-11413 RunTo is:-8093
+ SftVer is 6.6.2 CalVerSft is 1  File name  is DedxSampleHists_9613-10878_662.root
+Construct Mdc from GdmlFile /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/DetectorDescription/GdmlManagement/GdmlManagement-00-00-44/dat/Mdc.gdml
+SAXProcessor type G4
+SAXProcessor requires type 1
+Mdc TopVolume name logicalMdc
+
+---> warning from G4Element::GetElement(). The element: Fluorin does not exist in the table. Return NULL pointer.
+
+---> warning from G4Element::GetElement(). The element: Sulfur does not exist in the table. Return NULL pointer.
+ Material: PMTmaterial     density:  1.462 g/cm3   RadL:  12.824 cm   Nucl.Int.Length:  77.031 cm   Imean: 195.781 eV 
+   --->  Element: Aluminium ( )   Z = 13.0   N =  27.0   A =  26.98 g/mole  ElmMassFraction:  44.95 %  ElmAbundance  51.76 %
+   --->  Element: Copper ( )   Z = 29.0   N =  63.5   A =  63.55 g/mole  ElmMassFraction:  35.00 %  ElmAbundance  17.11 %
+   --->  Element: Silicon (Si)   Z = 14.0   N =  28.1   A =  28.09 g/mole  ElmMassFraction:   9.35 %  ElmAbundance  10.34 %
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole  ElmMassFraction:  10.67 %  ElmAbundance  20.71 %
+   --->  Element: Nitrogen (N)   Z =  7.0   N =  14.0   A =  14.01 g/mole  ElmMassFraction:   0.03 %  ElmAbundance   0.08 % Material:    Nylon     density:  1.150 g/cm3   RadL:  34.300 cm   Nucl.Int.Length:  67.652 cm   Imean:  73.241 eV 
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  42.10 %  ElmAbundance  28.57 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:   5.31 %  ElmAbundance  42.86 %
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole  ElmMassFraction:  28.04 %  ElmAbundance  14.29 %
+   --->  Element: Nitrogen (N)   Z =  7.0   N =  14.0   A =  14.01 g/mole  ElmMassFraction:  24.55 %  ElmAbundance  14.29 %
+ Material: honeycombCore     density: 24.000 mg/cm3  RadL:  16.148 m    Nucl.Int.Length:  32.271 m    Imean:  73.785 eV 
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  44.44 %  ElmAbundance  28.57 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:   6.23 %  ElmAbundance  47.62 %
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole  ElmMassFraction:  49.33 %  ElmAbundance  23.81 %
+ Material:    epoxy     density:  1.200 g/cm3   RadL:  34.170 cm   Nucl.Int.Length:  63.126 cm   Imean:  70.360 eV 
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  68.72 %  ElmAbundance  42.31 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:   6.30 %  ElmAbundance  46.15 %
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole  ElmMassFraction:  24.97 %  ElmAbundance  11.54 %
+ Material: insulationBoard     density:  1.850 g/cm3   RadL:  16.925 cm   Nucl.Int.Length:  46.842 cm   Imean:  98.957 eV 
+   --->  Element: Silicon (Si)   Z = 14.0   N =  28.1   A =  28.09 g/mole  ElmMassFraction:  28.05 %  ElmAbundance  11.88 %
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole  ElmMassFraction:  41.94 %  ElmAbundance  31.18 %
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  27.49 %  ElmAbundance  27.23 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:   2.52 %  ElmAbundance  29.71 %
+ Material:      PET     density:  1.390 g/cm3   RadL:  28.743 cm   Nucl.Int.Length:  56.337 cm   Imean:  75.075 eV 
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  62.49 %  ElmAbundance  45.45 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:   4.20 %  ElmAbundance  36.36 %
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole  ElmMassFraction:  33.30 %  ElmAbundance  18.18 %
+ Material: FreonR134A     density:  4.241 mg/cm3  RadL:  79.684 m    Nucl.Int.Length: 202.432 m    Imean:  90.865 eV   temperature: 273.15 K  pressure:   1.00 atm
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  24.49 %  ElmAbundance  25.00 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:   2.06 %  ElmAbundance  25.00 %
+   --->  Element: Fluorin (F)   Z =  9.0   N =  18.0   A =  18.01 g/mole  ElmMassFraction:  73.45 %  ElmAbundance  50.00 %
+ Material:      SF6     density:  6.140 mg/cm3  RadL:  44.692 m    Nucl.Int.Length: 155.646 m    Imean: 117.575 eV   temperature: 273.15 K  pressure:   1.00 atm
+   --->  Element: Sulfur (S)   Z = 16.0   N =  32.1   A =  32.06 g/mole  ElmMassFraction:  22.88 %  ElmAbundance  14.29 %
+   --->  Element: Fluorin (F)   Z =  9.0   N =  18.0   A =  18.01 g/mole  ElmMassFraction:  77.12 %  ElmAbundance  85.71 %
+ Material: Isobutan     density:  2.487 mg/cm3  RadL: 181.914 m    Nucl.Int.Length: 263.565 m    Imean:  53.612 eV   temperature: 273.15 K  pressure:   1.00 atm
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  82.63 %  ElmAbundance  28.57 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:  17.37 %  ElmAbundance  71.43 %
+ Material:  MRPCGas     density:  4.170 mg/cm3  RadL:  80.280 m    Nucl.Int.Length: 205.521 m    Imean:  90.916 eV   temperature: 273.15 K  pressure:   1.00 atm
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole  ElmMassFraction:  24.42 %  ElmAbundance  24.21 %
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole  ElmMassFraction:   2.36 %  ElmAbundance  27.86 %
+   --->  Element: Fluorin (F)   Z =  9.0   N =  18.0   A =  18.01 g/mole  ElmMassFraction:  71.54 %  ElmAbundance  47.30 %
+   --->  Element: Sulfur (S)   Z = 16.0   N =  32.1   A =  32.06 g/mole  ElmMassFraction:   1.68 %  ElmAbundance   0.62 %
+Construct old Tof from GdmlFile /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/DetectorDescription/GdmlManagement/GdmlManagement-00-00-44/dat/Tof.gdml
+SAXProcessor type G4
+SAXProcessor requires type 1
+Tof TopVolume name logicalTof
+BesTofSD Property:
+  FanoFactor= 0.2  nionOff= 0.5
+--------ReadBoostRoot::GetEmc()=2
+Construct Emc from GdmlFile /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/DetectorDescription/GdmlManagement/GdmlManagement-00-00-44/dat/Emc.gdml
+SAXProcessor type G4
+SAXProcessor requires type 1
+Emc TopVolume name logicalEMC
+logicEmc:  ===  0x7c7e320  physiEmc 0x7c7e490
+Construct Muc from GdmlFile /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/DetectorDescription/GdmlManagement/GdmlManagement-00-00-44/dat/Muc.gdml
+SAXProcessor type G4
+SAXProcessor requires type 1
+Muc TopVolume name logicalMuc
+MucNoiseMode:	0
+get world 11
+daughter n: name :0 logicalSCM
+daughter n: name :1 logicalhole5
+daughter n: name :2 logicalhole4
+daughter n: name :3 logicalhole3
+daughter n: name :4 logicalhole2
+daughter n: name :5 logicalhole1
+daughter n: name :6 logicalPip
+daughter n: name :7 physicalMdc
+daughter n: name :8 physicalTof
+daughter n: name :9 physicalEMC
+daughter n: name :10 PhysicalMuc
+### Adding tracking cuts for neutron  TimeCut(ns)= 10000  KinEnergyCut(MeV)= 0
+########### initializing the G4Run ############
+
+phot:   for  gamma    SubType= 12
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       PhotoElectric :     Emin=          0 eV         Emax=   10 TeV
+
+compt:   for  gamma    SubType= 13
+      Lambda tables from 100 eV  to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       Klein-Nishina :     Emin=          0 eV         Emax=   10 TeV
+
+conv:   for  gamma    SubType= 14
+      Lambda tables from 1.022 MeV to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       Bethe-Heitler :     Emin=          0 eV         Emax=   10 TeV
+
+msc:   for e-    SubType= 10
+      Lambda tables from 100 eV  to 10 TeV in 77 bins, spline: 1
+      RangeFactor= 0.04, step limit type: 1, lateralDisplacement: 1, skin= 3, geomFactor= 2.5
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          UrbanMsc92 :     Emin=          0 eV         Emax=   10 TeV
+
+eIoni:   for  e-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha :     Emin=          0 eV         Emax=   10 TeV
+
+eBrem:   for  e-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      LPM flag: 1 for E > 1 GeV
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               eBrem :     Emin=          0 eV         Emax=   1 GeV
+            eBremRel :     Emin=          1 GeV        Emax=   10 TeV
+
+eIoni:   for  e+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha :     Emin=          0 eV         Emax=   10 TeV
+
+eBrem:   for  e+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      LPM flag: 1 for E > 1 GeV
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               eBrem :     Emin=          0 eV         Emax=   1 GeV
+            eBremRel :     Emin=          1 GeV        Emax=   10 TeV
+
+annihil:   for  e+    SubType= 5
+      Lambda tables from 100 eV  to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            eplus2gg :     Emin=          0 eV         Emax=   10 TeV
+
+msc:   for proton    SubType= 10
+      Lambda tables from 100 eV  to 10 TeV in 77 bins, spline: 1
+      RangeFactor= 0.2, stepLimitType: 0, latDisplacement: 1, skin= 3, geomFactor= 2.5
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          UrbanMsc90 :     Emin=          0 eV         Emax=   10 TeV
+
+hIoni:   for  proton    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      NuclearStopping= 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   2 MeV
+          BetheBloch :     Emin=          2 MeV        Emax=   10 TeV
+
+hBrems:   for  proton    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :     Emin=          0 eV         Emax=   10 TeV
+
+hPairProd:   for  proton    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :     Emin=          0 eV         Emax=   10 TeV
+
+msc:   for GenericIon    SubType= 10
+      RangeFactor= 0.2, stepLimitType: 0, latDisplacement: 0, skin= 3, geomFactor= 2.5
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          UrbanMsc90 :     Emin=          0 eV         Emax=   10 TeV
+
+ionIoni:   for  GenericIon    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 0.1, dRoverRange= 0.1, integral: 1, fluct: 1, linLossLimit= 0.02
+      Stopping Power data for 17 ion/material pairs, nuclearStopping: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            BraggIon :     Emin=          0 eV         Emax=   2 MeV
+          BetheBloch :     Emin=          2 MeV        Emax=   10 TeV
+
+hIoni:   for  anti_proton    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      NuclearStopping= 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   2 MeV
+          BetheBloch :     Emin=          2 MeV        Emax=   10 TeV
+
+hIoni:   for  kaon+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      NuclearStopping= 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   1.05231 MeV
+          BetheBloch :     Emin=    1.05231 MeV        Emax=   10 TeV
+
+hBrems:   for  kaon+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :     Emin=          0 eV         Emax=   10 TeV
+
+hPairProd:   for  kaon+    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :     Emin=          0 eV         Emax=   10 TeV
+
+hIoni:   for  kaon-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      NuclearStopping= 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   1.05231 MeV
+          BetheBloch :     Emin=    1.05231 MeV        Emax=   10 TeV
+
+hBrems:   for  kaon-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :     Emin=          0 eV         Emax=   10 TeV
+
+hPairProd:   for  kaon-    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :     Emin=          0 eV         Emax=   10 TeV
+
+muMsc:   for mu+    SubType= 10
+      Lambda tables from 100 eV  to 10 TeV in 77 bins, spline: 1
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          UrbanMsc90 :     Emin=          0 eV         Emax=   10 TeV
+
+muIoni:   for  mu+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   200 keV
+          BetheBloch :     Emin=        200 keV        Emax=   1 GeV
+        MuBetheBloch :     Emin=          1 GeV        Emax=   10 TeV
+
+muBrems:   for  mu+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem :     Emin=          0 eV         Emax=   10 TeV
+
+muPairProd:   for  mu+    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd :     Emin=          0 eV         Emax=   10 TeV
+
+muIoni:   for  mu-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   200 keV
+          BetheBloch :     Emin=        200 keV        Emax=   1 GeV
+        MuBetheBloch :     Emin=          1 GeV        Emax=   10 TeV
+
+muBrems:   for  mu-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem :     Emin=          0 eV         Emax=   10 TeV
+
+muPairProd:   for  mu-    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd :     Emin=          0 eV         Emax=   10 TeV
+
+hIoni:   for  pi+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      NuclearStopping= 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   297.504 keV
+          BetheBloch :     Emin=    297.504 keV        Emax=   10 TeV
+
+hBrems:   for  pi+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :     Emin=          0 eV         Emax=   10 TeV
+
+hPairProd:   for  pi+    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :     Emin=          0 eV         Emax=   10 TeV
+
+msc:   for pi-    SubType= 10
+      Lambda tables from 100 eV  to 10 TeV in 77 bins, spline: 1
+      RangeFactor= 0.2, stepLimitType: 0, latDisplacement: 1, skin= 3, geomFactor= 2.5
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          UrbanMsc90 :     Emin=          0 eV         Emax=   10 TeV
+
+hIoni:   for  pi-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      NuclearStopping= 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :     Emin=          0 eV         Emax=   297.504 keV
+          BetheBloch :     Emin=    297.504 keV        Emax=   10 TeV
+
+hBrems:   for  pi-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :     Emin=          0 eV         Emax=   10 TeV
+
+hPairProd:   for  pi-    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV in 77 bins, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :     Emin=          0 eV         Emax=   10 TeV
+============================================================================================
+             HADRONIC PROCESSES SUMMARY (verbose level 1)
+
+                     Hadronic Processes for <anti_neutron>
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+AntiNeutronInelastic  Models:  G4LEAntiNeutronInelastic: Emin(GeV)=     0  Emax(GeV)= 25
+                               G4HEAntiNeutronInelastic: Emin(GeV)=    20  Emax(GeV)= 100000
+
+                     Hadronic Processes for <anti_proton>
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+
+                     Hadronic Processes for <e->
+      ElectroNuclear  Models:                     CHIPS: Emin(GeV)=     0  Emax(GeV)= 30000
+
+                     Hadronic Processes for <gamma>
+     PhotonInelastic  Models:                     CHIPS: Emin(GeV)=     0  Emax(GeV)= 3.5
+                                        TheoFSGenerator: Emin(GeV)=     3  Emax(GeV)= 100000
+
+                     Hadronic Processes for <kaon+>
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+   KaonPlusInelastic  Models:                      QGSP: Emin(GeV)=    12  Emax(GeV)= 100000
+                                  G4LEKaonPlusInelastic: Emin(GeV)=   9.5  Emax(GeV)= 25
+                                        Bertini Cascade: Emin(GeV)=     0  Emax(GeV)= 9.9
+
+                     Hadronic Processes for <kaon->
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+  KaonMinusInelastic  Models:                      QGSP: Emin(GeV)=    12  Emax(GeV)= 100000
+                                 G4LEKaonMinusInelastic: Emin(GeV)=   9.5  Emax(GeV)= 25
+                                        Bertini Cascade: Emin(GeV)=     0  Emax(GeV)= 9.9
+
+                     Hadronic Processes for <lambda>
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+     LambdaInelastic  Models:       G4LELambdaInelastic: Emin(GeV)=     0  Emax(GeV)= 25
+                                    G4HELambdaInelastic: Emin(GeV)=    20  Emax(GeV)= 100000
+
+                     Hadronic Processes for <mu->
+          muMinusCaptureAtRest
+
+                     Hadronic Processes for <neutron>
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+    NeutronInelastic  Models:                      QGSP: Emin(GeV)=    12  Emax(GeV)= 100000
+                                   G4LENeutronInelastic: Emin(GeV)=   9.5  Emax(GeV)= 25
+                                        Bertini Cascade: Emin(GeV)=     0  Emax(GeV)= 9.9
+            nCapture  Models:                G4LCapture: Emin(GeV)=     0  Emax(GeV)= 20000
+            nFission  Models:                G4LFission: Emin(GeV)=     0  Emax(GeV)= 20000
+
+                     Hadronic Processes for <pi+>
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+   PionPlusInelastic  Models:                      QGSP: Emin(GeV)=    12  Emax(GeV)= 100000
+                                  G4LEPionPlusInelastic: Emin(GeV)=   9.5  Emax(GeV)= 25
+                                        Bertini Cascade: Emin(GeV)=     0  Emax(GeV)= 9.9
+
+                     Hadronic Processes for <pi->
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+  PionMinusInelastic  Models:                      QGSP: Emin(GeV)=    12  Emax(GeV)= 100000
+                                 G4LEPionMinusInelastic: Emin(GeV)=   9.5  Emax(GeV)= 25
+                                        Bertini Cascade: Emin(GeV)=     0  Emax(GeV)= 9.9
+
+                     Hadronic Processes for <proton>
+            hElastic  Models:           G4HadronElastic: Emin(GeV)=     0  Emax(GeV)= 100000
+     ProtonInelastic  Models:                      QGSP: Emin(GeV)=    12  Emax(GeV)= 100000
+                                    G4LEProtonInelastic: Emin(GeV)=   9.5  Emax(GeV)= 25
+                                        Bertini Cascade: Emin(GeV)=     0  Emax(GeV)= 9.9
+============================================================================================
+
+========= Table of registered couples ==============================
+
+Index : 0     used in the geometry : Yes     recalculation needed : No 
+ Material : Air
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  990 eV     e-  990 eV     e+  990 eV  proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes     recalculation needed : No 
+ Material : Aluminium
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  5.87535 keV    e-  460.395 keV    e+  442.201 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes     recalculation needed : No 
+ Material : liquidhelium
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  990 eV     e-  79.1567 keV    e+  78.0999 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 3     used in the geometry : Yes     recalculation needed : No 
+ Material : Steel
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  16.9885 keV    e-  951.321 keV    e+  901.528 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 4     used in the geometry : Yes     recalculation needed : No 
+ Material : fibre
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  990 eV     e-  990 eV     e+  990 eV  proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 5     used in the geometry : Yes     recalculation needed : No 
+ Material : Beam
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  990 eV     e-  990 eV     e+  990 eV  proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 6     used in the geometry : Yes     recalculation needed : No 
+ Material : Copper
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  20.6438 keV    e-  1.03121 MeV    e+  977.24 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 7     used in the geometry : Yes     recalculation needed : No 
+ Material : Silver
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  42.371 keV    e-  1.08817 MeV    e+  1.02431 MeV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 8     used in the geometry : Yes     recalculation needed : No 
+ Material : Beryllium
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  1.81869 keV    e-  368.825 keV    e+  356.639 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 9     used in the geometry : Yes     recalculation needed : No 
+ Material : Oil
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  1.86197 keV    e-  254.861 keV    e+  248.102 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 10     used in the geometry : Yes     recalculation needed : No 
+ Material : Gold
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  102.875 keV    e-  1.62857 MeV    e+  1.52272 MeV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 11     used in the geometry : Yes     recalculation needed : No 
+ Material : Mdcgas
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  990 eV     e-  990 eV     e+  990 eV  proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 12     used in the geometry : Yes     recalculation needed : No 
+ Material : Au
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  102.875 keV    e-  1.62857 MeV    e+  1.52272 MeV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 13     used in the geometry : Yes     recalculation needed : No 
+ Material : Tungsten
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  97.4901 keV    e-  1.63955 MeV    e+  1.54333 MeV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 14     used in the geometry : Yes     recalculation needed : No 
+ Material : M_materialCable
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  10.8297 keV    e-  1.21169 MeV    e+  1.14827 MeV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 15     used in the geometry : Yes     recalculation needed : No 
+ Material : M_synthesis
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  6.90363 keV    e-  376.336 keV    e+  363.901 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 16     used in the geometry : Yes     recalculation needed : No 
+ Material : Kapton
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.6231 keV    e-  333.46 keV    e+  324.616 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 17     used in the geometry : Yes     recalculation needed : No 
+ Material : CarbonFiber
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.74022 keV    e-  344.855 keV    e+  333.46 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 18     used in the geometry : Yes     recalculation needed : No 
+ Material : PMTmaterial
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  5.68122 keV    e-  293.489 keV    e+  287.632 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 19     used in the geometry : Yes     recalculation needed : No 
+ Material : PVF
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.80544 keV    e-  342.545 keV    e+  333.46 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 20     used in the geometry : Yes     recalculation needed : No 
+ Material : BC404
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.09434 keV    e-  281.891 keV    e+  276.265 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 21     used in the geometry : Yes     recalculation needed : No 
+ Material : BC408
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.09434 keV    e-  281.891 keV    e+  276.265 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 22     used in the geometry : Yes     recalculation needed : No 
+ Material : tape
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  1.9981 keV    e-  297.46 keV    e+  287.632 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 23     used in the geometry : Yes     recalculation needed : No 
+ Material : M_Casing
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.2026 keV    e-  197.425 keV    e+  193.485 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 24     used in the geometry : Yes     recalculation needed : No 
+ Material : Cesiumiodide
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  31.1041 keV    e-  526.624 keV    e+  509.223 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 25     used in the geometry : Yes     recalculation needed : No 
+ Material : M_Cr18Ni9
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  17.1606 keV    e-  951.321 keV    e+  901.528 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 26     used in the geometry : Yes     recalculation needed : No 
+ Material : M_Cable
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  13.4279 keV    e-  548.291 keV    e+  526.624 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 27     used in the geometry : Yes     recalculation needed : No 
+ Material : M_Silicon
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  5.87535 keV    e-  424.726 keV    e+  410.692 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 28     used in the geometry : Yes     recalculation needed : No 
+ Material : M_Polyethylene
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  1.34861 keV    e-  148.876 keV    e+  145.905 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 29     used in the geometry : Yes     recalculation needed : No 
+ Material : M_OrganicGlass
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.40367 keV    e-  303.518 keV    e+  293.489 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 30     used in the geometry : Yes     recalculation needed : No 
+ Material : M_WaterPipe
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  14.4581 keV    e-  679.834 keV    e+  644.251 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 31     used in the geometry : Yes     recalculation needed : No 
+ Material : Aluminum
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  5.85564 keV    e-  460.395 keV    e+  442.201 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 32     used in the geometry : Yes     recalculation needed : No 
+ Material : RpcBakelite
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  2.09434 keV    e-  281.891 keV    e+  276.265 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 33     used in the geometry : Yes     recalculation needed : No 
+ Material : RpcGas
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  990 eV     e-  1.46262 keV    e+  1.43511 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 34     used in the geometry : Yes     recalculation needed : No 
+ Material : Iron
+ Range cuts        :  gamma  700 um     e-  700 um     e+  700 um  proton 700 um 
+ Energy thresholds :  gamma  17.2183 keV    e-  951.321 keV    e+  901.528 keV proton 70 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+====================================================================
+
+### Run -9989 start.
+Start Run processing.
+
+--------- Ranlux engine status ---------
+ Initial seed = 23669
+ float_seed_table[] = 0.45104444026947021484 0.18163961172103881836 0.15304923057556152344 0.2198517918586730957 0.20696115493774414062 0.47860217094421386719 0.88780570030212402344 0.65869528055191040039 0.14169603586196899414 0.89667087793350219727 0.53405195474624633789 0.70939159393310546875 0.60744965076446533203 0.49603551626205444336 0.51164251565933227539 0.8897692561149597168 0.36779409646987915039 0.070353567600250244141 0.18952983617782592773 0.000792026519775390625 0.76500391960144042969 0.92348122596740722656 0.27426534891128540039 0.5047861933708190918 
+ i_lag = 23, j_lag = 9
+ carry = 0, count24 = 0
+ luxury = 3 nskip = 199
+----------------------------------------
+ *    6340.53996802                 xs_crude  vesko          xcvesk        *
+ *    6335.12833333                 xs_crude  gauss          xcgaus        *
+ *       0.00085423                 xcvesk/xcgaus-1                        *
+
+
+ ***************************************************************************
+ *                          KarLud_Initialize END                          *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                        KarFin Initialize  START                         *
+ *                1                FSR radiation on/off      KeyFSR     a1 *
+ *                1                radiation from quark      KeyQSR     a2 *
+ *                1                removal    switch         KeyPia     a3 *
+ *   0.10000000E-02                infrared cut FACTOR       delfac     a4 *
+ *   0.10000000E-07                infrared cut itself       delta      a5 *
+ *   0.15485000E-04                EminCMS for removal       [GeV]      a6 *
+ *               50                Max. photon mult.         nmax       a7 *
+ *                        KarFin Initialize  END                           *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                           KK2f: Initialization                          *
+ *    57416.462                     x-crude [nb]             Xcrunb     ** *
+ *         List of final fermions:                                         *
+ *                4                 KF of final fermion      KFfin      ** *
+ *    1.3000000                     mass of final ferm.      amferm     ** *
+ *   0.97967054                     Xborn [R]                Xborn      ** *
+ *    5.0000000                     WtMax sampling par.      WtMax      ** *
+ *    12.000000                     Auxiliary Parameter      AuxPar     ** *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *        KK interface of Tauola                                           *
+ *                2                Cloning procedure       KeyClone    t01 *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *        Parameters passed from KK  to Tauola:                            *
+ *                0                dec. type 1-st tau        Jak1      t01 *
+ *                0                dec. type 2-nd tau        Jak2      t02 *
+ *                1                current type a1 dec.      KeyA1     t03 *
+ *               15                PDG id 1-st tau           idff      t04 *
+ *                1                R.c. switch lept dec      itdkRC    t05 *
+ *   0.10000000E-02                IR-cut for lept r.c.      xk0dec    t06 *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                 !!!!! Tauola inhibited !!!!                             *
+ ***************************************************************************
+
+1                                                                              
+ ******************************************************************************
+ ******************************************************************************
+ **                                                                          **
+ **                                                                          **
+ **              *......*                  Welcome to the Lund Monte Carlo!  **
+ **         *:::!!:::::::::::*                                               **
+ **      *::::::!!::::::::::::::*          PPP  Y   Y TTTTT H   H III   A    **
+ **    *::::::::!!::::::::::::::::*        P  P  Y Y    T   H   H  I   A A   **
+ **   *:::::::::!!:::::::::::::::::*       PPP    Y     T   HHHHH  I  AAAAA  **
+ **   *:::::::::!!:::::::::::::::::*       P      Y     T   H   H  I  A   A  **
+ **    *::::::::!!::::::::::::::::*!       P      Y     T   H   H III A   A  **
+ **      *::::::!!::::::::::::::* !!                                         **
+ **      !! *:::!!:::::::::::*    !!       This is PYTHIA version 6.205      **
+ **      !!     !* -><- *         !!       Last date of change:  1 Mar 2002  **
+ **      !!     !!                !!                                         **
+ **      !!     !!                !!       Now is  0 Jan 2000 at  0:00:00    **
+ **      !!                       !!                                         **
+ **      !!        lh             !!       Disclaimer: this program comes    **
+ **      !!                       !!       without any guarantees. Beware    **
+ **      !!                 hh    !!       of errors and use common sense    **
+ **      !!    ll                 !!       when interpreting results.        **
+ **      !!                       !!                                         **
+ **      !!                                Copyright T. Sjostrand (2001)     **
+ **                                                                          **
+ ** An archive of program versions and documentation is found on the web:    **
+ ** http://www.thep.lu.se/~torbjorn/Pythia.html                              **
+ **                                                                          **
+ ** When you cite this program, currently the official reference is          **
+ ** T. Sjostrand, P. Eden, C. Friberg, L. Lonnblad, G. Miu, S. Mrenna and    **
+ ** E. Norrbin, Computer Physics Commun. 135 (2001) 238.                     **
+ ** The large manual is                                                      **
+ ** T. Sjostrand, L. Lonnblad and S. Mrenna, LU TP 01-21 [hep-ph/0108264].   **
+ ** Also remember that the program, to a large extent, represents original   **
+ ** physics research. Other publications of special relevance to your        **
+ ** studies may therefore deserve separate mention.                          **
+ **                                                                          **
+ ** Main author: Torbjorn Sjostrand; Department of Theoretical Physics 2,    **
+ **   Lund University, Solvegatan 14A, S-223 62 Lund, Sweden;                **
+ **   phone: + 46 - 46 - 222 48 16; e-mail: torbjorn@thep.lu.se              **
+ ** Author: Leif Lonnblad; Department of Theoretical Physics 2,              **
+ **   Lund University, Solvegatan 14A, S-223 62 Lund, Sweden;                **
+ **   phone: + 46 - 46 - 222 77 80; e-mail: leif@thep.lu.se                  **
+ ** Author: Stephen Mrenna; Computing Division, Simulations Group,           **
+ **   Fermi National Accelerator Laboratory, MS 234, Batavia, IL 60510, USA; **
+ **   phone: + 1 - 630 - 840 - 2556; e-mail: mrenna@fnal.gov                 **
+ ** Author: Peter Skands; Department of Theoretical Physics 2,               **
+ **   Lund University, Solvegatan 14A, S-223 62 Lund, Sweden;                **
+ **   phone: + 46 - 46 - 222 31 92; e-mail: zeiler@thep.lu.se                **
+ **                                                                          **
+ **                                                                          **
+ ******************************************************************************
+ ******************************************************************************
+     MSTJ(41)       changed from              2 to              1
+     MSTU(21)       changed from              2 to              1
+ranmar initialized: ij,kl,ijkl,ntot,ntot2=      1802      9373  54217137         0         0
+
+
+
+                            Event listing (summary)
+
+    I particle/jet KS     KF  orig    p_x      p_y      p_z       E        m
+
+    1 !e+!         21     -11    0    0.000    0.000    1.548    1.548    0.001
+    2 !e-!         21      11    0    0.000    0.000   -1.549    1.549    0.001
+    3 (Z0)         11      23    1    0.000    0.000   -0.001    3.097    3.097
+ BesSim Begin of Event: 0
+Emc runfrm,runto in getSftParVer is:8093::::11413
+@table Emc: RunFrom is:9946 RunTo is:9992
+ SftVer is 6.6.2 CalVerSft is 1  File name  is EmcCalibConstIxtal9952-9992-lab.root
+******************************************************************************
+*Tree    :DigiCalibConst: DigiCalibConst                                         *
+*Entries :        1 : Total =          152036 bytes  File  Size =      46873 *
+*        :          : Tree compression factor =   1.60                       *
+******************************************************************************
+*Br    0 :DigiCalibConst : DigiConst[6240]/D                                 *
+*Entries :        1 : Total  Size=     100834 bytes  File Size  =      46644 *
+*Baskets :        1 : Basket Size=      32000 bytes  Compression=   1.07     *
+*............................................................................*
+*Br    1 :IxtalNumber : IxtalNumber[6240]/I                                  *
+*Entries :        1 : Total  Size=      50894 bytes  File Size  =        229 *
+*Baskets :        1 : Basket Size=      32000 bytes  Compression= 109.38     *
+*............................................................................*
+RootCnvSvc          ERROR Invalid tree name: 
+EvtHeaderCnv        ERROR Could not create branch TEvtHeader
+Muc runfrm,runto in getSftParVer is:4989::::10878
+@table Muc: RunFrom is:9947 RunTo is:10464
+ SftVer is 6.6.1 CalVerSft is 1  File name  is MucCalibConst_jpsi_dimu_9947to10464.root
+ApplicationMgr       INFO Application Manager Stopped successfully
+    4 (c)       A  12       4    3   -0.112    0.385    0.739    1.548    1.300
+    5 (cbar)    V  11      -4    3    0.112   -0.385   -0.740    1.549    1.300
+    6 (cluster)    11      91    4    0.000    0.000   -0.001    3.097    3.097
+    7 J/psi         1     443    6    0.000    0.000   -0.001    3.097    3.097
+                   sum:  0.00         0.000    0.000   -0.001    3.097    3.097
+
+
+ ***************************************************************************
+ *                      KarLud  final  report                              *
+ *             1696                  total no of events     nevtot      == *
+ *    6340.53996802                  ISRcru  [R]            ISRcru      == *
+ *     994.06149913  +-87.02864842   ISRbest [R],ISRerr     ISRbest     == *
+ *    6340.5400                      XKarlud [R]            XKarlud     == *
+ *    0.0000000                      KError  [R]            KError      == *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                   Report on wt_ISR of KarLud                            *
+ *             1696                 total no of events      nevtot      == *
+ *                0                 wt<0        events      nevneg      == *
+ *       0.02893394  +- 0.08816978  <wt>                    wt_ISR      == *
+ *     183.45683257  +-16.17534803  sigma of KarLud [R]     xskarl      == *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *       0.15677868  +- 0.08754856  Average WT of Vesk1      AVesk1     == *
+ *    6335.12833333  +- 0.06335128  xs_est gauss    [R]      xcgaus     == *
+ *      -0.84308739  +- 0.08754956  xcve/xcgs-1                         == *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                   KarLud_Finalize END  <<<                              *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                        KarFin Finalize    START                         *
+ *             3198                  generated events        nevgen     a2 *
+ *       0.99437148  +- 0.00188148   kinematics, smin        wt1        a5 *
+ *       1.00000000  +- 0.00000000   jacobian                wt2        a6 *
+ *       1.00410826  +- 0.00375196   photon ang. dist.       wt3        a7 *
+ *                            ON MASS WEIGHTS                              *
+ *       0.98486312  +- 0.00271405  removal wgt wtrem                   b1 *
+ *             1590                 no. of raw events                   b2 *
+ *                0                 wt6=0      events                   b3 *
+ *       1.00420736  +- 0.00271406  control wgt wctrl                   b4 *
+ *                0                 marked photons           MarTot     a5 *
+ *   0.15485000E-04                 emin                                b6 *
+ *   0.10000000E-07                 delta                               b7 *
+ *       0.03584906                 raw ph. multipl.                    b8 *
+ *       1.00000000                 Highest phot. mult.                 b9 *
+ *                        YFSfin Finalize    END                           *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                            KarFin Finalize                              *
+ *             3198                  generated events        nevgen     a2 *
+ *       0.99847974  +- 0.00421619   general weight          wt         a1 *
+ *       0.03564728                  aver. ph. multi.        avmlt      a3 *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                       KK2f_Finalize  printouts                          *
+ *       3.09700000                 cms energy total         cmsene     a0 *
+ *               50                 total no of events       nevgen     a1 *
+ *               ** principal info on x-section **                         *
+ *     199.22669225  +-17.93796811  xs_tot MC R-units        xsmc       a1 *
+ * 1804087.94471504                 xs_tot    picob.         xSecPb     a3 *
+ *  162436.42684889                 error     picob.         xErrPb     a4 *
+ *       0.09003798                 relative error           erel       a5 *
+ *       2.03025946                 WTsup, largest WT        WTsup     a10 *
+ *                       ** some auxiliary info **                         *
+ *    8871.36047118                 xs_born   picobarns       xborn    a11 *
+ *       0.19607843                 Raw phot. multipl.                 === *
+ *       2.00000000                 Highest phot. mult.                === *
+ *                         End of KK2f  Finalize                           *
+ ***************************************************************************
+
+
+
+ ***************************************************************************
+ *                MBrA: report on the main Weight                          *
+ *             1696                 no of raw events         Ntot       b1 *
+ *               51                 accepted    events       Nacc       b2 *
+ *                0                 wt<0        events       Nneg       b3 *
+ *                3                 wt>WTmax    events       Nove       b4 *
+ *       2.03025946                 WTsup, largest WT        WTsup      b5 *
+ *       0.00061428                 <Wt-WtMax>  Overfl.      AvOve      b6 *
+ *       0.00000000                 <Wt> for Wt<0            AvUnd      b7 *
+ *       0.01954977                 AvOve/<Wt>,WT>WtMax      ROverf     b8 *
+ *       0.00000000                 AvUnd/<Wt>,Wt<0          RUnder     b9 *
+ ***************************************************************************
+
+ 
+=====================================================================================================
+            MBrA:    Detailed statistics for all branches    
+=====================================================================================================
+  KF     AveWt     ERela     WtSup      Wt<0   Wt>Wmax       Ntot       Nacc   Nneg   Nove   Nzer
+   4  0.031421  0.090038 2.030      0.000000  0.019550       1696         51      0      3    106
+All:  0.031421  0.090038 2.030      0.000000  0.019550       1696         51      0      3    106
+=====================================================================================================
+BesSim::finalize(), total events in this run: 50
+BesDetectorConstruction::~BesDetectorConstruction()
+G4 kernel has come to Quit state.
+EventSelector       ERROR ............. releaseContext Not Implemented .............
+ApplicationMgr       INFO Application Manager Finalized successfully
+ApplicationMgr       INFO Application Manager Terminated successfully
+ 
+ 
+46.718u 0.970s 0:49.52 96.2%	0+0k 333160+63280io 1048pf+0w

@@ -1,0 +1,9 @@
+#
+Decay J/psi
+1.000  gamma eta                      HELAMP 1.0 0.0 1.0 0.0;
+Enddecay
+
+Decay eta
+1.0000    pi+ pi-   gamma             DIYEtaPiPi31;
+Enddecay
+End

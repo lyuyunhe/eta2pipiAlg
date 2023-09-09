@@ -1,0 +1,8 @@
+document cmt_action_runner new_rootsys -group=cmt_actions action_value=python'"'" "'"'/cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/ExternalLib/LCGCMT/LCGCMT_65a/LCG_Interfaces/ROOT/scripts/new_rootsys.py'"'" "'"'
+make_fragment make_header /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25/mgr/fragments/make_header
+make_fragment dependencies /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25/mgr/fragments/dependencies
+make_fragment cleanup_header /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25/mgr/fragments/cleanup_header
+make_fragment cmt_action_runner -header=cmt_action_runner_header /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25/mgr/fragments/cmt_action_runner
+make_fragment cmt_action_runner_header /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25/mgr/fragments/cmt_action_runner_header
+make_fragment document_header /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25/mgr/fragments/document_header
+make_fragment dependency /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25/mgr/fragments/dependency
