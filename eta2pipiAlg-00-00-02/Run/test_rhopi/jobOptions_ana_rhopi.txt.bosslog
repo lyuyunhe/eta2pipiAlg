@@ -1,0 +1,382 @@
+Job 104106416.0 submitted at 2023-07-28 15:43:00
+Sent to RemoteHost = "slot50@bws0947.ihep.ac.cn"
+
+**************************************************
+               BOSS version: 7.0.8
+************** BESIII Collaboration **************
+
+the jobOptions file is : jobOptions_ana_rhopi.txt
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Event/RootIO/RootIO-00-01-33/share/jobOptions_ReadRec.txt
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.DLLs += ["RecMakerAlg"]
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.TopAlg += ["RecMakerAlg"]
+JobOptionsSvc        INFO # (5,1): ApplicationMgr.DLLs += ["RootCnvSvc"]
+JobOptionsSvc        INFO # (7,1): ApplicationMgr.ExtSvc += ["EvtPersistencySvc/EventPersistencySvc"]
+JobOptionsSvc        INFO # (8,1): ApplicationMgr.ExtSvc += ["RootEvtSelector/EventSelector", "RootCnvSvc/EventCnvSvc"]
+JobOptionsSvc        INFO # (10,1): EventPersistencySvc.CnvServices += ["EventCnvSvc"]
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Control/OfflineEventLoopMgr/OfflineEventLoopMgr-00-00-15/share/OfflineEventLoopMgr_Option.txt
+JobOptionsSvc        INFO # (1,1): ApplicationMgr.DLLs += ["DummyLoadOldROOT"]
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.TopAlg += ["DummyLoadOldROOTAlg"]
+JobOptionsSvc        INFO # (3,1): DummyLoadOldROOTAlg.OldRootList = ["$DUMMYLOADOLDROOTROOT/share/ROOT-version-52400.root"]
+JobOptionsSvc        INFO # (5,1): ApplicationMgr.DLLs += ["OfflineEventLoopMgr"]
+JobOptionsSvc        INFO # (6,1): ApplicationMgr.EventLoop = "OfflineEventLoopMgr"
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Database/DatabaseSvc/DatabaseSvc-00-00-26/share/DatabaseConfig.txt
+JobOptionsSvc        INFO # (1,1): ApplicationMgr.DLLs += ["DatabaseSvc"]
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.ExtSvc += ["DatabaseSvc"]
+JobOptionsSvc        INFO # (4,1): DatabaseSvc.DbType = "mysql"
+JobOptionsSvc        INFO # (5,1): DatabaseSvc.Host = "bes3db2.ihep.ac.cn"
+JobOptionsSvc        INFO # (6,1): DatabaseSvc.User = "guest"
+JobOptionsSvc        INFO # (7,1): DatabaseSvc.Passwd = "guestpass"
+JobOptionsSvc        INFO # (8,1): DatabaseSvc.SqliteDbPath = "$SITEROOT/database"
+JobOptionsSvc        INFO # (9,1): DatabaseSvc.ReuseConnection = 1
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Analysis/VertexFit/VertexFit-00-02-91/share/jobOptions_VertexDbSvc.txt
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.DLLs += ["VertexFit"]
+JobOptionsSvc        INFO # (4,1): ApplicationMgr.ExtSvc += ["VertexDbSvc"]
+JobOptionsSvc        INFO # (7,1): VertexDbSvc.BossRelease = "7.0.8"
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/share/MagneticField.txt
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.DLLs += ["MagneticField"]
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.ExtSvc += ["MagneticFieldSvc"]
+JobOptionsSvc        INFO # (5,1): MagneticFieldSvc.IfRealField = 1
+JobOptionsSvc        INFO # (8,1): MagneticFieldSvc.OutLevel = 1
+JobOptionsSvc        INFO # (11,1): MagneticFieldSvc.GridDistance = 5
+JobOptionsSvc        INFO # (21,1): MagneticFieldSvc.RunMode = 3
+JobOptionsSvc        INFO # (24,1): MagneticFieldSvc.Cur_SCQ1_55 = 349.4
+JobOptionsSvc        INFO # (25,1): MagneticFieldSvc.Cur_SCQ1_89 = 426.2
+JobOptionsSvc        INFO # (26,1): MagneticFieldSvc.Cur_SCQ2_10 = 474.2
+JobOptionsSvc        INFO # (28,1): MagneticFieldSvc.UseDBFlag = 1
+JobOptionsSvc        INFO # (29,1): MagneticFieldSvc.TurnOffField = 0
+JobOptionsSvc        INFO # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Analysis/PhotonCor/AbsCor/AbsCor-00-00-40/share/jobOptions_AbsCor.txt
+JobOptionsSvc        INFO # (1,1): ApplicationMgr.DLLs += ["EmcRecGeoSvc"]
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.ExtSvc += ["EmcRecGeoSvc"]
+JobOptionsSvc        INFO # (4,1): ApplicationMgr.DLLs += ["AbsCor", "EmcShEnCalibSvc"]
+JobOptionsSvc        INFO # (5,1): ApplicationMgr.TopAlg += ["AbsCor"]
+JobOptionsSvc        INFO # (6,1): ApplicationMgr.ExtSvc += ["EmcShEnCalibSvc"]
+JobOptionsSvc        INFO # (8,1): AbsCor.NTupleOut = 0
+JobOptionsSvc        INFO # (9,1): AbsCor.UseTof = 1
+JobOptionsSvc        INFO # (10,1): AbsCor.DoDataCor = 1
+JobOptionsSvc        INFO # (12,1): AbsCor.MCUseTof = 1
+JobOptionsSvc        INFO # (13,1): AbsCor.DoPi0Cor = 1
+JobOptionsSvc        INFO # (15,1): AbsCor.MCCorUseFunction = 1
+JobOptionsSvc        INFO # (16,1): AbsCor.IYear = 2009
+JobOptionsSvc        INFO # (17,1): AbsCor.HotCellMask = 0
+JobOptionsSvc     WARNING # =======> /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Analysis/Physics/RhopiAlg/RhopiAlg-00-00-23/share/jobOptions_Rhopi.txt
+JobOptionsSvc     WARNING # (1,1): File /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/Analysis/VertexFit/VertexFit-00-02-91/share/jobOptions_VertexDbSvc.txt already included from /besfs5/groups/jpsi/jpsigroup/user/lyuyunhe/bes3/7.0.8/workarea-7.0.8/Run/jobOptions_ana_rhopi.txt: (2, 1)
+JobOptionsSvc        INFO # (2,1): ApplicationMgr.DLLs += ["RhopiAlg"]
+JobOptionsSvc        INFO # (3,1): ApplicationMgr.TopAlg += ["Rhopi"]
+JobOptionsSvc        INFO # (5,1): Rhopi.Vr0cut = 1.0
+JobOptionsSvc        INFO # (6,1): Rhopi.Vz0cut = 5.0
+JobOptionsSvc        INFO # (8,1): Rhopi.EnergyThreshold = 0.04
+JobOptionsSvc        INFO # (9,1): Rhopi.GammaPhiCut = 20.0
+JobOptionsSvc        INFO # (10,1): Rhopi.GammaThetaCut = 20.0
+JobOptionsSvc        INFO # (11,1): Rhopi.GammaAngleCut = 20.0
+JobOptionsSvc        INFO # (13,1): Rhopi.Test4C = 1
+JobOptionsSvc        INFO # (14,1): Rhopi.Test5C = 1
+JobOptionsSvc        INFO # (15,1): Rhopi.CheckDedx = 1
+JobOptionsSvc        INFO # (16,1): Rhopi.CheckTof = 1
+JobOptionsSvc        INFO # =======> /besfs5/groups/jpsi/jpsigroup/user/lyuyunhe/bes3/7.0.8/workarea-7.0.8/Run/jobOptions_ana_rhopi.txt
+JobOptionsSvc        INFO # (8,1): EventCnvSvc.digiRootInputFile = ["rhopi.dst"]
+JobOptionsSvc        INFO # (11,1): MessageSvc.OutputLevel = 5
+JobOptionsSvc        INFO # (14,1): ApplicationMgr.EvtMax = 50
+JobOptionsSvc        INFO # (16,1): ApplicationMgr.HistogramPersistency = "ROOT"
+JobOptionsSvc        INFO # (17,1): NTupleSvc.Output = ["FILE1 DATAFILE='rhopi_ana.root' OPT='NEW' TYP='ROOT'"]
+JobOptionsSvc        INFO Job options successfully read in from jobOptions_ana_rhopi.txt
+ApplicationMgr    SUCCESS 
+====================================================================================================================================
+                                                   Welcome to ApplicationMgr (GaudiCoreSvc v1r5)
+                                          running on bws0947.ihep.ac.cn on Fri Jul 28 15:44:22 2023
+====================================================================================================================================
+
+[1mRooFit v3.56 -- Developed by Wouter Verkerke and David Kirkby[0m 
+                Copyright (C) 2000-2013 NIKHEF, University of California & Stanford University
+                All rights reserved, please read http://roofit.sourceforge.net/license.txt
+
+ApplicationMgr       INFO Successfully loaded modules : RecMakerAlg, RootCnvSvc, DummyLoadOldROOT, OfflineEventLoopMgr, DatabaseSvc, VertexFit, MagneticField, EmcRecGeoSvc, AbsCor, EmcShEnCalibSvc, RhopiAlg
+*** Read field map_Iron: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/barIronpar.txt
+*** Read field map_Air: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/barAirpar.txt
+*** Read field map_end: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/endIronpar.txt
+*** Read field map_end_air: /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/MagneticField/MagneticField-00-02-04/dat/endAirpar.txt
+DatabaseSvc: Connected to MySQL database
+Construct Emc from GdmlFile /cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/7.0.8/DetectorDescription/GdmlManagement/GdmlManagement-00-00-44/dat/Emc.gdml
+SAXProcessor type ROOT
+SAXProcessor requires type 2
+Top Volume not found 
+Find logicalEMC!
+gGeoManager success!
+getPi0CalibFile() and getSingleGammaCalibFile() still are empty in initialize()
+will be assigned a value in execute()
+Test EmcShEnCalibSvc in AbsCor initialize getPi0CalibFile()= Test EmcShEnCalibSvc in AbsCor getSingleGammaCalibFile()= 
+ApplicationMgr       INFO Application Manager Initialized successfully
+ApplicationMgr       INFO Application Manager Started successfully
+
+**************************************************
+Print JobInfo for data file: rhopi.dst
+          BOSS version: 7.0.8
+**************************************************
+
+
+**************************************************
+          Decay Options: 
+Decay J/psi
+  0.3333 rho0 pi0 HELAMP 1.0 0.0 0.0 0.0 -1.0 0.0;
+  0.3333 rho+ pi- HELAMP 1.0 0.0 0.0 0.0 -1.0 0.0;
+  0.3333 rho- pi+ HELAMP 1.0 0.0 0.0 0.0 -1.0 0.0;
+Enddecay
+End
+
+**************************************************
+
+
+**************************************************
+          JobOptions for this data file: 
+
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+#include "$KKMCROOT/share/jobOptions_KKMC.txt"
+KKMC.CMSEnergy = 3.097;
+KKMC.BeamEnergySpread=0.0008;
+KKMC.NumberOfEventPrinted=1;
+KKMC.GenerateJPsi=true;
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+EvtDecay.userDecayTableName = "rhopi.dec";
+BesRndmGenSvc.RndmSeed = 100;
+#include "$BESSIMROOT/share/G4Svc_BesSim.txt"
+#include "$CALIBSVCROOT/share/calibConfig_sim.txt"
+RealizationSvc.RunIdList = {-9989};
+#include "$ROOTIOROOT/share/jobOptions_Digi2Root.txt"
+RootCnvSvc.digiRootOutputFile = "rhopi.rtraw";
+MessageSvc.OutputLevel  = 5;
+ApplicationMgr.EvtMax = 50;
+DatabaseSvc.Host="bes3db01.csns.ihep.ac.cn";
+DatabaseSvc.User="guest";
+DatabaseSvc.Passwd="guestpass";
+
+          end of the jobOptions file 
+**************************************************
+
+#include "$ROOTIOROOT/share/jobOptions_ReadRoot.txt"
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+#include "$BESEVENTMIXERROOT/share/jobOptions_EventMixer_rec.txt"
+#include "$CALIBSVCROOT/share/job-CalibData.txt"
+#include "$MAGNETICFIELDROOT/share/MagneticField.txt"
+#include "$ESTIMEALGROOT/share/job_EsTimeAlg.txt"
+#include "$MDCHOUGHFINDERROOT/share/jobOptions_MdcPatTsfHoughRec.txt"
+#include "$KALFITALGROOT/share/job_kalfit_numf_data.txt"
+#include "$MDCDEDXALGROOT/share/job_dedx_all.txt"
+#include "$TRKEXTALGROOT/share/TrkExtAlgOption.txt"
+#include "$TOFRECROOT/share/jobOptions_TofRec.txt"
+#include "$TOFENERGYRECROOT/share/TofEnergyRecOptions_MC.txt"
+#include "$EMCRECROOT/share/EmcRecOptions.txt"
+#include "$MUCRECALGROOT/share/jobOptions_MucRec.txt"
+#include "$EVENTASSEMBLYROOT/share/EventAssembly.txt"
+#include "$PRIMARYVERTEXALGROOT/share/jobOptions_kalman.txt"
+#include "$VEEVERTEXALGROOT/share/jobOptions_veeVertex.txt"
+#include "$HLTMAKERALGROOT/share/jobOptions_HltMakerAlg.txt"
+#include "$EVENTNAVIGATORROOT/share/EventNavigator.txt"
+#include "$ROOTIOROOT/share/jobOptions_Dst2Root.txt"
+#include "$CALIBSVCROOT/share/calibConfig_rec_mc.txt"
+BesRndmGenSvc.RndmSeed = 100;
+MessageSvc.OutputLevel = 2; 
+EventCnvSvc.digiRootInputFile = {"rhopi.rtraw"};
+EventCnvSvc.digiRootOutputFile ="rhopi.dst";
+ApplicationMgr.EvtMax = 50;
+
+          end of the jobOptions file 
+**************************************************
+
+Using the SftVer and ParVer (7.0.8, 1) for run 9989. 
+-------------in EmcShEnCalibSvc in the following-----------
+handle: Run in handle is: 9989
+Run in getEmcShEnCalibSvcInfo() is: -9989
+This data is the MC sample with the Run Number: -9989
+stmt=select RunFrom,RunTo,SftVer,ParVer from CalVtxLumVer where BossRelease = '7.0.8' and RunFrom <= 9989 and RunTo >= 9989 and DataType='EmcShEnCalib' 
+EmcShEnCalib runfrm,runto in getSftParVer is:8093::::80000
+stmt=select RunFrom,RunTo,SftVer,ParVer from CalVtxLumVer where BossRelease = '7.0.8' and RunFrom <= 9989 and RunTo >= 9989 and DataType='EmcShEnCalib' 	7.0.6	1
+BossReleaseVer=7.0.8	EmcShEnCalibBossVer=7.0.6
+m_Pi0CalibFile is:/cvmfs/bes3.ihep.ac.cn/CalibConst/emc/ShEnCalib/7.0.6/c3ptof2009Jpsi.txt
+m_SingleGammaCalibFile is:/cvmfs/bes3.ihep.ac.cn/CalibConst/emc/ShEnCalib/7.0.6/evsetTofCorFunctionPar2009Jpsi.txt
+m_RunFrom is:8093
+m_RunTo is:24896
+Successfully fetch EmcShEnCalibSvc information for run: 9989
+////////// read parameters from EmcShEnCalibConst database/////////////
+in handle of EmcShEnCalibSvc  getPi0CalibFile()= /cvmfs/bes3.ihep.ac.cn/CalibConst/emc/ShEnCalib/7.0.6/c3ptof2009Jpsi.txt
+getSingleGammaCalibFile()= /cvmfs/bes3.ihep.ac.cn/CalibConst/emc/ShEnCalib/7.0.6/evsetTofCorFunctionPar2009Jpsi.txt
+current run=-9989
+in AbsCor  open getPi0CalibFile()= /cvmfs/bes3.ihep.ac.cn/CalibConst/emc/ShEnCalib/7.0.6/c3ptof2009Jpsi.txt
+open getSingleGammaCalibFile()= /cvmfs/bes3.ihep.ac.cn/CalibConst/emc/ShEnCalib/7.0.6/evsetTofCorFunctionPar2009Jpsi.txt
+getRunFrom()=8093
+getRunTo()=24896
+-----------read parameter file-------
+execute()
+event 0
+execute()
+event 1
+before pid
+before 4c
+execute()
+event 2
+before pid
+before 4c
+execute()
+event 3
+before pid
+before 4c
+execute()
+event 4
+before pid
+before 4c
+execute()
+event 5
+execute()
+event 6
+before pid
+before 4c
+execute()
+event 7
+before pid
+before 4c
+execute()
+event 8
+execute()
+event 9
+before pid
+before 4c
+execute()
+event 10
+execute()
+event 11
+execute()
+event 12
+before pid
+before 4c
+execute()
+event 13
+before pid
+before 4c
+execute()
+event 14
+execute()
+event 15
+before pid
+before 4c
+execute()
+event 16
+execute()
+event 17
+before pid
+before 4c
+execute()
+event 18
+before pid
+before 4c
+execute()
+event 19
+before pid
+before 4c
+execute()
+event 20
+before pid
+before 4c
+execute()
+event 21
+before pid
+before 4c
+execute()
+event 22
+before pid
+before 4c
+execute()
+event 23
+execute()
+event 24
+before pid
+before 4c
+execute()
+event 25
+execute()
+event 26
+execute()
+event 27
+before pid
+execute()
+event 28
+execute()
+event 29
+before pid
+before 4c
+execute()
+event 30
+before pid
+before 4c
+execute()
+event 31
+before pid
+before 4c
+execute()
+event 32
+before pid
+before 4c
+execute()
+event 33
+before pid
+before 4c
+execute()
+event 34
+execute()
+event 35
+before pid
+before 4c
+execute()
+event 36
+before pid
+before 4c
+execute()
+event 37
+before pid
+before 4c
+execute()
+event 38
+before pid
+before 4c
+execute()
+event 39
+before pid
+before 4c
+execute()
+event 40
+before pid
+before 4c
+execute()
+event 41
+before pid
+before 4c
+execute()
+event 42
+execute()
+event 43
+execute()
+event 44
+execute()
+event 45
+before pid
+before 4c
+execute()
+event 46
+before pid
+before 4c
+execute()
+event 47
+execute()
+event 48
+execute()
+event 49
+before pid
+before 4c
+ApplicationMgr       INFO Application Manager Stopped successfully
+total number:         50
+nGood==2, nCharge==0: 42
+nGam>=2:              33
+Pass Pid:             32
+Pass 4C:              27
+Pass 5C:              25
+J/psi->rho0 pi0:      9
+ApplicationMgr       INFO Application Manager Finalized successfully
+ApplicationMgr       INFO Application Manager Terminated successfully
+1.975u 0.177s 0:02.46 86.9%	0+0k 258696+424io 846pf+0w

@@ -1,0 +1,7 @@
+#include "$VERTEXFITROOT/share/jobOptions_VertexDbSvc.txt"
+ApplicationMgr.DLLs += {"eta2pipiAlg"};
+ApplicationMgr.TopAlg += { "eta2pipi" };
+
+//Vrocut in eta2pipiAlg
+eta2pipiAlg.Vr0cut = 1.0;
+

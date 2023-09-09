@@ -1,0 +1,2 @@
+--- Warning from G4Material::G4Material() define a material with density=0 is not allowed. 
+ The material Galactic will be constructed with the default minimal density: 1e-25g/cm3
