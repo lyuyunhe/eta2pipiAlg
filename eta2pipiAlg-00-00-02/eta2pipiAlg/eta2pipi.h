@@ -78,7 +78,7 @@ private:
   NTuple::Array<double> m_dthe;
   NTuple::Array<double> m_dphi;
   NTuple::Array<double> m_dang;
-
+  NTuple::Array<double> m_eraw;
   NTuple::Item<double> e_jpsi_mom;
   NTuple::Item<double> px_jpsi_mom;
   NTuple::Item<double> py_jpsi_mom;
@@ -130,6 +130,11 @@ private:
   NTuple::Item<double> m_kmfit_lab_Etagam_py;
   NTuple::Item<double> m_kmfit_lab_Etagam_pz;
 
+  NTuple::Item<double> m_kmfit_lab_ISRgam_e;
+  NTuple::Item<double> m_kmfit_lab_ISRgam_px;
+  NTuple::Item<double> m_kmfit_lab_ISRgam_py;
+  NTuple::Item<double> m_kmfit_lab_ISRgam_pz;
+
   // kmfit cms Info.
   NTuple::Item<double> m_kmfit_cms_pim_e;
   NTuple::Item<double> m_kmfit_cms_pim_px;
@@ -144,28 +149,15 @@ private:
   NTuple::Item<double> m_kmfit_cms_Etagam_py;
   NTuple::Item<double> m_kmfit_cms_Etagam_pz;
   // Inv.Masses[kmfit]
-  NTuple::Item<double> m_mg1pippim;
-  NTuple::Item<double> m_mg2pippim;
-  NTuple::Item<double> m_mpippim;
+  NTuple::Item<double> m_kmfit_mg1pippim;
+  NTuple::Item<double> m_kmfit_mg2pippim;
+  NTuple::Item<double> m_kmfit_mpippim;
 
-  NTuple::Item<double> m_chi2_ggpippim;
-  NTuple::Item<double> m_chi2_gggpippim;
+  NTuple::Item<double> m_kmfit_chi2_ggpippim;
+  NTuple::Item<double> m_kmfit_chi2_gggpippim;
 
   NTuple::Item<double> m_chi2;
   NTuple::Item<double> m_meta;
-  // photon
-  // NTuple::Item<int>  m_nGam;
-  // NTuple::Item<double>  m_dthe;
-  // NTuple::Item<double>  m_dphi;
-  // NTuple::Item<double>  m_dang;
-  // NTuple::Item<double>  m_eraw;
-  // NTuple::Array<double>  m_dthe;
-  // NTuple::Array<double>  m_dphi;
-  // NTuple::Array<double>  m_dang;
-  NTuple::Array<double> m_eraw;
-
-  NTuple::Item<double> m_m2gg;
-  NTuple::Item<double> m_etot;
 
   NTuple::Item<int> m_nGood;
   NTuple::Array<double> m_ptrk;
@@ -194,27 +186,27 @@ private:
   NTuple::Array<double> m_rhit_etof;
   NTuple::Array<double> m_qual_etof;
 
-  NTuple::Item<double> m_ptot_btof1;
-  NTuple::Item<double> m_cntr_btof1;
-  NTuple::Item<double> m_te_btof1;
-  NTuple::Item<double> m_tmu_btof1;
-  NTuple::Item<double> m_tpi_btof1;
-  NTuple::Item<double> m_tk_btof1;
-  NTuple::Item<double> m_tp_btof1;
-  NTuple::Item<double> m_ph_btof1;
-  NTuple::Item<double> m_zhit_btof1;
-  NTuple::Item<double> m_qual_btof1;
+  NTuple::Array<double> m_ptot_btof1;
+  NTuple::Array<double> m_cntr_btof1;
+  NTuple::Array<double> m_te_btof1;
+  NTuple::Array<double> m_tmu_btof1;
+  NTuple::Array<double> m_tpi_btof1;
+  NTuple::Array<double> m_tk_btof1;
+  NTuple::Array<double> m_tp_btof1;
+  NTuple::Array<double> m_ph_btof1;
+  NTuple::Array<double> m_zhit_btof1;
+  NTuple::Array<double> m_qual_btof1;
 
-  NTuple::Item<double> m_ptot_btof2;
-  NTuple::Item<double> m_cntr_btof2;
-  NTuple::Item<double> m_te_btof2;
-  NTuple::Item<double> m_tmu_btof2;
-  NTuple::Item<double> m_tpi_btof2;
-  NTuple::Item<double> m_tk_btof2;
-  NTuple::Item<double> m_tp_btof2;
-  NTuple::Item<double> m_ph_btof2;
-  NTuple::Item<double> m_zhit_btof2;
-  NTuple::Item<double> m_qual_btof2;
+  NTuple::Array<double> m_ptot_btof2;
+  NTuple::Array<double> m_cntr_btof2;
+  NTuple::Array<double> m_te_btof2;
+  NTuple::Array<double> m_tmu_btof2;
+  NTuple::Array<double> m_tpi_btof2;
+  NTuple::Array<double> m_tk_btof2;
+  NTuple::Array<double> m_tp_btof2;
+  NTuple::Array<double> m_ph_btof2;
+  NTuple::Array<double> m_zhit_btof2;
+  NTuple::Array<double> m_qual_btof2;
 
   NTuple::Array<double> m_ptrk_pid;
   NTuple::Array<double> m_cost_pid;

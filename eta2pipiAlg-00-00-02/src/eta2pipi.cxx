@@ -117,12 +117,12 @@ StatusCode eta2pipi::initialize() {
     }
   }
   // analysis information
-  NTuplePtr nt1(ntupleSvc(), "FILE1/REC");
+  NTuplePtr nt1(ntupleSvc(), "FILE1/rec");
   if (nt1)
     m_anaTuple = nt1;
   else {
     m_anaTuple =
-        ntupleSvc()->book("FILE1/REC", CLID_ColumnWiseTuple, "Data Analysis");
+        ntupleSvc()->book("FILE1/rec", CLID_ColumnWiseTuple, "Data Analysis");
     if (m_anaTuple) { // McTruth Information
       status = m_anaTuple->addItem("indexmc", m_idxmc, 0, 100);
       status = m_anaTuple->addIndexedItem("trkidx", m_idxmc, m_trkidx);
@@ -198,6 +198,15 @@ StatusCode eta2pipi::initialize() {
       status =
           m_anaTuple->addItem("kmfit_lab_Etagam_pz", m_kmfit_lab_Etagam_pz);
 
+      // lab_ISRgam
+      status = m_anaTuple->addItem("kmfit_lab_ISRgam_e", m_kmfit_lab_ISRgam_e);
+      status =
+          m_anaTuple->addItem("kmfit_lab_ISRgam_px", m_kmfit_lab_ISRgam_px);
+      status =
+          m_anaTuple->addItem("kmfit_lab_ISRgam_py", m_kmfit_lab_ISRgam_py);
+      status =
+          m_anaTuple->addItem("kmfit_lab_ISRgam_pz", m_kmfit_lab_ISRgam_pz);
+
       // Four momentum boosted to eta
       // cms_pim
       status = m_anaTuple->addItem("kmfit_cms_pim_e", m_kmfit_cms_pim_e);
@@ -221,12 +230,14 @@ StatusCode eta2pipi::initialize() {
           m_anaTuple->addItem("kmfit_cms_Etagam_pz", m_kmfit_cms_Etagam_pz);
 
       // Inv.Masses[kmfit]
-      status = m_anaTuple->addItem("mg1pippim", m_mg1pippim);
-      status = m_anaTuple->addItem("mg2pippim", m_mg2pippim);
-      status = m_anaTuple->addItem("mpippim", m_mpippim);
+      status = m_anaTuple->addItem("kmfit_mg1pippim", m_kmfit_mg1pippim);
+      status = m_anaTuple->addItem("kmfit_mg2pippim", m_kmfit_mg2pippim);
+      status = m_anaTuple->addItem("kmfit_mpippim", m_kmfit_mpippim);
       // 4C Info.
-      status = m_anaTuple->addItem("chi2_ggpippim", m_chi2_ggpippim);
-      status = m_anaTuple->addItem("chi2_gggpippim", m_chi2_gggpippim);
+      status =
+          m_anaTuple->addItem("kmfit_chi2_ggpippim", m_kmfit_chi2_ggpippim);
+      status =
+          m_anaTuple->addItem("kmfit_chi2_gggpippim", m_kmfit_chi2_gggpippim);
       // 5C Info.
       status = m_anaTuple->addItem("chi2", m_chi2);
       status = m_anaTuple->addItem("meta", m_meta);
@@ -252,38 +263,38 @@ StatusCode eta2pipi::initialize() {
       status =
           m_anaTuple->addIndexedItem("nHits_btof2", m_nGood, m_nHits_btof2);
 
-      status = m_anaTuple->addItem("ptrk_etof", m_nGood, m_ptot_etof);
-      status = m_anaTuple->addItem("cntr_etof", m_nGood, m_cntr_etof);
-      status = m_anaTuple->addItem("ph_etof", m_nGood, m_ph_etof);
-      status = m_anaTuple->addItem("rhit_etof", m_nGood, m_rhit_etof);
-      status = m_anaTuple->addItem("qual_etof", m_nGood, m_qual_etof);
-      status = m_anaTuple->addItem("te_etof", m_nGood, m_te_etof);
-      status = m_anaTuple->addItem("tmu_etof", m_nGood, m_tmu_etof);
-      status = m_anaTuple->addItem("tpi_etof", m_nGood, m_tpi_etof);
-      status = m_anaTuple->addItem("tk_etof", m_nGood, m_tk_etof);
-      status = m_anaTuple->addItem("tp_etof", m_nGood, m_tp_etof);
+      status = m_anaTuple->addIndexedItem("ptrk_etof", m_nGood, m_ptot_etof);
+      status = m_anaTuple->addIndexedItem("cntr_etof", m_nGood, m_cntr_etof);
+      status = m_anaTuple->addIndexedItem("ph_etof", m_nGood, m_ph_etof);
+      status = m_anaTuple->addIndexedItem("rhit_etof", m_nGood, m_rhit_etof);
+      status = m_anaTuple->addIndexedItem("qual_etof", m_nGood, m_qual_etof);
+      status = m_anaTuple->addIndexedItem("te_etof", m_nGood, m_te_etof);
+      status = m_anaTuple->addIndexedItem("tmu_etof", m_nGood, m_tmu_etof);
+      status = m_anaTuple->addIndexedItem("tpi_etof", m_nGood, m_tpi_etof);
+      status = m_anaTuple->addIndexedItem("tk_etof", m_nGood, m_tk_etof);
+      status = m_anaTuple->addIndexedItem("tp_etof", m_nGood, m_tp_etof);
       //
-      status = m_anaTuple->addItem("ptrk_btof1", m_ptot_btof1);
-      status = m_anaTuple->addItem("cntr_btof1", m_cntr_btof1);
-      status = m_anaTuple->addItem("ph_btof1", m_ph_btof1);
-      status = m_anaTuple->addItem("zhit_btof1", m_zhit_btof1);
-      status = m_anaTuple->addItem("qual_btof1", m_qual_btof1);
-      status = m_anaTuple->addItem("te_btof1", m_te_btof1);
-      status = m_anaTuple->addItem("tmu_btof1", m_tmu_btof1);
-      status = m_anaTuple->addItem("tpi_btof1", m_tpi_btof1);
-      status = m_anaTuple->addItem("tk_btof1", m_tk_btof1);
-      status = m_anaTuple->addItem("tp_btof1", m_tp_btof1);
+      status = m_anaTuple->addIndexedItem("ptrk_btof1", m_nGood, m_ptot_btof1);
+      status = m_anaTuple->addIndexedItem("cntr_btof1", m_nGood, m_cntr_btof1);
+      status = m_anaTuple->addIndexedItem("ph_btof1", m_nGood, m_ph_btof1);
+      status = m_anaTuple->addIndexedItem("zhit_btof1", m_nGood, m_zhit_btof1);
+      status = m_anaTuple->addIndexedItem("qual_btof1", m_nGood, m_qual_btof1);
+      status = m_anaTuple->addIndexedItem("te_btof1", m_nGood, m_te_btof1);
+      status = m_anaTuple->addIndexedItem("tmu_btof1", m_nGood, m_tmu_btof1);
+      status = m_anaTuple->addIndexedItem("tpi_btof1", m_nGood, m_tpi_btof1);
+      status = m_anaTuple->addIndexedItem("tk_btof1", m_nGood, m_tk_btof1);
+      status = m_anaTuple->addIndexedItem("tp_btof1", m_nGood, m_tp_btof1);
       //
-      status = m_anaTuple->addItem("ptrk_btof2", m_ptot_btof2);
-      status = m_anaTuple->addItem("cntr_btof2", m_cntr_btof2);
-      status = m_anaTuple->addItem("ph_btof2", m_ph_btof2);
-      status = m_anaTuple->addItem("zhit_btof2", m_zhit_btof2);
-      status = m_anaTuple->addItem("qual_btof2", m_qual_btof2);
-      status = m_anaTuple->addItem("te_btof2", m_te_btof2);
-      status = m_anaTuple->addItem("tmu_btof2", m_tmu_btof2);
-      status = m_anaTuple->addItem("tpi_btof2", m_tpi_btof2);
-      status = m_anaTuple->addItem("tk_btof2", m_tk_btof2);
-      status = m_anaTuple->addItem("tp_btof2", m_tp_btof2);
+      status = m_anaTuple->addIndexedItem("ptrk_btof2", m_nGood, m_ptot_btof2);
+      status = m_anaTuple->addIndexedItem("cntr_btof2", m_nGood, m_cntr_btof2);
+      status = m_anaTuple->addIndexedItem("ph_btof2", m_nGood, m_ph_btof2);
+      status = m_anaTuple->addIndexedItem("zhit_btof2", m_nGood, m_zhit_btof2);
+      status = m_anaTuple->addIndexedItem("qual_btof2", m_nGood, m_qual_btof2);
+      status = m_anaTuple->addIndexedItem("te_btof2", m_nGood, m_te_btof2);
+      status = m_anaTuple->addIndexedItem("tmu_btof2", m_nGood, m_tmu_btof2);
+      status = m_anaTuple->addIndexedItem("tpi_btof2", m_nGood, m_tpi_btof2);
+      status = m_anaTuple->addIndexedItem("tk_btof2", m_nGood, m_tk_btof2);
+      status = m_anaTuple->addIndexedItem("tp_btof2", m_nGood, m_tp_btof2);
       //
       status = m_anaTuple->addIndexedItem("ptrk_pid", m_nGood, m_ptrk_pid);
       status = m_anaTuple->addIndexedItem("cost_pid", m_nGood, m_cost_pid);
@@ -443,7 +454,7 @@ StatusCode eta2pipi::execute() {
           px_gam1_mom = pxmc;
           py_gam1_mom = pymc;
           pz_gam1_mom = pzmc;
-        } // loop of pdgid==22
+        }                                       // loop of pdgid==22
         if (pdgid == 221 && motherpdgid == 443) // etaid=221
         {
           p4_eta.setPx(pxmc);
@@ -459,7 +470,7 @@ StatusCode eta2pipi::execute() {
           px_eta_mom = pxmc;
           py_eta_mom = pymc;
           pz_eta_mom = pzmc;
-        } // loop of pdg=221
+        }                                      // loop of pdg=221
         if (pdgid == 22 && motherpdgid == 221) // gam2 from eta
         {
           p4_gam2.setPx(pxmc);
@@ -475,7 +486,7 @@ StatusCode eta2pipi::execute() {
           px_gam2_mom = pxmc;
           py_gam2_mom = pymc;
           pz_gam2_mom = pzmc;
-        } // loop of pdg==22&&pdg==221
+        }                                       // loop of pdg==22&&pdg==221
         if (pdgid == 211 && motherpdgid == 221) // pion^+
         {
           p4_pip.setPx(pxmc);
@@ -602,7 +613,7 @@ StatusCode eta2pipi::execute() {
     helixip.pivot(IP);
     HepVector vecipa = helixip.a();
     double Rvxy0 = fabs(vecipa[0]); // the nearest distance to IP in xy plane
-    double Rvz0 = vecipa[3]; // the nearest distance to IP in z direction
+    double Rvz0 = vecipa[3];        // the nearest distance to IP in z direction
     double Rvphi0 = vecipa[1];
     double costheta0 = cos(mdcTrk->theta());
     if (fabs(costheta0) >= 0.93)
@@ -766,6 +777,40 @@ StatusCode eta2pipi::execute() {
       }
       int nHits_btof1 = 0, nHits_btof2 = 0, nHits_etof = 0;
 
+      // intialize the tof info for this track
+      m_cntr_etof[i] = -99;
+      m_ptot_etof[i] = -99;
+      m_ph_etof[i] = -99;
+      m_rhit_etof[i] = -99;
+      m_qual_etof[i] = -99;
+      m_te_etof[i] = -99;
+      m_tmu_etof[i] = -99;
+      m_tpi_etof[i] = -99;
+      m_tk_etof[i] = -99;
+      m_tp_etof[i] = -99;
+
+      m_cntr_btof1[i] = -99;
+      m_ptot_btof1[i] = -99;
+      m_ph_btof1[i] = -99;
+      m_zhit_btof1[i] = -99;
+      m_qual_btof1[i] = -99;
+      m_te_btof1[i] = -99;
+      m_tmu_btof1[i] = -99;
+      m_tpi_btof1[i] = -99;
+      m_tk_btof1[i] = -99;
+      m_tp_btof1[i] = -99;
+
+      m_cntr_btof2[i] = -99;
+      m_ptot_btof2[i] = -99;
+      m_ph_btof2[i] = -99;
+      m_zhit_btof2[i] = -99;
+      m_qual_btof2[i] = -99;
+      m_te_btof2[i] = -99;
+      m_tmu_btof2[i] = -99;
+      m_tpi_btof2[i] = -99;
+      m_tk_btof2[i] = -99;
+      m_tp_btof2[i] = -99;
+
       if ((*itTrk)->isTofTrackValid()) {
 
         RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
@@ -781,8 +826,7 @@ StatusCode eta2pipi::execute() {
             if (!(status->is_counter()))
               continue; // ?
             if (status->layer() != 0)
-              continue; // layer1
-            nHits_etof++;
+              continue;                        // layer1
             double path = (*iter_tof)->path(); // ?
             double tof = (*iter_tof)->tof();
             double ph = (*iter_tof)->ph();
@@ -795,22 +839,24 @@ StatusCode eta2pipi::execute() {
               double beta = gb / sqrt(1 + gb * gb);
               texp[j] = 10 * path / beta / velc;
             }
-            // m_cntr_etof[nGood] = cntr;
-            // m_ptot_etof[nGood]= ptrk;
-            // m_ph_etof  [nGood]  = ph;
-            // m_rhit_etof[nGood] = rhit;
-            // m_qual_etof[nGood]= qual;
-            // m_te_etof  [nGood]= tof - texp[0];
-            // m_tmu_etof [nGood]= tof - texp[1];
-            // m_tpi_etof [nGood]= tof - texp[2];
-            // m_tk_etof  [nGood]= tof - texp[3];
-            // m_tp_etof  [nGood]= tof - texp[4];
-          } //
+            // The etof info for this track is reset by at most once
+            m_cntr_etof[i] = cntr;
+            m_ptot_etof[i] = ptrk;
+            m_ph_etof[i] = ph;
+            m_rhit_etof[i] = rhit;
+            m_qual_etof[i] = qual;
+            m_te_etof[i] = tof - texp[0];
+            m_tmu_etof[i] = tof - texp[1];
+            m_tpi_etof[i] = tof - texp[2];
+            m_tk_etof[i] = tof - texp[3];
+            m_tp_etof[i] = tof - texp[4];
+
+            nHits_etof++;
+          }      //
           else { // barrel
             if (!(status->is_counter()))
-              continue; // ?
-            if (status->layer() == 1) { // layer1
-              nHits_btof1++;
+              continue;                          // ?
+            if (status->layer() == 1) {          // layer1
               double path = (*iter_tof)->path(); // ?
               double tof = (*iter_tof)->tof();
               double ph = (*iter_tof)->ph();
@@ -824,20 +870,22 @@ StatusCode eta2pipi::execute() {
                 texp[j] = 10 * path / beta / velc;
               }
 
-              //   m_cntr_btof1  = cntr;
-              //   m_ptot_btof1 = ptrk;
-              //   m_ph_btof1   = ph;
-              //   m_zhit_btof1  = rhit;
-              //   m_qual_btof1  = qual;
-              //   m_te_btof1    = tof - texp[0];
-              //   m_tmu_btof1   = tof - texp[1];
-              //   m_tpi_btof1   = tof - texp[2];
-              //   m_tk_btof1    = tof - texp[3];
-              //   m_tp_btof1    = tof - texp[4];
+              // The btof1 info for this track is reset by at most once
+              m_cntr_btof1[i] = cntr;
+              m_ptot_btof1[i] = ptrk;
+              m_ph_btof1[i] = ph;
+              m_zhit_btof1[i] = rhit;
+              m_qual_btof1[i] = qual;
+              m_te_btof1[i] = tof - texp[0];
+              m_tmu_btof1[i] = tof - texp[1];
+              m_tpi_btof1[i] = tof - texp[2];
+              m_tk_btof1[i] = tof - texp[3];
+              m_tp_btof1[i] = tof - texp[4];
+
+              nHits_btof1++;
             }
 
-            if (status->layer() == 2) { // layer2
-              nHits_btof2++;
+            if (status->layer() == 2) {          // layer2
               double path = (*iter_tof)->path(); // ?
               double tof = (*iter_tof)->tof();
               double ph = (*iter_tof)->ph();
@@ -851,16 +899,19 @@ StatusCode eta2pipi::execute() {
                 texp[j] = 10 * path / beta / velc;
               }
 
-              //   m_cntr_btof2  = cntr;
-              //   m_ptot_btof2 = ptrk;
-              //   m_ph_btof2   = ph;
-              //   m_zhit_btof2  = rhit;
-              //   m_qual_btof2  = qual;
-              //   m_te_btof2    = tof - texp[0];
-              //   m_tmu_btof2   = tof - texp[1];
-              //   m_tpi_btof2   = tof - texp[2];
-              //   m_tk_btof2    = tof - texp[3];
-              //   m_tp_btof2    = tof - texp[4];
+              // The btof1 info for this track is reset by at most once
+              m_cntr_btof2[i] = cntr;
+              m_ptot_btof2[i] = ptrk;
+              m_ph_btof2[i] = ph;
+              m_zhit_btof2[i] = rhit;
+              m_qual_btof2[i] = qual;
+              m_te_btof2[i] = tof - texp[0];
+              m_tmu_btof2[i] = tof - texp[1];
+              m_tpi_btof2[i] = tof - texp[2];
+              m_tk_btof2[i] = tof - texp[3];
+              m_tp_btof2[i] = tof - texp[4];
+
+              nHits_btof2++;
             }
           }
 
@@ -1101,6 +1152,10 @@ StatusCode eta2pipi::execute() {
             m_kmfit_lab_Etagam_px = p4_Etagam.px();
             m_kmfit_lab_Etagam_py = p4_Etagam.py();
             m_kmfit_lab_Etagam_pz = p4_Etagam.pz();
+            m_kmfit_lab_ISRgam_e = p4_ISRgam.e();
+            m_kmfit_lab_ISRgam_px = p4_ISRgam.px();
+            m_kmfit_lab_ISRgam_py = p4_ISRgam.py();
+            m_kmfit_lab_ISRgam_pz = p4_ISRgam.pz();
 
             mg1pippim = g1pippim.m();
             mg2pippim = g2pippim.m();
@@ -1131,10 +1186,10 @@ StatusCode eta2pipi::execute() {
     // 2) perform the kinematic fit with the selected ig1, ig2, pi+, pi-
     if (chisq_ggpippim < 200) {
       // Inv.Masses[kmfit]
-      m_mg1pippim = mg1pippim;
-      m_mg2pippim = mg2pippim;
-      m_mpippim = mpippim;
-      m_chi2_ggpippim = chisq_ggpippim;
+      m_kmfit_mg1pippim = mg1pippim;
+      m_kmfit_mg2pippim = mg2pippim;
+      m_kmfit_mpippim = mpippim;
+      m_kmfit_chi2_ggpippim = chisq_ggpippim;
 
       // 3) if nGam >=3
       if (nGam >= 3) {
@@ -1163,17 +1218,18 @@ StatusCode eta2pipi::execute() {
               } // if oksq
             }   // end of loop for k
           }     // end of loop for j
-        } // end of loop for i
+        }       // end of loop for i
       }
-      m_chi2_gggpippim = chisq_gggpippim;
+      m_kmfit_chi2_gggpippim = chisq_gggpippim;
 
       nCounter_PSL[7]++;
       m_cutflow->Fill(7);
     } // loop of chi_ggpippim <200
   }   // if apply_4C
-      //
-      //  Kinematic 5C Fit
-      //
+
+  //
+  //  Kinematic 5C Fit
+  //
   // find the best combination over all possible pi+ pi- gamma gamma pair
   if (m_test5C == 1) {
     //  double ecms = 3.097;
@@ -1233,8 +1289,8 @@ StatusCode eta2pipi::execute() {
         nCounter_PSL[8]++; // After 5C
         m_cutflow->Fill(8);
       } // oksq
-    } // loop of chisq
-  } // loop of m_test5C
+    }   // loop of chisq
+  }     // loop of m_test5C
 
   m_anaTuple->write();
 
