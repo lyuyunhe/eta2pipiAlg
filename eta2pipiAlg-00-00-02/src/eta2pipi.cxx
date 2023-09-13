@@ -296,12 +296,19 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addIndexedItem("tk_btof2", m_nGood, m_tk_btof2);
       status = m_anaTuple->addIndexedItem("tp_btof2", m_nGood, m_tp_btof2);
       //
+      status = m_anaTuple->addItem("pip_index", m_pip_index);
+      status = m_anaTuple->addItem("pim_index", m_pim_index);
+      status = m_anaTuple->addItem("pip_pi_pid", m_pip_pi_pid);
+      status = m_anaTuple->addItem("pim_pi_pid", m_pim_pi_pid);
       status = m_anaTuple->addIndexedItem("ptrk_pid", m_nGood, m_ptrk_pid);
       status = m_anaTuple->addIndexedItem("cost_pid", m_nGood, m_cost_pid);
       status = m_anaTuple->addIndexedItem("dedx_pid", m_nGood, m_dedx_pid);
       status = m_anaTuple->addIndexedItem("tof1_pid", m_nGood, m_tof1_pid);
       status = m_anaTuple->addIndexedItem("tof2_pid", m_nGood, m_tof2_pid);
-      status = m_anaTuple->addIndexedItem("prob_pid", m_nGood, m_prob_pid);
+      status =
+          m_anaTuple->addIndexedItem("prob_pi_pid", m_nGood, m_prob_pi_pid);
+      status = m_anaTuple->addIndexedItem("prob_e_pid", m_nGood, m_prob_e_pid);
+      status = m_anaTuple->addIndexedItem("pi_pid", m_nGood, m_pi_pid);
       // photon
       status = m_anaTuple->addItem("nGam", m_nGam, 0, 200);
       status = m_anaTuple->addIndexedItem("dthe", m_nGam, m_dthe);
@@ -966,6 +973,9 @@ StatusCode eta2pipi::execute() {
   for (int i = 0; i < nGood; i++) {
     if (debug)
       std::cout << "Check pid info for good charged track " << i << std::endl;
+
+    m_pi_pid[i] = false;
+
     EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
     //    if(pid) delete pid;
     pid->init();
@@ -975,10 +985,8 @@ StatusCode eta2pipi::execute() {
     pid->setChiMinCut(4);
     pid->setRecTrack(*itTrk);
     pid->usePidSys(pid->useDedx() | pid->useTof1() | pid->useTof2() |
-                   pid->useTofE());                   // use PID sub-system
-    pid->identify(pid->onlyPion() | pid->onlyKaon()); // seperater Pion/Kaon
-    //    pid->identify(pid->onlyPion());
-    //  pid->identify(pid->onlyKaon());
+                   pid->useTofE()); // use PID sub-system
+    pid->identify(pid->onlyPion() | pid->onlyElectron() | pid->onlyMuon());
     pid->calculate();
     if (!(pid->IsPidInfoValid())) {
       m_ptrk_pid[i] = -99;
@@ -986,7 +994,8 @@ StatusCode eta2pipi::execute() {
       m_dedx_pid[i] = -99;
       m_tof1_pid[i] = -99;
       m_tof2_pid[i] = -99;
-      m_prob_pid[i] = -99;
+      m_prob_pi_pid[i] = -99;
+      m_prob_e_pid[i] = -99;
     } else {
       RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
       m_ptrk_pid[i] = mdcTrk->p();
@@ -994,52 +1003,57 @@ StatusCode eta2pipi::execute() {
       m_dedx_pid[i] = pid->chiDedx(2);
       m_tof1_pid[i] = pid->chiTof1(2);
       m_tof2_pid[i] = pid->chiTof2(2);
-      m_prob_pid[i] = pid->probPion();
+      m_prob_pi_pid[i] = pid->probPion();
+      m_prob_e_pid[i] = pid->probElectron();
 
       //  if(pid->probPion() < 0.001 || (pid->probPion() < pid->probKaon()))
       // continue;
-      if (pid->probPion() < 0.001)
-        continue;
-      //    if(pid->pdf(2)<pid->pdf(3)) continue; //  for Likelihood
-      // Method(0=electron 1=muon 2=pion 3=kaon 4=proton)
-
-      RecMdcKalTrack *mdcKalTrk =
-          (*itTrk)->mdcKalTrack(); // After ParticleID, use RecMdcKalTrack
-                                   // substitute RecMdcTrack
-      RecMdcKalTrack::setPidType(RecMdcKalTrack::pion); // PID can set to
-                                                        // electron, muon, pion,
-                                                        // kaon and proton;The
-                                                        // default setting is
-                                                        // pion
-
-      if (mdcKalTrk->charge() > 0) {
-        ipip.push_back(iGood[i]);
-        HepLorentzVector ptrk;
-        ptrk.setPx(mdcKalTrk->px());
-        ptrk.setPy(mdcKalTrk->py());
-        ptrk.setPz(mdcKalTrk->pz());
-        double p3 = ptrk.mag();
-        ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
-
-        //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
-
-        ppip.push_back(ptrk);
-      } else {
-        ipim.push_back(iGood[i]);
-        HepLorentzVector ptrk;
-        ptrk.setPx(mdcKalTrk->px());
-        ptrk.setPy(mdcKalTrk->py());
-        ptrk.setPz(mdcKalTrk->pz());
-        double p3 = ptrk.mag();
-        ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
-
-        //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
-
-        ppim.push_back(ptrk);
+      if (pid->probPion() > 0.001 && (pid->probPion() >= pid->probElectron())) {
+        m_pi_pid[i] = true;
       }
-      if (debug)
-        cout << __LINE__ << endl;
     }
+
+    //    if(pid->pdf(2)<pid->pdf(3)) continue; //  for Likelihood
+
+    RecMdcKalTrack *mdcKalTrk =
+        (*itTrk)->mdcKalTrack(); // After ParticleID, use RecMdcKalTrack
+                                 // substitute RecMdcTrack
+    RecMdcKalTrack::setPidType(RecMdcKalTrack::pion); // PID can set to
+                                                      // electron, muon, pion,
+                                                      // kaon and proton;The
+                                                      // default setting is
+                                                      // pion
+
+    if (mdcKalTrk->charge() > 0) {
+      ipip.push_back(iGood[i]);
+      HepLorentzVector ptrk;
+      ptrk.setPx(mdcKalTrk->px());
+      ptrk.setPy(mdcKalTrk->py());
+      ptrk.setPz(mdcKalTrk->pz());
+      double p3 = ptrk.mag();
+      ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
+      m_pip_index = i;
+      m_pip_pi_pid = m_pi_pid[i];
+      //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
+
+      ppip.push_back(ptrk);
+    } else {
+      ipim.push_back(iGood[i]);
+      HepLorentzVector ptrk;
+      ptrk.setPx(mdcKalTrk->px());
+      ptrk.setPy(mdcKalTrk->py());
+      ptrk.setPz(mdcKalTrk->pz());
+      double p3 = ptrk.mag();
+      ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
+      m_pim_index = i;
+      m_pim_pi_pid = m_pi_pid[i];
+
+      //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
+
+      ppim.push_back(ptrk);
+    }
+    if (debug)
+      cout << __LINE__ << endl;
   }
   int npip = ipip.size();
   int npim = ipim.size();
