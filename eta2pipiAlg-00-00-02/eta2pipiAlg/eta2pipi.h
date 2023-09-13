@@ -208,12 +208,18 @@ private:
   NTuple::Array<double> m_zhit_btof2;
   NTuple::Array<double> m_qual_btof2;
 
+  NTuple::Item<int> m_pip_index;
+  NTuple::Item<int> m_pim_index;
+  NTuple::Item<bool> m_pip_pi_pid;
+  NTuple::Item<bool> m_pim_pi_pid;
   NTuple::Array<double> m_ptrk_pid;
   NTuple::Array<double> m_cost_pid;
   NTuple::Array<double> m_dedx_pid;
   NTuple::Array<double> m_tof1_pid;
   NTuple::Array<double> m_tof2_pid;
-  NTuple::Array<double> m_prob_pid;
+  NTuple::Array<double> m_prob_pi_pid;
+  NTuple::Array<double> m_prob_e_pid;
+  NTuple::Array<bool> m_pi_pid;
 
   ITHistSvc *m_histSvc;
   // TH1F for cutflow
