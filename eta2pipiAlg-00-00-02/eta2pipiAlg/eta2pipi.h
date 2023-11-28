@@ -5,9 +5,14 @@
 #include "GaudiKernel/Algorithm.h"
 #include "GaudiKernel/NTuple.h"
 #include "GaudiKernel/ITHistSvc.h"
+#include "EvtRecEvent/EvtRecEvent.h"
+#include "EvtRecEvent/EvtRecTrack.h"
 #include "TH1.h"
 
 //#include "VertexFit/ReadBeamParFromDb.h"
+
+typedef std::vector<int> Vint;
+typedef std::vector<HepLorentzVector> Vp4;
 
 class eta2pipi : public Algorithm {
 
@@ -32,6 +37,8 @@ private:
   //
   int m_test4C;
   int m_test5C;
+  
+  int m_debug;
 
   //
   int m_checkDedx;
@@ -119,8 +126,8 @@ private:
   NTuple::Item<double> pz_pim_mom;
 
   // kmfit4C lab  Info.
-  NTuple::Item<double> m_kmfit_Jpsigam_index;
-  NTuple::Item<double> m_kmfit_Etagam_index;
+  NTuple::Item<int> m_kmfit_Jpsigam_index;
+  NTuple::Item<int> m_kmfit_Etagam_index;
   
   NTuple::Item<double> m_kmfit_lab_pip_e;
   NTuple::Item<double> m_kmfit_lab_pip_px;
@@ -247,8 +254,8 @@ private:
   NTuple::Item<double> m_kalTrk_pim_e;
   NTuple::Item<double> m_kalTrk_pim_mom;
   // after5C, Inv.Masses
-  NTuple::Item<double> m_kmfit5C_Jpsigam_index;
-  NTuple::Item<double> m_kmfit5C_Etagam_index;
+  NTuple::Item<int> m_kmfit5C_Jpsigam_index;
+  NTuple::Item<int> m_kmfit5C_Etagam_index;
 
   NTuple::Item<double> m_kmfit5C_chi2;
   NTuple::Item<double> m_kmfit5C_mEtagampippim;
@@ -300,5 +307,11 @@ private:
   ITHistSvc *m_histSvc;
   // TH1F for cutflow
   TH1F *m_cutflow;
+
+  //functions for check dE/dx
+  void checkDedx(SmartDataPtr<EvtRecTrackCol> evtRecTrkCol, const Vint& iGood, int nGood);
+  void checkTof(SmartDataPtr<EvtRecTrackCol> evtRecTrkCol, const Vint& iGood, int nGood);
+  //functions for check tof 
+
 };
 #endif

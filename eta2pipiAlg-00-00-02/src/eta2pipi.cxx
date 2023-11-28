@@ -11,8 +11,6 @@
 #include "EventModel/EventModel.h"
 #include "EventModel/Event.h"
 
-#include "EvtRecEvent/EvtRecEvent.h"
-#include "EvtRecEvent/EvtRecTrack.h"
 #include "DstEvent/TofHitStatus.h"
 #include "EventModel/EventHeader.h"
 
@@ -45,10 +43,7 @@ const double mpi = 0.13957;
 const double xmass[5] = { 0.000511, 0.105658, 0.139570, 0.493677, 0.938272 };
 // const double velc = 29.9792458;  tof_path unit in cm.
 const double velc = 299.792458; // tof path unit in mm
-typedef std::vector<int> Vint;
-typedef std::vector<HepLorentzVector> Vp4;
 int nCounter_PSL[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-bool debug = false;
 #include "McTruth/McParticle.h"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -56,6 +51,7 @@ bool debug = false;
 eta2pipi::eta2pipi(const std::string &name, ISvcLocator *pSvcLocator)
     : Algorithm(name, pSvcLocator) {
 
+  declareProperty("debug", m_debug = 1);
   declareProperty("Test4C", m_test4C = 1);
   declareProperty("Test5C", m_test5C = 1);
   declareProperty("chisq_4c_cut", m_chisq_4c_cut = 100);
@@ -248,7 +244,10 @@ StatusCode eta2pipi::initialize() {
       // 4C Info.
       status = m_anaTuple->addItem("kmfit_chi2_ggpippim", m_kmfit_chi2_ggpippim);
       status = m_anaTuple->addItem("kmfit_chi2_threegampippim", m_kmfit_chi2_threegampippim);
+      
       // 5C Info.
+      status = m_anaTuple->addItem("kmfit5C_Jpsigam_index", m_kmfit5C_Jpsigam_index);
+      status = m_anaTuple->addItem("kmfit5C_Etagam_index", m_kmfit5C_Etagam_index);
       status = m_anaTuple->addItem("kmfit5C_chi2", m_kmfit5C_chi2);
       // kmfit5C, Inv.Masses
       status = m_anaTuple->addItem("kmfit5C_mEtagampippim", m_kmfit5C_mEtagampippim);
@@ -655,7 +654,7 @@ StatusCode eta2pipi::execute() {
   if (vtxsvc) {
     if (vtxsvc->isVertexValid()) {
       vertexValid = true;
-      if (debug)
+      if (m_debug)
         cout << __LINE__ << endl;
       double *dbv = vtxsvc->PrimaryVertex();
       double *vv = vtxsvc->SigmaPrimaryVertex();
@@ -672,7 +671,7 @@ StatusCode eta2pipi::execute() {
   nCounter_PSL[2]++;
   m_cutflow->Fill(2);
 
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
   int nCharge = 0;
   for (int i = 0; i < evtRecEvent->totalCharged(); i++) {
@@ -812,47 +811,16 @@ StatusCode eta2pipi::execute() {
   }
   nCounter_PSL[4]++;
   m_cutflow->Fill(4);
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
 
   //----------------------------------------------------
   //  check dedx infomation
   //----------------------------------------------------
   if (m_checkDedx == 1) {
-    for (int i = 0; i < nGood; i++) {
-      EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
-      if (!(*itTrk)->isMdcTrackValid()) {
-        throw std::runtime_error(
-            "The selected good charged tracks should have MdcTrack!!");
-      }
-      if (!(*itTrk)->isMdcDedxValid()) {
-        m_ptrk[i] = -99;
-        m_chie[i] = -99;
-        m_chimu[i] = -99;
-        m_chipi[i] = -99;
-        m_chik[i] = -99;
-        m_chip[i] = -99;
-        m_ghit[i] = -99;
-        m_thit[i] = -99;
-        m_probPH[i] = -99;
-        m_normPH[i] = -99;
-      } else {
-        RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
-        RecMdcDedx *dedxTrk = (*itTrk)->mdcDedx();
-        m_ptrk[i] = mdcTrk->p();
-        m_chie[i] = dedxTrk->chiE();
-        m_chimu[i] = dedxTrk->chiMu();
-        m_chipi[i] = dedxTrk->chiPi();
-        m_chik[i] = dedxTrk->chiK();
-        m_chip[i] = dedxTrk->chiP();
-        m_ghit[i] = dedxTrk->numGoodHits();
-        m_thit[i] = dedxTrk->numTotalHits();
-        m_probPH[i] = dedxTrk->probPH();
-        m_normPH[i] = dedxTrk->normPH();
-      }
-    }
+    checkDedx(evtRecTrkCol, iGood, nGood); 
   }
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
 
   //-------------------------------------------------
@@ -860,163 +828,9 @@ StatusCode eta2pipi::execute() {
   //------------------------------------------------
 
   if (m_checkTof == 1) {
-    for (int i = 0; i < nGood; i++) {
-      EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
-      if (!(*itTrk)->isMdcTrackValid()) {
-        throw std::runtime_error(
-            "The selected good charged tracks should have MdcTrack!!");
-      }
-      int nHits_btof1 = 0, nHits_btof2 = 0, nHits_etof = 0;
-
-      // intialize the tof info for this track
-      m_cntr_etof[i] = -99;
-      m_ptot_etof[i] = -99;
-      m_ph_etof[i] = -99;
-      m_rhit_etof[i] = -99;
-      m_qual_etof[i] = -99;
-      m_te_etof[i] = -99;
-      m_tmu_etof[i] = -99;
-      m_tpi_etof[i] = -99;
-      m_tk_etof[i] = -99;
-      m_tp_etof[i] = -99;
-
-      m_cntr_btof1[i] = -99;
-      m_ptot_btof1[i] = -99;
-      m_ph_btof1[i] = -99;
-      m_zhit_btof1[i] = -99;
-      m_qual_btof1[i] = -99;
-      m_te_btof1[i] = -99;
-      m_tmu_btof1[i] = -99;
-      m_tpi_btof1[i] = -99;
-      m_tk_btof1[i] = -99;
-      m_tp_btof1[i] = -99;
-
-      m_cntr_btof2[i] = -99;
-      m_ptot_btof2[i] = -99;
-      m_ph_btof2[i] = -99;
-      m_zhit_btof2[i] = -99;
-      m_qual_btof2[i] = -99;
-      m_te_btof2[i] = -99;
-      m_tmu_btof2[i] = -99;
-      m_tpi_btof2[i] = -99;
-      m_tk_btof2[i] = -99;
-      m_tp_btof2[i] = -99;
-
-      if ((*itTrk)->isTofTrackValid()) {
-
-        RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
-        SmartRefVector<RecTofTrack> tofTrkCol = (*itTrk)->tofTrack();
-
-        double ptrk = mdcTrk->p();
-
-        SmartRefVector<RecTofTrack>::iterator iter_tof = tofTrkCol.begin();
-        for (; iter_tof != tofTrkCol.end(); iter_tof++) {
-          TofHitStatus *status = new TofHitStatus;
-          status->setStatus((*iter_tof)->status());
-          if (!(status->is_barrel())) { // endcap
-            if (!(status->is_counter()))
-              continue; // ?
-            if (status->layer() != 0)
-              continue;                        // layer1
-            double path = (*iter_tof)->path(); // ?
-            double tof = (*iter_tof)->tof();
-            double ph = (*iter_tof)->ph();
-            double rhit = (*iter_tof)->zrhit();
-            double qual = 0.0 + (*iter_tof)->quality();
-            double cntr = 0.0 + (*iter_tof)->tofID();
-            double texp[5];
-            for (int j = 0; j < 5; j++) {
-              double gb = ptrk / xmass[j];
-              double beta = gb / sqrt(1 + gb * gb);
-              texp[j] = 10 * path / beta / velc;
-            }
-            // The etof info for this track is reset by at most once
-            m_cntr_etof[i] = cntr;
-            m_ptot_etof[i] = ptrk;
-            m_ph_etof[i] = ph;
-            m_rhit_etof[i] = rhit;
-            m_qual_etof[i] = qual;
-            m_te_etof[i] = tof - texp[0];
-            m_tmu_etof[i] = tof - texp[1];
-            m_tpi_etof[i] = tof - texp[2];
-            m_tk_etof[i] = tof - texp[3];
-            m_tp_etof[i] = tof - texp[4];
-
-            nHits_etof++;
-          }      //
-          else { // barrel
-            if (!(status->is_counter()))
-              continue;                          // ?
-            if (status->layer() == 1) {          // layer1
-              double path = (*iter_tof)->path(); // ?
-              double tof = (*iter_tof)->tof();
-              double ph = (*iter_tof)->ph();
-              double rhit = (*iter_tof)->zrhit();
-              double qual = 0.0 + (*iter_tof)->quality();
-              double cntr = 0.0 + (*iter_tof)->tofID();
-              double texp[5];
-              for (int j = 0; j < 5; j++) {
-                double gb = ptrk / xmass[j];
-                double beta = gb / sqrt(1 + gb * gb);
-                texp[j] = 10 * path / beta / velc;
-              }
-
-              // The btof1 info for this track is reset by at most once
-              m_cntr_btof1[i] = cntr;
-              m_ptot_btof1[i] = ptrk;
-              m_ph_btof1[i] = ph;
-              m_zhit_btof1[i] = rhit;
-              m_qual_btof1[i] = qual;
-              m_te_btof1[i] = tof - texp[0];
-              m_tmu_btof1[i] = tof - texp[1];
-              m_tpi_btof1[i] = tof - texp[2];
-              m_tk_btof1[i] = tof - texp[3];
-              m_tp_btof1[i] = tof - texp[4];
-
-              nHits_btof1++;
-            }
-
-            if (status->layer() == 2) {          // layer2
-              double path = (*iter_tof)->path(); // ?
-              double tof = (*iter_tof)->tof();
-              double ph = (*iter_tof)->ph();
-              double rhit = (*iter_tof)->zrhit();
-              double qual = 0.0 + (*iter_tof)->quality();
-              double cntr = 0.0 + (*iter_tof)->tofID();
-              double texp[5];
-              for (int j = 0; j < 5; j++) {
-                double gb = ptrk / xmass[j];
-                double beta = gb / sqrt(1 + gb * gb);
-                texp[j] = 10 * path / beta / velc;
-              }
-
-              // The btof1 info for this track is reset by at most once
-              m_cntr_btof2[i] = cntr;
-              m_ptot_btof2[i] = ptrk;
-              m_ph_btof2[i] = ph;
-              m_zhit_btof2[i] = rhit;
-              m_qual_btof2[i] = qual;
-              m_te_btof2[i] = tof - texp[0];
-              m_tmu_btof2[i] = tof - texp[1];
-              m_tpi_btof2[i] = tof - texp[2];
-              m_tk_btof2[i] = tof - texp[3];
-              m_tp_btof2[i] = tof - texp[4];
-
-              nHits_btof2++;
-            }
-          }
-
-          delete status;
-        }
-      } // if tof info valid
-
-      m_nHits_etof[i] = nHits_etof;
-      m_nHits_btof1[i] = nHits_btof1;
-      m_nHits_btof2[i] = nHits_btof2;
-
-    } // loop all charged track
+    checkTof(evtRecTrkCol, iGood, nGood); 
   }   // check tof
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
 
   //---------------------------------------------------
@@ -1041,7 +855,7 @@ StatusCode eta2pipi::execute() {
     
     pGam.push_back(ptrk);
   }
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
 
   //-------------------------------------------------
@@ -1052,10 +866,10 @@ StatusCode eta2pipi::execute() {
 
   ParticleID *pid = ParticleID::instance();
 
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
   for (int i = 0; i < nGood; i++) {
-    if (debug)
+    if (m_debug)
       std::cout << "Check pid info for good charged track " << i << std::endl;
 
     m_pi_pid[i] = false;
@@ -1148,7 +962,7 @@ StatusCode eta2pipi::execute() {
 
       ppim.push_back(ptrk);
     }
-    if (debug)
+    if (m_debug)
       cout << __LINE__ << endl;
   }
   int npip = ipip.size();
@@ -1201,6 +1015,9 @@ StatusCode eta2pipi::execute() {
   ///////////////////////////////////////////
   //start kinematic fit 
   ///////////////////////////////////////////
+  if(m_debug){
+    std::cout<<__LINE__<< std::endl;
+  }
   m_kmfit_Etagam_index = -99;
   m_kmfit_Jpsigam_index = -99;
   m_kmfit_lab_pip_e = -99;
@@ -1296,7 +1113,9 @@ StatusCode eta2pipi::execute() {
   m_kmfit5C_mgam1pippim = -9999.;
   m_kmfit5C_mpippim = -9999.;
   
-
+  if(m_debug){
+    std::cout<<"Start to perform kmfit"<< std::endl;
+  }
   KinematicFit *kmfit = KinematicFit::instance();
   // KalmanKinematicFit * kmfit = KalmanKinematicFit::instance();
   //
@@ -1408,6 +1227,8 @@ StatusCode eta2pipi::execute() {
       }
     }
 
+    log << MSG::INFO << "4C kinematic fit chisq = " << chisq_ggpippim << endreq;
+    
     if (chisq_ggpippim > m_chisq_4c_cut) {
       return StatusCode::SUCCESS;
     }
@@ -1610,4 +1431,201 @@ StatusCode eta2pipi::finalize() {
   MsgStream log(msgSvc(), name());
   log << MSG::INFO << "in finalize()" << endmsg;
   return StatusCode::SUCCESS;
+}
+
+
+// Member function for checkDedx info
+void eta2pipi::checkDedx(SmartDataPtr<EvtRecTrackCol> evtRecTrkCol, const Vint& iGood, int nGood){
+    for (int i = 0; i < nGood; i++) {
+      EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
+      if (!(*itTrk)->isMdcTrackValid()) {
+        throw std::runtime_error(
+            "The selected good charged tracks should have MdcTrack!!");
+      }
+      if (!(*itTrk)->isMdcDedxValid()) {
+        m_ptrk[i] = -99;
+        m_chie[i] = -99;
+        m_chimu[i] = -99;
+        m_chipi[i] = -99;
+        m_chik[i] = -99;
+        m_chip[i] = -99;
+        m_ghit[i] = -99;
+        m_thit[i] = -99;
+        m_probPH[i] = -99;
+        m_normPH[i] = -99;
+      } else {
+        RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
+        RecMdcDedx *dedxTrk = (*itTrk)->mdcDedx();
+        m_ptrk[i] = mdcTrk->p();
+        m_chie[i] = dedxTrk->chiE();
+        m_chimu[i] = dedxTrk->chiMu();
+        m_chipi[i] = dedxTrk->chiPi();
+        m_chik[i] = dedxTrk->chiK();
+        m_chip[i] = dedxTrk->chiP();
+        m_ghit[i] = dedxTrk->numGoodHits();
+        m_thit[i] = dedxTrk->numTotalHits();
+        m_probPH[i] = dedxTrk->probPH();
+        m_normPH[i] = dedxTrk->normPH();
+      }
+    }
+}
+
+
+// Member function for Tof info
+void eta2pipi::checkTof( SmartDataPtr<EvtRecTrackCol> evtRecTrkCol, const Vint& iGood, int nGood){
+    for (int i = 0; i < nGood; i++) {
+      EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
+      if (!(*itTrk)->isMdcTrackValid()) {
+        throw std::runtime_error(
+            "The selected good charged tracks should have MdcTrack!!");
+      }
+      int nHits_btof1 = 0, nHits_btof2 = 0, nHits_etof = 0;
+
+      // intialize the tof info for this track
+      m_cntr_etof[i] = -99;
+      m_ptot_etof[i] = -99;
+      m_ph_etof[i] = -99;
+      m_rhit_etof[i] = -99;
+      m_qual_etof[i] = -99;
+      m_te_etof[i] = -99;
+      m_tmu_etof[i] = -99;
+      m_tpi_etof[i] = -99;
+      m_tk_etof[i] = -99;
+      m_tp_etof[i] = -99;
+
+      m_cntr_btof1[i] = -99;
+      m_ptot_btof1[i] = -99;
+      m_ph_btof1[i] = -99;
+      m_zhit_btof1[i] = -99;
+      m_qual_btof1[i] = -99;
+      m_te_btof1[i] = -99;
+      m_tmu_btof1[i] = -99;
+      m_tpi_btof1[i] = -99;
+      m_tk_btof1[i] = -99;
+      m_tp_btof1[i] = -99;
+
+      m_cntr_btof2[i] = -99;
+      m_ptot_btof2[i] = -99;
+      m_ph_btof2[i] = -99;
+      m_zhit_btof2[i] = -99;
+      m_qual_btof2[i] = -99;
+      m_te_btof2[i] = -99;
+      m_tmu_btof2[i] = -99;
+      m_tpi_btof2[i] = -99;
+      m_tk_btof2[i] = -99;
+      m_tp_btof2[i] = -99;
+
+      if ((*itTrk)->isTofTrackValid()) {
+
+        RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
+        SmartRefVector<RecTofTrack> tofTrkCol = (*itTrk)->tofTrack();
+
+        double ptrk = mdcTrk->p();
+
+        SmartRefVector<RecTofTrack>::iterator iter_tof = tofTrkCol.begin();
+        for (; iter_tof != tofTrkCol.end(); iter_tof++) {
+          TofHitStatus *status = new TofHitStatus;
+          status->setStatus((*iter_tof)->status());
+          if (!(status->is_barrel())) { // endcap
+            if (!(status->is_counter()))
+              continue; // ?
+            if (status->layer() != 0)
+              continue;                        // layer1
+            double path = (*iter_tof)->path(); // ?
+            double tof = (*iter_tof)->tof();
+            double ph = (*iter_tof)->ph();
+            double rhit = (*iter_tof)->zrhit();
+            double qual = 0.0 + (*iter_tof)->quality();
+            double cntr = 0.0 + (*iter_tof)->tofID();
+            double texp[5];
+            for (int j = 0; j < 5; j++) {
+              double gb = ptrk / xmass[j];
+              double beta = gb / sqrt(1 + gb * gb);
+              texp[j] = 10 * path / beta / velc;
+            }
+            // The etof info for this track is reset by at most once
+            m_cntr_etof[i] = cntr;
+            m_ptot_etof[i] = ptrk;
+            m_ph_etof[i] = ph;
+            m_rhit_etof[i] = rhit;
+            m_qual_etof[i] = qual;
+            m_te_etof[i] = tof - texp[0];
+            m_tmu_etof[i] = tof - texp[1];
+            m_tpi_etof[i] = tof - texp[2];
+            m_tk_etof[i] = tof - texp[3];
+            m_tp_etof[i] = tof - texp[4];
+
+            nHits_etof++;
+          }      //
+          else { // barrel
+            if (!(status->is_counter()))
+              continue;                          // ?
+            if (status->layer() == 1) {          // layer1
+              double path = (*iter_tof)->path(); // ?
+              double tof = (*iter_tof)->tof();
+              double ph = (*iter_tof)->ph();
+              double rhit = (*iter_tof)->zrhit();
+              double qual = 0.0 + (*iter_tof)->quality();
+              double cntr = 0.0 + (*iter_tof)->tofID();
+              double texp[5];
+              for (int j = 0; j < 5; j++) {
+                double gb = ptrk / xmass[j];
+                double beta = gb / sqrt(1 + gb * gb);
+                texp[j] = 10 * path / beta / velc;
+              }
+
+              // The btof1 info for this track is reset by at most once
+              m_cntr_btof1[i] = cntr;
+              m_ptot_btof1[i] = ptrk;
+              m_ph_btof1[i] = ph;
+              m_zhit_btof1[i] = rhit;
+              m_qual_btof1[i] = qual;
+              m_te_btof1[i] = tof - texp[0];
+              m_tmu_btof1[i] = tof - texp[1];
+              m_tpi_btof1[i] = tof - texp[2];
+              m_tk_btof1[i] = tof - texp[3];
+              m_tp_btof1[i] = tof - texp[4];
+
+              nHits_btof1++;
+            }
+
+            if (status->layer() == 2) {          // layer2
+              double path = (*iter_tof)->path(); // ?
+              double tof = (*iter_tof)->tof();
+              double ph = (*iter_tof)->ph();
+              double rhit = (*iter_tof)->zrhit();
+              double qual = 0.0 + (*iter_tof)->quality();
+              double cntr = 0.0 + (*iter_tof)->tofID();
+              double texp[5];
+              for (int j = 0; j < 5; j++) {
+                double gb = ptrk / xmass[j];
+                double beta = gb / sqrt(1 + gb * gb);
+                texp[j] = 10 * path / beta / velc;
+              }
+
+              // The btof1 info for this track is reset by at most once
+              m_cntr_btof2[i] = cntr;
+              m_ptot_btof2[i] = ptrk;
+              m_ph_btof2[i] = ph;
+              m_zhit_btof2[i] = rhit;
+              m_qual_btof2[i] = qual;
+              m_te_btof2[i] = tof - texp[0];
+              m_tmu_btof2[i] = tof - texp[1];
+              m_tpi_btof2[i] = tof - texp[2];
+              m_tk_btof2[i] = tof - texp[3];
+              m_tp_btof2[i] = tof - texp[4];
+
+              nHits_btof2++;
+            }
+          }
+
+          delete status;
+        }
+      } // if tof info valid
+
+      m_nHits_etof[i] = nHits_etof;
+      m_nHits_btof1[i] = nHits_btof1;
+      m_nHits_btof2[i] = nHits_btof2;
+
+    } // loop all charged track
 }
