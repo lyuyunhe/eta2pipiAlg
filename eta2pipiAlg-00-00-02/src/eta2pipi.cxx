@@ -11,8 +11,6 @@
 #include "EventModel/EventModel.h"
 #include "EventModel/Event.h"
 
-#include "EvtRecEvent/EvtRecEvent.h"
-#include "EvtRecEvent/EvtRecTrack.h"
 #include "DstEvent/TofHitStatus.h"
 #include "EventModel/EventHeader.h"
 
@@ -45,28 +43,22 @@ const double mpi = 0.13957;
 const double xmass[5] = { 0.000511, 0.105658, 0.139570, 0.493677, 0.938272 };
 // const double velc = 29.9792458;  tof_path unit in cm.
 const double velc = 299.792458; // tof path unit in mm
-typedef std::vector<int> Vint;
-typedef std::vector<HepLorentzVector> Vp4;
-int nCounter_PSL[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-bool debug = false;
+int nCounter_PSL[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 #include "McTruth/McParticle.h"
-//#include "MdcRecEvent/RecMdcTrack.h"
-//#include "MdcRecEvent/RecMdcDedx.h"
-//#include "TofRecEvent/RecTofTrack.h"
-//#include "EmcRecEventModel/RecEmcShower.h"
-//#include "MucRecEvent/RecMucTrack.h"
-//#include "VertexFitRefine/VertexFitRefine.h"
 
 /////////////////////////////////////////////////////////////////////////////
 
 eta2pipi::eta2pipi(const std::string &name, ISvcLocator *pSvcLocator)
     : Algorithm(name, pSvcLocator) {
 
+  declareProperty("debug", m_debug = 1);
   declareProperty("Test4C", m_test4C = 1);
   declareProperty("Test5C", m_test5C = 1);
+  declareProperty("chisq_4c_cut", m_chisq_4c_cut = 100);
+  declareProperty("mgpippim_cut", m_mgpippim_cut = -1);
 
-  declareProperty("CheckDedx", m_checkDedx = 1);
-  declareProperty("CheckTof", m_checkTof = 1);
+  declareProperty("CheckDedx", m_checkDedx = 0);
+  declareProperty("CheckTof", m_checkTof = 0);
   // Declare the properties
 }
 
@@ -75,6 +67,8 @@ StatusCode eta2pipi::initialize() {
   //--------------------------------------------------------------------------
   MsgStream log(msgSvc(), name());
   log << MSG::INFO << "in initialize()" << endmsg;
+  std::cout << "Applied chisq_4c_cut = " << m_chisq_4c_cut << std::endl;
+  std::cout << "Applied mgpippim_cut = " << m_mgpippim_cut << std::endl;
 
   StatusCode status;
   nevt = 0;
@@ -85,8 +79,8 @@ StatusCode eta2pipi::initialize() {
     log << MSG::INFO << "Unable to retrieve pointer to THistSvc" << endreq;
     return status;
   }
-  m_cutflow = new TH1F("cutflow", "cutflow", 9, -0.5,
-                       8.5); // 8 is bin from -0.5 to 6.5.
+  m_cutflow = new TH1F("cutflow", "cutflow", 10, -0.5,
+                       9.5); // 10 is bin from -0.5 to 9.5.
   status = m_histSvc->regHist("/HIST/cutflow", m_cutflow);
 
   // mc information
@@ -178,17 +172,21 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addItem("mc_px_pim_mom", px_pim_mom);
       status = m_anaTuple->addItem("mc_py_pim_mom", py_pim_mom);
       status = m_anaTuple->addItem("mc_pz_pim_mom", pz_pim_mom);
-      // kmfit Info.
+      // kmfit4C Info.
+      status = m_anaTuple->addItem("kmfit_Jpsigam_index", m_kmfit_Jpsigam_index);
+      status = m_anaTuple->addItem("kmfit_Etagam_index", m_kmfit_Etagam_index);
       // lab_pip
       status = m_anaTuple->addItem("kmfit_lab_pip_e", m_kmfit_lab_pip_e);
       status = m_anaTuple->addItem("kmfit_lab_pip_px", m_kmfit_lab_pip_px);
       status = m_anaTuple->addItem("kmfit_lab_pip_py", m_kmfit_lab_pip_py);
       status = m_anaTuple->addItem("kmfit_lab_pip_pz", m_kmfit_lab_pip_pz);
+      status = m_anaTuple->addItem("kmfit_lab_pip_mom", m_kmfit_lab_pip_mom);
       // lab_pim
       status = m_anaTuple->addItem("kmfit_lab_pim_e", m_kmfit_lab_pim_e);
       status = m_anaTuple->addItem("kmfit_lab_pim_px", m_kmfit_lab_pim_px);
       status = m_anaTuple->addItem("kmfit_lab_pim_py", m_kmfit_lab_pim_py);
       status = m_anaTuple->addItem("kmfit_lab_pim_pz", m_kmfit_lab_pim_pz);
+      status = m_anaTuple->addItem("kmfit_lab_pim_mom", m_kmfit_lab_pim_mom);
       // lab_Etagam
       status = m_anaTuple->addItem("kmfit_lab_Etagam_e", m_kmfit_lab_Etagam_e);
       status =
@@ -197,15 +195,20 @@ StatusCode eta2pipi::initialize() {
           m_anaTuple->addItem("kmfit_lab_Etagam_py", m_kmfit_lab_Etagam_py);
       status =
           m_anaTuple->addItem("kmfit_lab_Etagam_pz", m_kmfit_lab_Etagam_pz);
+      status =
+          m_anaTuple->addItem("kmfit_lab_Etagam_mom", m_kmfit_lab_Etagam_mom);
 
-      // lab_ISRgam
-      status = m_anaTuple->addItem("kmfit_lab_ISRgam_e", m_kmfit_lab_ISRgam_e);
+      // lab_Jpsigam
       status =
-          m_anaTuple->addItem("kmfit_lab_ISRgam_px", m_kmfit_lab_ISRgam_px);
+          m_anaTuple->addItem("kmfit_lab_Jpsigam_e", m_kmfit_lab_Jpsigam_e);
       status =
-          m_anaTuple->addItem("kmfit_lab_ISRgam_py", m_kmfit_lab_ISRgam_py);
+          m_anaTuple->addItem("kmfit_lab_Jpsigam_px", m_kmfit_lab_Jpsigam_px);
       status =
-          m_anaTuple->addItem("kmfit_lab_ISRgam_pz", m_kmfit_lab_ISRgam_pz);
+          m_anaTuple->addItem("kmfit_lab_Jpsigam_py", m_kmfit_lab_Jpsigam_py);
+      status =
+          m_anaTuple->addItem("kmfit_lab_Jpsigam_pz", m_kmfit_lab_Jpsigam_pz);
+      status =
+          m_anaTuple->addItem("kmfit_lab_Jpsigam_mom", m_kmfit_lab_Jpsigam_mom);
 
       // Four momentum boosted to eta
       // cms_pim
@@ -213,12 +216,14 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addItem("kmfit_cms_pim_px", m_kmfit_cms_pim_px);
       status = m_anaTuple->addItem("kmfit_cms_pim_py", m_kmfit_cms_pim_py);
       status = m_anaTuple->addItem("kmfit_cms_pim_pz", m_kmfit_cms_pim_pz);
+      status = m_anaTuple->addItem("kmfit_cms_pim_mom", m_kmfit_cms_pim_mom);
 
       // cms_pip
       status = m_anaTuple->addItem("kmfit_cms_pip_e", m_kmfit_cms_pip_e);
       status = m_anaTuple->addItem("kmfit_cms_pip_px", m_kmfit_cms_pip_px);
       status = m_anaTuple->addItem("kmfit_cms_pip_py", m_kmfit_cms_pip_py);
       status = m_anaTuple->addItem("kmfit_cms_pip_pz", m_kmfit_cms_pip_pz);
+      status = m_anaTuple->addItem("kmfit_cms_pip_mom", m_kmfit_cms_pip_mom);
 
       // cms_Etagam
       status = m_anaTuple->addItem("kmfit_cms_Etagam_e", m_kmfit_cms_Etagam_e);
@@ -228,20 +233,87 @@ StatusCode eta2pipi::initialize() {
           m_anaTuple->addItem("kmfit_cms_Etagam_py", m_kmfit_cms_Etagam_py);
       status =
           m_anaTuple->addItem("kmfit_cms_Etagam_pz", m_kmfit_cms_Etagam_pz);
+      status =
+          m_anaTuple->addItem("kmfit_cms_Etagam_mom", m_kmfit_cms_Etagam_mom);
 
-      // Inv.Masses[kmfit]
+      // after 4C, Inv.Masses[kmfit]
       status = m_anaTuple->addItem("kmfit_mg1pippim", m_kmfit_mg1pippim);
       status = m_anaTuple->addItem("kmfit_mg2pippim", m_kmfit_mg2pippim);
       status = m_anaTuple->addItem("kmfit_mpippim", m_kmfit_mpippim);
+      status = m_anaTuple->addItem("kmfit_mEtagampippim", m_kmfit_mEtagampippim);
       // 4C Info.
-      status =
-          m_anaTuple->addItem("kmfit_chi2_ggpippim", m_kmfit_chi2_ggpippim);
-      status =
-          m_anaTuple->addItem("kmfit_chi2_gggpippim", m_kmfit_chi2_gggpippim);
+      status = m_anaTuple->addItem("kmfit_chi2_ggpippim", m_kmfit_chi2_ggpippim);
+      status = m_anaTuple->addItem("kmfit_chi2_threegampippim", m_kmfit_chi2_threegampippim);
+      
       // 5C Info.
-      status = m_anaTuple->addItem("chi2", m_chi2);
-      status = m_anaTuple->addItem("meta", m_meta);
+      status = m_anaTuple->addItem("kmfit5C_Jpsigam_index", m_kmfit5C_Jpsigam_index);
+      status = m_anaTuple->addItem("kmfit5C_Etagam_index", m_kmfit5C_Etagam_index);
+      status = m_anaTuple->addItem("kmfit5C_chi2", m_kmfit5C_chi2);
+      // kmfit5C, Inv.Masses
+      status = m_anaTuple->addItem("kmfit5C_mEtagampippim", m_kmfit5C_mEtagampippim);
+      status = m_anaTuple->addItem("kmfit5C_mgam1pippim", m_kmfit5C_mgam1pippim);
+      status = m_anaTuple->addItem("kmfit5C_mpippim", m_kmfit5C_mpippim);
+      // kmfit5C four lab mom
 
+      status = m_anaTuple->addItem("kmfit5C_lab_pip_e", m_kmfit5C_lab_pip_e);
+      status = m_anaTuple->addItem("kmfit5C_lab_pip_px", m_kmfit5C_lab_pip_px);
+      status = m_anaTuple->addItem("kmfit5C_lab_pip_py", m_kmfit5C_lab_pip_py);
+      status = m_anaTuple->addItem("kmfit5C_lab_pip_pz", m_kmfit5C_lab_pip_pz);
+      status =
+          m_anaTuple->addItem("kmfit5C_lab_pip_mom", m_kmfit5C_lab_pip_mom);
+
+      status = m_anaTuple->addItem("kmfit5C_lab_pim_e", m_kmfit5C_lab_pim_e);
+      status = m_anaTuple->addItem("kmfit5C_lab_pim_px", m_kmfit5C_lab_pim_px);
+      status = m_anaTuple->addItem("kmfit5C_lab_pim_py", m_kmfit5C_lab_pim_py);
+      status = m_anaTuple->addItem("kmfit5C_lab_pim_pz", m_kmfit5C_lab_pim_pz);
+      status =
+          m_anaTuple->addItem("kmfit5C_lab_pim_mom", m_kmfit5C_lab_pim_mom);
+
+      status =
+          m_anaTuple->addItem("kmfit5C_lab_Etagam_e", m_kmfit5C_lab_Etagam_e);
+      status =
+          m_anaTuple->addItem("kmfit5C_lab_Etagam_px", m_kmfit5C_lab_Etagam_px);
+      status =
+          m_anaTuple->addItem("kmfit5C_lab_Etagam_py", m_kmfit5C_lab_Etagam_py);
+      status =
+          m_anaTuple->addItem("kmfit5C_lab_Etagam_pz", m_kmfit5C_lab_Etagam_pz);
+      status = m_anaTuple->addItem("kmfit5C_lab_Etagam_mom",
+                                   m_kmfit5C_lab_Etagam_mom);
+
+      status =
+          m_anaTuple->addItem("kmfit5C_lab_Jpsigam_e", m_kmfit5C_lab_Jpsigam_e);
+      status = m_anaTuple->addItem("kmfit5C_lab_Jpsigam_px",
+                                   m_kmfit5C_lab_Jpsigam_px);
+      status = m_anaTuple->addItem("kmfit5C_lab_Jpsigam_py",
+                                   m_kmfit5C_lab_Jpsigam_py);
+      status = m_anaTuple->addItem("kmfit5C_lab_Jpsigam_pz",
+                                   m_kmfit5C_lab_Jpsigam_pz);
+      status = m_anaTuple->addItem("kmfit5C_lab_Jpsigam_mom",
+                                   m_kmfit5C_lab_Jpsigam_mom);
+      // kmfit5C cms
+      status = m_anaTuple->addItem("kmfit5C_cms_pim_e", m_kmfit5C_cms_pim_e);
+      status = m_anaTuple->addItem("kmfit5C_cms_pim_px", m_kmfit5C_cms_pim_px);
+      status = m_anaTuple->addItem("kmfit5C_cms_pim_py", m_kmfit5C_cms_pim_py);
+      status = m_anaTuple->addItem("kmfit5C_cms_pim_pz", m_kmfit5C_cms_pim_pz);
+      status =
+          m_anaTuple->addItem("kmfit5C_cms_pim_mom", m_kmfit5C_cms_pim_mom);
+
+      status = m_anaTuple->addItem("kmfit5C_cms_pip_e", m_kmfit5C_cms_pip_e);
+      status = m_anaTuple->addItem("kmfit5C_cms_pip_px", m_kmfit5C_cms_pip_px);
+      status = m_anaTuple->addItem("kmfit5C_cms_pip_py", m_kmfit5C_cms_pip_py);
+      status = m_anaTuple->addItem("kmfit5C_cms_pip_pz", m_kmfit5C_cms_pip_pz);
+      status =
+          m_anaTuple->addItem("kmfit5C_cms_pip_mom", m_kmfit5C_cms_pip_mom);
+      status =
+          m_anaTuple->addItem("kmfit5C_cms_Etagam_e", m_kmfit5C_cms_Etagam_e);
+      status =
+          m_anaTuple->addItem("kmfit5C_cms_Etagam_px", m_kmfit5C_cms_Etagam_px);
+      status =
+          m_anaTuple->addItem("kmfit5C_cms_Etagam_py", m_kmfit5C_cms_Etagam_py);
+      status =
+          m_anaTuple->addItem("kmfit5C_cms_Etagam_pz", m_kmfit5C_cms_Etagam_pz);
+      status = m_anaTuple->addItem("kmfit5C_cms_Etagam_mom",
+                                   m_kmfit5C_cms_Etagam_mom);
       // dE/dx
       status = m_anaTuple->addItem("nGood", m_nGood, 0, 200);
       status = m_anaTuple->addIndexedItem("ptrk", m_nGood, m_ptrk);
@@ -305,16 +377,31 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addIndexedItem("dedx_pid", m_nGood, m_dedx_pid);
       status = m_anaTuple->addIndexedItem("tof1_pid", m_nGood, m_tof1_pid);
       status = m_anaTuple->addIndexedItem("tof2_pid", m_nGood, m_tof2_pid);
-      status =
-          m_anaTuple->addIndexedItem("prob_pi_pid", m_nGood, m_prob_pi_pid);
+      status = m_anaTuple->addIndexedItem("prob_pi_pid", m_nGood, m_prob_pi_pid);
       status = m_anaTuple->addIndexedItem("prob_e_pid", m_nGood, m_prob_e_pid);
+      status = m_anaTuple->addIndexedItem("prob_mu_pid", m_nGood, m_prob_mu_pid);
       status = m_anaTuple->addIndexedItem("pi_pid", m_nGood, m_pi_pid);
+      status = m_anaTuple->addItem("pip_px", m_kalTrk_pip_px);
+      status = m_anaTuple->addItem("pip_py", m_kalTrk_pip_py);
+      status = m_anaTuple->addItem("pip_pz", m_kalTrk_pip_pz);
+      status = m_anaTuple->addItem("pip_e", m_kalTrk_pip_e);
+      status = m_anaTuple->addItem("pip_mom", m_kalTrk_pip_mom);
+      status = m_anaTuple->addItem("pim_px", m_kalTrk_pim_px);
+      status = m_anaTuple->addItem("pim_py", m_kalTrk_pim_py);
+      status = m_anaTuple->addItem("pim_pz", m_kalTrk_pim_pz);
+      status = m_anaTuple->addItem("pim_e", m_kalTrk_pim_e);
+      status = m_anaTuple->addItem("pim_mom", m_kalTrk_pim_mom);
       // photon
       status = m_anaTuple->addItem("nGam", m_nGam, 0, 200);
       status = m_anaTuple->addIndexedItem("dthe", m_nGam, m_dthe);
       status = m_anaTuple->addIndexedItem("dphi", m_nGam, m_dphi);
       status = m_anaTuple->addIndexedItem("dang", m_nGam, m_dang);
       status = m_anaTuple->addIndexedItem("eraw", m_nGam, m_eraw);
+      status = m_anaTuple->addIndexedItem("theta", m_nGam, m_theta);
+      status = m_anaTuple->addIndexedItem("phi", m_nGam, m_phi);
+
+      status = m_anaTuple->addItem("kmfit_ene_g1", m_ene_g1);
+      status = m_anaTuple->addItem("kmfit_ene_g2", m_ene_g2);
       //
 
     } else {
@@ -370,66 +457,59 @@ StatusCode eta2pipi::execute() {
   //-------------------------------------------------
   // Session #0:truth MC
   //-------------------------------------------------
-  if (debug)
-    cout << __LINE__ << endl;
+  HepLorentzVector p4_jpsi, p4_gam1, p4_eta, p4_gam2, p4_pip, p4_pim;
   if (eventHeader->runNumber() < 0) { // MC information
-    // MC particle collection
-    SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(),
-                                                     "/Event/MC/McParticleCol");
-    if (debug)
-      cout << __LINE__ << endl;
-    int m_numParticle = 0;
-    if (debug)
-      cout << __LINE__ << endl;
-    if (!mcParticleCol) {
-      std::cout << "Could not retrieve McParticelCol" << std::endl;
-      return StatusCode::FAILURE;
-    } else {
-      bool jpsiDecay = false;
-      int rootIndex = -1;
-      Event::McParticleCol::iterator iter_mc;
-      HepLorentzVector p4_jpsi, p4_gam1, p4_eta, p4_gam2, p4_pip, p4_pim;
-      for (iter_mc = mcParticleCol->begin(); iter_mc != mcParticleCol->end();
-           iter_mc++) {
+    SmartDataPtr<Event::EventHeader> eventHeader(
+        eventSvc(), "/Event/EventHeader"); // Remove this statement if it
+                                           // already exists in your codes.
+    if (eventHeader->runNumber() < 0) {
+      SmartDataPtr<Event::McParticleCol> mcParticleCol(
+          eventSvc(), "/Event/MC/McParticleCol");
+      if (!mcParticleCol) {
+        std::cout << "Could not retrieve McParticelCol" << std::endl;
+        return (StatusCode::FAILURE);
+      }
+      Event::McParticleCol::iterator iter_mc = mcParticleCol->begin();
+      m_idxmc = 0;
+      const int incPid = 443; // 443 is the PDG code of J/psi
+      bool incPdcy(false);
+      int rootIndex(-1);
+      for (; iter_mc != mcParticleCol->end(); iter_mc++) {
         if ((*iter_mc)->primaryParticle())
           continue;
         if (!(*iter_mc)->decayFromGenerator())
           continue;
-        if ((*iter_mc)->particleProperty() ==
-            443) // 443=Jpsi; 100443=Psip; 30443=Psipp
-        {
-          jpsiDecay = true;
+        if ((*iter_mc)->particleProperty() == incPid) {
+          incPdcy = true;
           rootIndex = (*iter_mc)->trackIndex();
-        } // loop of 443
-        if (!jpsiDecay)
+        }
+        if (!incPdcy)
           continue;
-        int trkidx = (*iter_mc)->trackIndex() - rootIndex; // 0ID= 4  // c
-        int mcidx =
-            ((*iter_mc)->mother()).trackIndex() - rootIndex; // 1ID= -4// c-bar
-        int pdgid = (*iter_mc)->particleProperty();          // 2ID= 91// cluste
-        int motherpdgid =
-            ((*iter_mc)->mother()).particleProperty(); // 2ID= 91// cluste
-
-        m_trkidx[m_numParticle] = trkidx;
-        m_pdgid[m_numParticle] = pdgid; // 6ID= 310 or 2112           // Ks0
-        m_motherpdgid[m_numParticle] =
-            ((*iter_mc)->mother()).particleProperty();
-        m_motheridx[m_numParticle] =
-            mcidx; // 7ID= -2112 or 310          // n-bar
-        double costmc =
-            cos((*iter_mc)->initialFourMomentum().theta()); // 9ID= 211 // pion+
-        double ptmc =
-            (*iter_mc)->initialFourMomentum().rho(); // 9ID= 211 // pion+
-        double pxmc =
-            (*iter_mc)->initialFourMomentum().px(); // 10ID= -211 // pion-
-        double pymc =
-            (*iter_mc)->initialFourMomentum().py(); // 11ID= 2212 // pion+
-        double pzmc =
-            (*iter_mc)->initialFourMomentum().pz(); // 12ID= -211 // pion-
+        int pdgid = (*iter_mc)->particleProperty();
+        int motherpdgid = ((*iter_mc)->mother()).particleProperty();
+        m_pdgid[m_idxmc] = pdgid;
+        if ((*iter_mc)->particleProperty() == incPid ||
+            ((*iter_mc)->mother()).particleProperty() == incPid)
+          m_motheridx[m_idxmc] =
+              ((*iter_mc)->mother()).trackIndex() - rootIndex;
+        else
+          m_motheridx[m_idxmc] =
+              ((*iter_mc)->mother()).trackIndex() - rootIndex -
+              1; // The reason why an extra 1 is subtracted in this else
+                 // statement is as follows. There is an otiose electron
+                 // following J/psi in the MC particle collection. It exists in
+                 // the collection as a primary particle, and thus its PDG code
+                 // and mother index will not be stored to the arrays m_pdgid
+                 // and m_motheridx. As a result, all the particles following it
+                 // will be shifted forward by 1 place. Accordingly, all the
+                 // mother indices of their daughters should be subtracted by 1.
+        double costmc = cos((*iter_mc)->initialFourMomentum().theta());
+        double ptmc = (*iter_mc)->initialFourMomentum().rho();
+        double pxmc = (*iter_mc)->initialFourMomentum().px();
+        double pymc = (*iter_mc)->initialFourMomentum().py();
+        double pzmc = (*iter_mc)->initialFourMomentum().pz();
         double pemc = (*iter_mc)->initialFourMomentum().e();
-        // if(debug) cout<<__LINE__<<endl;
-        // p4 and costheta
-        if (fabs(pdgid) == 443) // jpsi=443
+        if (pdgid == 443) // jpsi=443
         {
           p4_jpsi.setPx(pxmc);
           p4_jpsi.setPy(pymc);
@@ -440,7 +520,7 @@ StatusCode eta2pipi::execute() {
           m_jpsi_mom = ptmc;
           n_jpsi_cos = costmc;
           m_jpsi_cos = costmc;
-          m_jpsi_pdgid == pdgid;
+          m_jpsi_pdgid = pdgid;
           e_jpsi_mom = pemc;
           px_jpsi_mom = pxmc;
           py_jpsi_mom = pymc;
@@ -456,12 +536,13 @@ StatusCode eta2pipi::execute() {
           m_gam1_mom = ptmc;
           n_gam1_cos = costmc;
           m_gam1_cos = costmc;
-          m_gam1_pdgid == pdgid;
+          m_gam1_pdgid = pdgid;
           e_gam1_mom = pemc;
           px_gam1_mom = pxmc;
           py_gam1_mom = pymc;
           pz_gam1_mom = pzmc;
-        }                                       // loop of pdgid==22
+        }
+
         if (pdgid == 221 && motherpdgid == 443) // etaid=221
         {
           p4_eta.setPx(pxmc);
@@ -472,12 +553,13 @@ StatusCode eta2pipi::execute() {
           m_eta_mom = ptmc;
           n_eta_cos = costmc;
           m_eta_cos = costmc;
-          m_eta_pdgid == pdgid;
+          m_eta_pdgid = pdgid;
           e_eta_mom = pemc;
           px_eta_mom = pxmc;
           py_eta_mom = pymc;
           pz_eta_mom = pzmc;
-        }                                      // loop of pdg=221
+        }
+
         if (pdgid == 22 && motherpdgid == 221) // gam2 from eta
         {
           p4_gam2.setPx(pxmc);
@@ -488,12 +570,12 @@ StatusCode eta2pipi::execute() {
           m_gam2_mom = ptmc;
           n_gam2_cos = costmc;
           m_gam2_cos = costmc;
-          m_gam2_pdgid == pdgid;
+          m_gam2_pdgid = pdgid;
           e_gam2_mom = pemc;
           px_gam2_mom = pxmc;
           py_gam2_mom = pymc;
           pz_gam2_mom = pzmc;
-        }                                       // loop of pdg==22&&pdg==221
+        }
         if (pdgid == 211 && motherpdgid == 221) // pion^+
         {
           p4_pip.setPx(pxmc);
@@ -504,7 +586,7 @@ StatusCode eta2pipi::execute() {
           m_pip_mom = ptmc;
           n_pip_cos = costmc;
           m_pip_cos = costmc;
-          m_pip_pdgid == pdgid;
+          m_pip_pdgid = pdgid;
           e_pip_mom = pemc;
           px_pip_mom = pxmc;
           py_pip_mom = pymc;
@@ -520,18 +602,15 @@ StatusCode eta2pipi::execute() {
           m_pim_mom = ptmc;
           n_pim_cos = costmc;
           m_pim_cos = costmc;
-          m_pim_pdgid == pdgid;
+          m_pim_pdgid = pdgid;
           e_pim_mom = pemc;
           px_pim_mom = pxmc;
           py_pim_mom = pymc;
           pz_pim_mom = pzmc;
         } // loop of pdgid == -211 && motherpdgid ==221
-        // if(debug) cout<<__LINE__<<endl;
-        m_numParticle += 1;
-        if (debug)
-          cout << __LINE__ << endl;
-      } // loop of all particles  (for(ter_mc = mcParticleCol->begin()...))
-      // cms (center mass system)
+
+        m_idxmc++;
+      } // loop of all particles(for(ter_mc=mcP....>end()....))
       const Hep3Vector mc_eta_cms = -p4_eta.boostVector();
       p4_gam2.boost(mc_eta_cms);
       p4_pip.boost(mc_eta_cms);
@@ -551,8 +630,8 @@ StatusCode eta2pipi::execute() {
       px_gam2_mom = p4_gam2.px();
       py_gam2_mom = p4_gam2.py();
       pz_gam2_mom = p4_gam2.pz();
-    } // loop of #413 else
-    m_idxmc = m_numParticle;
+    }
+    // MC particle collection
   } // loop of (!mcParticleCol)
 
   m_mcTuple->write();
@@ -575,7 +654,7 @@ StatusCode eta2pipi::execute() {
   if (vtxsvc) {
     if (vtxsvc->isVertexValid()) {
       vertexValid = true;
-      if (debug)
+      if (m_debug)
         cout << __LINE__ << endl;
       double *dbv = vtxsvc->PrimaryVertex();
       double *vv = vtxsvc->SigmaPrimaryVertex();
@@ -592,7 +671,7 @@ StatusCode eta2pipi::execute() {
   nCounter_PSL[2]++;
   m_cutflow->Fill(2);
 
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
   int nCharge = 0;
   for (int i = 0; i < evtRecEvent->totalCharged(); i++) {
@@ -704,15 +783,19 @@ StatusCode eta2pipi::execute() {
     if (fabs(costheta) > 0.92)
       continue;
     if (!((fabs(costheta) < 0.80 && eraw > 0.025) ||
-          (fabs(costheta) > 0.86 || (fabs(costheta) < 0.92) && eraw > 0.05)))
+          (fabs(costheta) > 0.86 && eraw > 0.05)))
       continue;
     if (fabs(dang) < 10.0)
       continue;
 
-    m_dthe[nGam] = dthe;
-    m_dphi[nGam] = dphi;
-    m_dang[nGam] = dang;
-    m_eraw[nGam] = eraw;
+    if (nGam < 200) {
+      m_dthe[nGam] = dthe;
+      m_dphi[nGam] = dphi;
+      m_dang[nGam] = dang;
+      m_eraw[nGam] = eraw;
+      m_phi[nGam] = emcTrk->phi();
+      m_theta[nGam] = emcTrk->theta();
+    }
     iGam.push_back(i);
     nGam++;
   } // end of loop of all photons
@@ -728,13 +811,631 @@ StatusCode eta2pipi::execute() {
   }
   nCounter_PSL[4]++;
   m_cutflow->Fill(4);
-  if (debug)
+  if (m_debug)
     cout << __LINE__ << endl;
 
   //----------------------------------------------------
   //  check dedx infomation
   //----------------------------------------------------
   if (m_checkDedx == 1) {
+    checkDedx(evtRecTrkCol, iGood, nGood); 
+  }
+  if (m_debug)
+    cout << __LINE__ << endl;
+
+  //-------------------------------------------------
+  // check TOF infomation
+  //------------------------------------------------
+
+  if (m_checkTof == 1) {
+    checkTof(evtRecTrkCol, iGood, nGood); 
+  }   // check tof
+  if (m_debug)
+    cout << __LINE__ << endl;
+
+  //---------------------------------------------------
+  // Assign 4-momentum to each photon
+  //--------------------------------------------------
+
+  Vp4 pGam;
+  pGam.clear();
+  for (int i = 0; i < nGam; i++) {
+    EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGam[i];
+    RecEmcShower *emcTrk = (*itTrk)->emcShower();
+    double eraw = emcTrk->energy();
+    double phi = emcTrk->phi();
+    double the = emcTrk->theta();
+    HepLorentzVector ptrk;
+    ptrk.setPx(eraw * sin(the) * cos(phi));
+    ptrk.setPy(eraw * sin(the) * sin(phi));
+    ptrk.setPz(eraw * cos(the));
+    ptrk.setE(eraw);
+
+    //    ptrk = ptrk.boost(-0.011,0,0);// boost to cms
+    
+    pGam.push_back(ptrk);
+  }
+  if (m_debug)
+    cout << __LINE__ << endl;
+
+  //-------------------------------------------------
+  // Session#3 Particle indentification for the charged tracks
+  // 1) particle indentification for charged trks
+  // 2) Assign 4-momentum to each charged track (679-702)
+  //-------------------------------------------------
+
+  ParticleID *pid = ParticleID::instance();
+
+  if (m_debug)
+    cout << __LINE__ << endl;
+  for (int i = 0; i < nGood; i++) {
+    if (m_debug)
+      std::cout << "Check pid info for good charged track " << i << std::endl;
+
+    m_pi_pid[i] = false;
+
+    EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
+    //    if(pid) delete pid;
+    pid->init();
+    pid->setMethod(pid->methodProbability());
+    //    pid->setMethod(pid->methodLikelihood());  //for Likelihood Method
+
+    pid->setChiMinCut(4);
+    pid->setRecTrack(*itTrk);
+    pid->usePidSys(pid->useDedx() | pid->useTof1() | pid->useTof2() |
+                   pid->useTofE()); // use PID sub-system
+    pid->identify(pid->onlyPion() | pid->onlyElectron() | pid->onlyMuon());
+    pid->calculate();
+    if (!(pid->IsPidInfoValid())) {
+      m_ptrk_pid[i] = -99;
+      m_cost_pid[i] = -99;
+      m_dedx_pid[i] = -99;
+      m_tof1_pid[i] = -99;
+      m_tof2_pid[i] = -99;
+      m_prob_pi_pid[i] = -99;
+      m_prob_e_pid[i] = -99;
+      m_prob_mu_pid[i] = -99;
+    } else {
+      RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
+      m_ptrk_pid[i] = mdcTrk->p();
+      m_cost_pid[i] = cos(mdcTrk->theta());
+      m_dedx_pid[i] = pid->chiDedx(2);
+      m_tof1_pid[i] = pid->chiTof1(2);
+      m_tof2_pid[i] = pid->chiTof2(2);
+      m_prob_pi_pid[i] = pid->probPion();
+      m_prob_e_pid[i] = pid->probElectron();
+      m_prob_mu_pid[i] = pid->probMuon();
+
+      //  if(pid->probPion() < 0.001 || (pid->probPion() < pid->probKaon()))
+      // continue;
+      if (pid->probPion() > 0.001 && (pid->probPion() >= pid->probElectron())) {
+        m_pi_pid[i] = true;
+      }
+    }
+
+    //    if(pid->pdf(2)<pid->pdf(3)) continue; //  for Likelihood
+
+    RecMdcKalTrack *mdcKalTrk =
+        (*itTrk)->mdcKalTrack(); // After ParticleID, use RecMdcKalTrack
+                                 // substitute RecMdcTrack
+    RecMdcKalTrack::setPidType(RecMdcKalTrack::pion); // PID can set to
+                                                      // electron, muon, pion,
+                                                      // kaon and proton;The
+                                                      // default setting is
+                                                      // pion
+
+    if (mdcKalTrk->charge() > 0) {
+      ipip.push_back(iGood[i]);
+      HepLorentzVector ptrk;
+      ptrk.setPx(mdcKalTrk->px());
+      ptrk.setPy(mdcKalTrk->py());
+      ptrk.setPz(mdcKalTrk->pz());
+      double p3 = ptrk.mag();
+      ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
+      m_pip_index = i;
+      m_pip_pi_pid = m_pi_pid[i];
+      m_kalTrk_pip_px = mdcKalTrk->px();
+      m_kalTrk_pip_py = mdcKalTrk->py();
+      m_kalTrk_pip_pz = mdcKalTrk->pz();
+      m_kalTrk_pip_mom = p3;
+      m_kalTrk_pip_e = sqrt(p3 * p3 + mpi * mpi);
+      //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
+
+      ppip.push_back(ptrk);
+    } else {
+      ipim.push_back(iGood[i]);
+      HepLorentzVector ptrk;
+      ptrk.setPx(mdcKalTrk->px());
+      ptrk.setPy(mdcKalTrk->py());
+      ptrk.setPz(mdcKalTrk->pz());
+      double p3 = ptrk.mag();
+      ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
+      m_pim_index = i;
+      m_pim_pi_pid = m_pi_pid[i];
+      m_kalTrk_pim_px = mdcKalTrk->px();
+      m_kalTrk_pim_py = mdcKalTrk->py();
+      m_kalTrk_pim_pz = mdcKalTrk->pz();
+      m_kalTrk_pim_mom = p3;
+      m_kalTrk_pim_e = sqrt(p3 * p3 + mpi * mpi);
+
+      //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
+
+      ppim.push_back(ptrk);
+    }
+    if (m_debug)
+      cout << __LINE__ << endl;
+  }
+  int npip = ipip.size();
+  int npim = ipim.size();
+  if (npip * npim != 1) {
+    return StatusCode::SUCCESS;
+  }                  // return SUCCESS;
+  nCounter_PSL[5]++; // After PID
+  m_cutflow->Fill(5);
+  //-------------------------------------------------------
+  // Session #4: Kinematic Fit
+  //-------------------------------------------------------
+  int iok = -1;
+  RecMdcKalTrack *pipTrk = (*(evtRecTrkCol->begin() + ipip[0]))->mdcKalTrack();
+  RecMdcKalTrack *pimTrk = (*(evtRecTrkCol->begin() + ipim[0]))->mdcKalTrack();
+
+  WTrackParameter wvpipTrk, wvpimTrk;
+  wvpipTrk = WTrackParameter(mpi, pipTrk->getZHelix(), pipTrk->getZError());
+  wvpimTrk = WTrackParameter(mpi, pimTrk->getZHelix(), pimTrk->getZError());
+
+  HepPoint3D vx(0.0, 0.0, 0.0);
+  HepSymMatrix Evx(3, 0);
+  double bx = 1E+6;
+  double by = 1E+6;
+  double bz = 1E+6;
+  Evx[0][0] = bx * bx;
+  Evx[1][1] = by * by;
+  Evx[2][2] = bz * bz;
+  //
+  // Set a common vertex with huge error[eta--->pim pip ]
+  //
+  VertexParameter vxpar;
+  vxpar.setVx(vx);
+  vxpar.setEvx(Evx);
+  VertexFit *vtxfit = VertexFit::instance();
+  vtxfit->init();
+  vtxfit->AddTrack(0, wvpipTrk);
+  vtxfit->AddTrack(1, wvpimTrk);
+  vtxfit->AddVertex(0, vxpar, 0, 1);
+  if (!vtxfit->Fit(0)) {
+    return StatusCode::SUCCESS;
+  } // return SUCCESS;
+  vtxfit->Swim(0);
+
+  nCounter_PSL[6]++; // After vertex fit
+  m_cutflow->Fill(6);
+  WTrackParameter wpip = vtxfit->wtrk(0);
+  WTrackParameter wpim = vtxfit->wtrk(1);
+
+  ///////////////////////////////////////////
+  //start kinematic fit 
+  ///////////////////////////////////////////
+  if(m_debug){
+    std::cout<<__LINE__<< std::endl;
+  }
+  m_kmfit_Etagam_index = -99;
+  m_kmfit_Jpsigam_index = -99;
+  m_kmfit_lab_pip_e = -99;
+  m_kmfit_lab_pip_px = -99;
+  m_kmfit_lab_pip_py = -99;
+  m_kmfit_lab_pip_pz = -99;
+  m_kmfit_lab_pip_mom = -99;
+  
+  m_kmfit_lab_pim_e = -99;
+  m_kmfit_lab_pim_px = -99;
+  m_kmfit_lab_pim_py = -99;
+  m_kmfit_lab_pim_pz = -99;
+  m_kmfit_lab_pim_mom = -99;
+
+  m_kmfit_lab_Jpsigam_e = -99.;
+  m_kmfit_lab_Jpsigam_px = -99.;
+  m_kmfit_lab_Jpsigam_py = -99.;
+  m_kmfit_lab_Jpsigam_pz = -99.;
+  m_kmfit_lab_Jpsigam_mom = -99.;
+
+  m_kmfit_lab_Etagam_e = -99.;
+  m_kmfit_lab_Etagam_px = -99.;
+  m_kmfit_lab_Etagam_py = -99.;
+  m_kmfit_lab_Etagam_pz = -99.;
+  m_kmfit_lab_Etagam_mom = -99.;
+
+  m_kmfit_cms_pip_e = -99.;
+  m_kmfit_cms_pip_px = -99.;
+  m_kmfit_cms_pip_py = -99.;
+  m_kmfit_cms_pip_pz = -99.;
+  m_kmfit_cms_pip_mom = -99.;
+
+  m_kmfit_cms_pim_e = -99.;
+  m_kmfit_cms_pim_px = -99.;
+  m_kmfit_cms_pim_py = -99.;
+  m_kmfit_cms_pim_pz = -99.;
+  m_kmfit_cms_pim_mom = -99.;
+
+  m_kmfit_cms_Etagam_e = -99.;
+  m_kmfit_cms_Etagam_px = -99.;
+  m_kmfit_cms_Etagam_py = -99.;
+  m_kmfit_cms_Etagam_pz = -99.;
+  m_kmfit_cms_Etagam_mom = -99.;
+ 
+
+  m_kmfit5C_Etagam_index = -99;
+  m_kmfit5C_Jpsigam_index = -99;
+
+  m_kmfit5C_lab_pip_e = -99.;
+  m_kmfit5C_lab_pip_px = -99.;
+  m_kmfit5C_lab_pip_py = -99.;
+  m_kmfit5C_lab_pip_pz = -99.;
+  m_kmfit5C_lab_pip_mom = -99.;
+
+  m_kmfit5C_lab_pim_e = -99.;
+  m_kmfit5C_lab_pim_px = -99.;
+  m_kmfit5C_lab_pim_py = -99.;
+  m_kmfit5C_lab_pim_pz = -99.;
+  m_kmfit5C_lab_pim_mom = -99.;
+
+  m_kmfit5C_lab_Jpsigam_e = -99.;
+  m_kmfit5C_lab_Jpsigam_px = -99.;
+  m_kmfit5C_lab_Jpsigam_py = -99.;
+  m_kmfit5C_lab_Jpsigam_pz = -99.;
+  m_kmfit5C_lab_Jpsigam_mom = -99.;
+
+  m_kmfit5C_lab_Etagam_e = -99.;
+  m_kmfit5C_lab_Etagam_px = -99.;
+  m_kmfit5C_lab_Etagam_py = -99.;
+  m_kmfit5C_lab_Etagam_pz = -99.;
+  m_kmfit5C_lab_Etagam_mom = -99.;
+
+  m_kmfit5C_cms_pip_e = -99.;
+  m_kmfit5C_cms_pip_px = -99.;
+  m_kmfit5C_cms_pip_py = -99.;
+  m_kmfit5C_cms_pip_pz = -99.;
+  m_kmfit5C_cms_pip_mom = -99.;
+
+  m_kmfit5C_cms_pim_e = -99.;
+  m_kmfit5C_cms_pim_px = -99.;
+  m_kmfit5C_cms_pim_py = -99.;
+  m_kmfit5C_cms_pim_pz = -99.;
+  m_kmfit5C_cms_pim_mom = -99.;
+
+  m_kmfit5C_cms_Etagam_e = -99.;
+  m_kmfit5C_cms_Etagam_px = -99.;
+  m_kmfit5C_cms_Etagam_py = -99.;
+  m_kmfit5C_cms_Etagam_pz = -99.;
+  m_kmfit5C_cms_Etagam_mom = -99.;
+
+  m_kmfit5C_chi2 = 9999.;
+  m_kmfit5C_mEtagampippim = -9999.;
+  m_kmfit5C_mgam1pippim = -9999.;
+  m_kmfit5C_mpippim = -9999.;
+  
+  if(m_debug){
+    std::cout<<"Start to perform kmfit"<< std::endl;
+  }
+  KinematicFit *kmfit = KinematicFit::instance();
+  // KalmanKinematicFit * kmfit = KalmanKinematicFit::instance();
+  //
+  //   Kinematic 4C fit
+  //
+  if (m_test4C == 1) {
+    //    double ecms = 3.097;
+    HepLorentzVector ecms(0.034, 0, 0, 3.097);
+    // 1) select the ig1 and ig2 which give the best chisq
+    double chisq_ggpippim = 9999.;
+    double chisq_threegampippim = 9999.;
+    int ig1 = -1;
+    int ig2 = -1;
+    double mg1pippim = -9999;
+    double mg2pippim = -9999;
+    double mpippim = -9999;
+    double mEtagampippim = -9999;
+    for (int i = 0; i < nGam - 1; i++) {
+      RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + iGam[i]))->emcShower();
+      for (int j = i + 1; j < nGam; j++) {
+        RecEmcShower *g2Trk = (*(evtRecTrkCol->begin() + iGam[j]))->emcShower();
+        kmfit->init();
+        kmfit->AddTrack(0, wpip);
+        kmfit->AddTrack(1, wpim);
+        kmfit->AddTrack(2, 0.0, g1Trk);
+        kmfit->AddTrack(3, 0.0, g2Trk);
+        kmfit->AddFourMomentum(0, ecms);
+        bool oksq = kmfit->Fit();
+        if (oksq) {
+          double chi2 = kmfit->chisq();
+          iok = 1;
+          if (chi2 < chisq_ggpippim) {
+            chisq_ggpippim = chi2;
+            ig1 = iGam[i];
+            ig2 = iGam[j];
+            HepLorentzVector g1pippim =
+                kmfit->pfit(0) + kmfit->pfit(1) + kmfit->pfit(2);
+            HepLorentzVector g2pippim =
+                kmfit->pfit(0) + kmfit->pfit(1) + kmfit->pfit(3);
+            HepLorentzVector pippim = kmfit->pfit(0) + kmfit->pfit(1);
+            double ene_g1 = kmfit->pfit(2).e();
+            double ene_g2 = kmfit->pfit(3).e();
+            HepLorentzVector p4_pip = kmfit->pfit(0);
+            HepLorentzVector p4_pim = kmfit->pfit(1);
+            m_kmfit_lab_pip_e = p4_pip.e();
+            m_kmfit_lab_pip_px = p4_pip.px();
+            m_kmfit_lab_pip_py = p4_pip.py();
+            m_kmfit_lab_pip_pz = p4_pip.pz();
+            m_kmfit_lab_pip_mom = p4_pip.rho();
+            m_kmfit_lab_pim_e = p4_pim.e();
+            m_kmfit_lab_pim_px = p4_pim.px();
+            m_kmfit_lab_pim_py = p4_pim.py();
+            m_kmfit_lab_pim_pz = p4_pim.pz();
+            m_kmfit_lab_pim_mom = p4_pim.rho();
+            HepLorentzVector p4_eta, p4_Jpsigam, p4_Etagam;
+            if (ene_g1 >= ene_g2) {
+              p4_eta = kmfit->pfit(3) + kmfit->pfit(0) + kmfit->pfit(1);
+              p4_Jpsigam = kmfit->pfit(2);
+              p4_Etagam = kmfit->pfit(3);
+              m_kmfit_Etagam_index = j; 
+              m_kmfit_Jpsigam_index = i; 
+            } else {
+              p4_eta = kmfit->pfit(2) + kmfit->pfit(0) + kmfit->pfit(1);
+              p4_Jpsigam = kmfit->pfit(3);
+              p4_Etagam = kmfit->pfit(2);
+              m_kmfit_Etagam_index = i; 
+              m_kmfit_Jpsigam_index = j; 
+            }
+            m_kmfit_lab_Etagam_e = p4_Etagam.e();
+            m_kmfit_lab_Etagam_px = p4_Etagam.px();
+            m_kmfit_lab_Etagam_py = p4_Etagam.py();
+            m_kmfit_lab_Etagam_pz = p4_Etagam.pz();
+            m_kmfit_lab_Etagam_mom = p4_Etagam.rho();
+            m_kmfit_lab_Jpsigam_e = p4_Jpsigam.e();
+            m_kmfit_lab_Jpsigam_px = p4_Jpsigam.px();
+            m_kmfit_lab_Jpsigam_py = p4_Jpsigam.py();
+            m_kmfit_lab_Jpsigam_pz = p4_Jpsigam.pz();
+            m_kmfit_lab_Jpsigam_mom = p4_Jpsigam.rho();
+
+            m_ene_g1 = ene_g1;
+            m_ene_g2 = ene_g2;
+            mg1pippim = g1pippim.m();
+            mg2pippim = g2pippim.m();
+            mpippim = pippim.m();
+            mEtagampippim = p4_eta.m();
+            // boost the Etagam, pip, pim to eta center of mass frame
+            const Hep3Vector eta_cms = -p4_eta.boostVector();
+            p4_pip.boost(eta_cms);
+            p4_pim.boost(eta_cms);
+            p4_Etagam.boost(eta_cms);
+
+            m_kmfit_cms_pip_e = p4_pip.e();
+            m_kmfit_cms_pip_px = p4_pip.px();
+            m_kmfit_cms_pip_py = p4_pip.py();
+            m_kmfit_cms_pip_pz = p4_pip.pz();
+            m_kmfit_cms_pip_mom = p4_pip.rho();
+            m_kmfit_cms_pim_e = p4_pim.e();
+            m_kmfit_cms_pim_px = p4_pim.px();
+            m_kmfit_cms_pim_py = p4_pim.py();
+            m_kmfit_cms_pim_pz = p4_pim.pz();
+            m_kmfit_cms_pim_mom = p4_pim.rho();
+            m_kmfit_cms_Etagam_e = p4_Etagam.e();
+            m_kmfit_cms_Etagam_px = p4_Etagam.px();
+            m_kmfit_cms_Etagam_py = p4_Etagam.py();
+            m_kmfit_cms_Etagam_pz = p4_Etagam.pz();
+            m_kmfit_cms_Etagam_mom = p4_Etagam.rho();
+          }
+        }
+      }
+    }
+
+    log << MSG::INFO << "4C kinematic fit chisq = " << chisq_ggpippim << endreq;
+    
+    if (chisq_ggpippim > m_chisq_4c_cut) {
+      return StatusCode::SUCCESS;
+    }
+
+    nCounter_PSL[7]++;
+    m_cutflow->Fill(7);
+
+    // Inv.Masses[kmfit]
+    m_kmfit_mg1pippim = mg1pippim;
+    m_kmfit_mg2pippim = mg2pippim;
+    m_kmfit_mpippim = mpippim;
+    m_kmfit_chi2_ggpippim = chisq_ggpippim;
+    m_kmfit_mEtagampippim = mEtagampippim;
+
+    if (m_mgpippim_cut > 0) {
+      if (fabs(m_kmfit_mEtagampippim - 0.547862) > m_mgpippim_cut) {
+        return StatusCode::SUCCESS;
+      }
+    }
+    // m(gam pip pim) cut
+    nCounter_PSL[8]++;
+    m_cutflow->Fill(8);
+
+    // 2) if nGam >=3
+    if (nGam >= 3) {
+      for (int i = 0; i < nGam - 2; i++) {
+        RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + iGam[i]))->emcShower();
+        for (int j = i + 1; j < nGam - 1; j++) {
+          RecEmcShower *g2Trk =
+              (*(evtRecTrkCol->begin() + iGam[j]))->emcShower();
+          for (int k = j + 1; k < nGam; k++) {
+            RecEmcShower *g3Trk =
+                (*(evtRecTrkCol->begin() + iGam[k]))->emcShower();
+            kmfit->init();
+            kmfit->AddTrack(0, wpip);
+            kmfit->AddTrack(1, wpim);
+            kmfit->AddTrack(2, 0.0, g1Trk);
+            kmfit->AddTrack(3, 0.0, g2Trk);
+            kmfit->AddTrack(4, 0.0, g3Trk);
+            kmfit->AddFourMomentum(0, ecms);
+            bool oksq = kmfit->Fit();
+            if (oksq) {
+              double chi2 = kmfit->chisq();
+              if (chi2 < chisq_threegampippim) {
+                chisq_threegampippim = chi2;
+              }
+            } // if oksq
+          }   // end of loop for k
+        }     // end of loop for j
+      }       // end of loop for i
+    }
+    m_kmfit_chi2_threegampippim = chisq_threegampippim;
+
+  } // if apply_4C
+
+  //
+  //  Kinematic 5C Fit
+
+
+  // find the best combination over all possible pi+ pi- gamma gamma pair
+  if (m_test5C == 1) {
+    //  double ecms = 3.097;
+    HepLorentzVector ecms(0.034, 0, 0, 3.097);
+    double chisq = 9999.;
+    int ig1 = -1;
+    int ig2 = -1;
+    for (int i = 0; i < nGam; i++) {
+      RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + iGam[i]))->emcShower();
+      for (int j = 0; j < nGam; j++) {
+        RecEmcShower *g2Trk = (*(evtRecTrkCol->begin() + iGam[j]))->emcShower();
+        if (i == j)
+          continue;
+        kmfit->init();
+        kmfit->AddTrack(0, wpip);
+        kmfit->AddTrack(1, wpim);
+        kmfit->AddTrack(2, 0.0, g1Trk);
+        kmfit->AddTrack(3, 0.0, g2Trk);
+        kmfit->AddResonance(0, 0.547862, 0, 1, 2); // eta ->gamma pip  pim
+        kmfit->AddFourMomentum(1, ecms);
+        if (!kmfit->Fit(0))
+          continue;
+        if (!kmfit->Fit(1))
+          continue;
+        bool oksq = kmfit->Fit();
+        if (oksq) {
+          double chi2 = kmfit->chisq();
+          if (chi2 < chisq) {
+            chisq = chi2;
+            ig1 = iGam[i];
+            ig2 = iGam[j];
+            m_kmfit5C_Etagam_index = i;
+            m_kmfit5C_Jpsigam_index = j;
+          }
+        }
+      }
+    }
+
+    log << MSG::INFO << "5C kinematic fit chisq = " << chisq << endreq;
+
+    if (chisq < 200) {
+      RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + ig1))->emcShower();
+      RecEmcShower *g2Trk = (*(evtRecTrkCol->begin() + ig2))->emcShower();
+
+      kmfit->init();
+      kmfit->AddTrack(0, wpip);
+      kmfit->AddTrack(1, wpim);
+      kmfit->AddTrack(2, 0.0, g1Trk);
+      kmfit->AddTrack(3, 0.0, g2Trk);
+      kmfit->AddResonance(0, 0.547, 0, 1, 2);
+      kmfit->AddFourMomentum(1, ecms);
+      bool oksq = kmfit->Fit();
+      if (oksq) {
+        HepLorentzVector Etagampippim5C =
+            kmfit->pfit(0) + kmfit->pfit(1) + kmfit->pfit(2);
+        HepLorentzVector gam1pippim5C =
+            kmfit->pfit(0) + kmfit->pfit(1) + kmfit->pfit(3);
+        HepLorentzVector pippim5C = kmfit->pfit(0) + kmfit->pfit(1);
+        // charged tracks four lab mom
+        HepLorentzVector p4_pip_5C = kmfit->pfit(0);
+        HepLorentzVector p4_pim_5C = kmfit->pfit(1);
+        m_kmfit5C_lab_pip_e = p4_pip_5C.e();
+        m_kmfit5C_lab_pip_px = p4_pip_5C.px();
+        m_kmfit5C_lab_pip_py = p4_pip_5C.py();
+        m_kmfit5C_lab_pip_pz = p4_pip_5C.pz();
+        m_kmfit5C_lab_pip_mom = p4_pip_5C.rho();
+
+        m_kmfit5C_lab_pim_e = p4_pim_5C.e();
+        m_kmfit5C_lab_pim_px = p4_pim_5C.px();
+        m_kmfit5C_lab_pim_py = p4_pim_5C.py();
+        m_kmfit5C_lab_pim_pz = p4_pim_5C.pz();
+        m_kmfit5C_lab_pim_mom = p4_pim_5C.rho();
+
+        // photons four lab mom
+        HepLorentzVector p4_Jpsigam_5C, p4_Etagam_5C;
+        p4_Jpsigam_5C = kmfit->pfit(3);
+        p4_Etagam_5C = kmfit->pfit(2);
+        m_kmfit5C_lab_Jpsigam_e = p4_Jpsigam_5C.e();
+        m_kmfit5C_lab_Jpsigam_px = p4_Jpsigam_5C.px();
+        m_kmfit5C_lab_Jpsigam_py = p4_Jpsigam_5C.py();
+        m_kmfit5C_lab_Jpsigam_pz = p4_Jpsigam_5C.pz();
+        m_kmfit5C_lab_Jpsigam_mom = p4_Jpsigam_5C.rho();
+
+        m_kmfit5C_lab_Etagam_e = p4_Etagam_5C.e();
+        m_kmfit5C_lab_Etagam_px = p4_Etagam_5C.px();
+        m_kmfit5C_lab_Etagam_py = p4_Etagam_5C.py();
+        m_kmfit5C_lab_Etagam_pz = p4_Etagam_5C.pz();
+        m_kmfit5C_lab_Etagam_mom = p4_Etagam_5C.rho();
+        // boost to cms
+        const Hep3Vector eta_cms_5C = -Etagampippim5C.boostVector();
+        p4_pip_5C.boost(eta_cms_5C);
+        p4_pim_5C.boost(eta_cms_5C);
+        p4_Etagam_5C.boost(eta_cms_5C);
+        m_kmfit5C_cms_pip_e = p4_pip_5C.e();
+        m_kmfit5C_cms_pip_px = p4_pip_5C.px();
+        m_kmfit5C_cms_pip_py = p4_pip_5C.py();
+        m_kmfit5C_cms_pip_pz = p4_pip_5C.pz();
+        m_kmfit5C_cms_pip_mom = p4_pip_5C.rho();
+
+        m_kmfit5C_cms_pim_e = p4_pim_5C.e();
+        m_kmfit5C_cms_pim_px = p4_pim_5C.px();
+        m_kmfit5C_cms_pim_py = p4_pim_5C.py();
+        m_kmfit5C_cms_pim_pz = p4_pim_5C.pz();
+        m_kmfit5C_cms_pim_mom = p4_pim_5C.rho();
+
+        m_kmfit5C_cms_Etagam_e = p4_Etagam_5C.e();
+        m_kmfit5C_cms_Etagam_px = p4_Etagam_5C.px();
+        m_kmfit5C_cms_Etagam_py = p4_Etagam_5C.py();
+        m_kmfit5C_cms_Etagam_pz = p4_Etagam_5C.pz();
+        m_kmfit5C_cms_Etagam_mom = p4_Etagam_5C.rho();
+
+        m_kmfit5C_chi2 = kmfit->chisq();
+        m_kmfit5C_mEtagampippim = Etagampippim5C.m();
+        m_kmfit5C_mgam1pippim = gam1pippim5C.m();
+        m_kmfit5C_mpippim = pippim5C.m();
+        nCounter_PSL[9]++; // After 5C
+        m_cutflow->Fill(9);
+      } // oksq
+    }   // loop of chisq
+  }     // loop of m_test5C
+
+  m_anaTuple->write();
+
+  return StatusCode::SUCCESS;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+StatusCode eta2pipi::finalize() {
+  cout << "#Total run    :         " << nrun << endl;
+  cout << "#Total events :         " << nCounter_PSL[0] << endl;
+  cout << "#nChrgtrks>=2 :         " << nCounter_PSL[1] << endl;
+  cout << "#Load vertex  :         " << nCounter_PSL[2] << endl;
+  cout << "#nGood = 2||nCharge=0:  " << nCounter_PSL[3] << endl;
+  cout << "#nGam         :         " << nCounter_PSL[4] << endl;
+  cout << "#After PID    :         " << nCounter_PSL[5] << endl;
+  cout << "#After vertex Fit:      " << nCounter_PSL[6] << endl;
+  cout << "#After 4C     :         " << nCounter_PSL[7] << endl;
+  cout << "#After mgpippim cut     :         " << nCounter_PSL[8] << endl;
+  cout << "#After 5C     :         " << nCounter_PSL[9] << endl;
+  // cout<<"#Final events :         "<<nCounter_PSL[8]<<endl;
+  MsgStream log(msgSvc(), name());
+  log << MSG::INFO << "in finalize()" << endmsg;
+  return StatusCode::SUCCESS;
+}
+
+
+// Member function for checkDedx info
+void eta2pipi::checkDedx(SmartDataPtr<EvtRecTrackCol> evtRecTrkCol, const Vint& iGood, int nGood){
     for (int i = 0; i < nGood; i++) {
       EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
       if (!(*itTrk)->isMdcTrackValid()) {
@@ -767,15 +1468,11 @@ StatusCode eta2pipi::execute() {
         m_normPH[i] = dedxTrk->normPH();
       }
     }
-  }
-  if (debug)
-    cout << __LINE__ << endl;
+}
 
-  //-------------------------------------------------
-  // check TOF infomation
-  //------------------------------------------------
 
-  if (m_checkTof == 1) {
+// Member function for Tof info
+void eta2pipi::checkTof( SmartDataPtr<EvtRecTrackCol> evtRecTrkCol, const Vint& iGood, int nGood){
     for (int i = 0; i < nGood; i++) {
       EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
       if (!(*itTrk)->isMdcTrackValid()) {
@@ -931,400 +1628,4 @@ StatusCode eta2pipi::execute() {
       m_nHits_btof2[i] = nHits_btof2;
 
     } // loop all charged track
-  }   // check tof
-  if (debug)
-    cout << __LINE__ << endl;
-
-  //---------------------------------------------------
-  // Assign 4-momentum to each photon
-  //--------------------------------------------------
-
-  Vp4 pGam;
-  pGam.clear();
-  for (int i = 0; i < nGam; i++) {
-    EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGam[i];
-    RecEmcShower *emcTrk = (*itTrk)->emcShower();
-    double eraw = emcTrk->energy();
-    double phi = emcTrk->phi();
-    double the = emcTrk->theta();
-    HepLorentzVector ptrk;
-    ptrk.setPx(eraw * sin(the) * cos(phi));
-    ptrk.setPy(eraw * sin(the) * sin(phi));
-    ptrk.setPz(eraw * cos(the));
-    ptrk.setE(eraw);
-
-    //    ptrk = ptrk.boost(-0.011,0,0);// boost to cms
-
-    pGam.push_back(ptrk);
-  }
-  if (debug)
-    cout << __LINE__ << endl;
-
-  //-------------------------------------------------
-  // Session#3 Particle indentification for the charged tracks
-  // 1) particle indentification for charged trks
-  // 2) Assign 4-momentum to each charged track (679-702)
-  //-------------------------------------------------
-
-  ParticleID *pid = ParticleID::instance();
-
-  if (debug)
-    cout << __LINE__ << endl;
-  for (int i = 0; i < nGood; i++) {
-    if (debug)
-      std::cout << "Check pid info for good charged track " << i << std::endl;
-
-    m_pi_pid[i] = false;
-
-    EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
-    //    if(pid) delete pid;
-    pid->init();
-    pid->setMethod(pid->methodProbability());
-    //    pid->setMethod(pid->methodLikelihood());  //for Likelihood Method
-
-    pid->setChiMinCut(4);
-    pid->setRecTrack(*itTrk);
-    pid->usePidSys(pid->useDedx() | pid->useTof1() | pid->useTof2() |
-                   pid->useTofE()); // use PID sub-system
-    pid->identify(pid->onlyPion() | pid->onlyElectron() | pid->onlyMuon());
-    pid->calculate();
-    if (!(pid->IsPidInfoValid())) {
-      m_ptrk_pid[i] = -99;
-      m_cost_pid[i] = -99;
-      m_dedx_pid[i] = -99;
-      m_tof1_pid[i] = -99;
-      m_tof2_pid[i] = -99;
-      m_prob_pi_pid[i] = -99;
-      m_prob_e_pid[i] = -99;
-    } else {
-      RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
-      m_ptrk_pid[i] = mdcTrk->p();
-      m_cost_pid[i] = cos(mdcTrk->theta());
-      m_dedx_pid[i] = pid->chiDedx(2);
-      m_tof1_pid[i] = pid->chiTof1(2);
-      m_tof2_pid[i] = pid->chiTof2(2);
-      m_prob_pi_pid[i] = pid->probPion();
-      m_prob_e_pid[i] = pid->probElectron();
-
-      //  if(pid->probPion() < 0.001 || (pid->probPion() < pid->probKaon()))
-      // continue;
-      if (pid->probPion() > 0.001 && (pid->probPion() >= pid->probElectron())) {
-        m_pi_pid[i] = true;
-      }
-    }
-
-    //    if(pid->pdf(2)<pid->pdf(3)) continue; //  for Likelihood
-
-    RecMdcKalTrack *mdcKalTrk =
-        (*itTrk)->mdcKalTrack(); // After ParticleID, use RecMdcKalTrack
-                                 // substitute RecMdcTrack
-    RecMdcKalTrack::setPidType(RecMdcKalTrack::pion); // PID can set to
-                                                      // electron, muon, pion,
-                                                      // kaon and proton;The
-                                                      // default setting is
-                                                      // pion
-
-    if (mdcKalTrk->charge() > 0) {
-      ipip.push_back(iGood[i]);
-      HepLorentzVector ptrk;
-      ptrk.setPx(mdcKalTrk->px());
-      ptrk.setPy(mdcKalTrk->py());
-      ptrk.setPz(mdcKalTrk->pz());
-      double p3 = ptrk.mag();
-      ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
-      m_pip_index = i;
-      m_pip_pi_pid = m_pi_pid[i];
-      //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
-
-      ppip.push_back(ptrk);
-    } else {
-      ipim.push_back(iGood[i]);
-      HepLorentzVector ptrk;
-      ptrk.setPx(mdcKalTrk->px());
-      ptrk.setPy(mdcKalTrk->py());
-      ptrk.setPz(mdcKalTrk->pz());
-      double p3 = ptrk.mag();
-      ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
-      m_pim_index = i;
-      m_pim_pi_pid = m_pi_pid[i];
-
-      //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
-
-      ppim.push_back(ptrk);
-    }
-    if (debug)
-      cout << __LINE__ << endl;
-  }
-  int npip = ipip.size();
-  int npim = ipim.size();
-  if (npip * npim != 1)
-    return SUCCESS;
-  nCounter_PSL[5]++; // After PID
-  m_cutflow->Fill(5);
-  //-------------------------------------------------------
-  // Session #4: Kinematic Fit
-  //-------------------------------------------------------
-  int iok = -1;
-  RecMdcKalTrack *pipTrk = (*(evtRecTrkCol->begin() + ipip[0]))->mdcKalTrack();
-  RecMdcKalTrack *pimTrk = (*(evtRecTrkCol->begin() + ipim[0]))->mdcKalTrack();
-
-  WTrackParameter wvpipTrk, wvpimTrk;
-  wvpipTrk = WTrackParameter(mpi, pipTrk->getZHelix(), pipTrk->getZError());
-  wvpimTrk = WTrackParameter(mpi, pimTrk->getZHelix(), pimTrk->getZError());
-
-  HepPoint3D vx(0.0, 0.0, 0.0);
-  HepSymMatrix Evx(3, 0);
-  double bx = 1E+6;
-  double by = 1E+6;
-  double bz = 1E+6;
-  Evx[0][0] = bx * bx;
-  Evx[1][1] = by * by;
-  Evx[2][2] = bz * bz;
-  //
-  // Set a common vertex with huge error[eta--->pim pip ]
-  //
-  VertexParameter vxpar;
-  vxpar.setVx(vx);
-  vxpar.setEvx(Evx);
-  VertexFit *vtxfit = VertexFit::instance();
-  vtxfit->init();
-  vtxfit->AddTrack(0, wvpipTrk);
-  vtxfit->AddTrack(1, wvpimTrk);
-  vtxfit->AddVertex(0, vxpar, 0, 1);
-  if (!vtxfit->Fit(0))
-    return SUCCESS;
-  vtxfit->Swim(0);
-
-  nCounter_PSL[6]++; // After vertex fit
-  m_cutflow->Fill(6);
-  WTrackParameter wpip = vtxfit->wtrk(0);
-  WTrackParameter wpim = vtxfit->wtrk(1);
-
-  KinematicFit *kmfit = KinematicFit::instance();
-  // KalmanKinematicFit * kmfit = KalmanKinematicFit::instance();
-  //
-  //   Kinematic 4C fit
-  //
-  if (m_test4C == 1) {
-    //    double ecms = 3.097;
-    HepLorentzVector ecms(0.034, 0, 0, 3.097);
-    // 1) select the ig1 and ig2 which give the best chisq
-    double chisq_ggpippim = 9999.;
-    double chisq_gggpippim = 9999.;
-    int ig1 = -1;
-    int ig2 = -1;
-    double mg1pippim = -9999;
-    double mg2pippim = -9999;
-    double mpippim = -9999;
-    for (int i = 0; i < nGam - 1; i++) {
-      RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + iGam[i]))->emcShower();
-      for (int j = i + 1; j < nGam; j++) {
-        RecEmcShower *g2Trk = (*(evtRecTrkCol->begin() + iGam[j]))->emcShower();
-        kmfit->init();
-        kmfit->AddTrack(0, wpip);
-        kmfit->AddTrack(1, wpim);
-        kmfit->AddTrack(2, 0.0, g1Trk);
-        kmfit->AddTrack(3, 0.0, g2Trk);
-        kmfit->AddFourMomentum(0, ecms);
-        bool oksq = kmfit->Fit();
-        if (oksq) {
-          double chi2 = kmfit->chisq();
-          iok = 1;
-          if (chi2 < chisq_ggpippim) {
-            chisq_ggpippim = chi2;
-            ig1 = iGam[i];
-            ig2 = iGam[j];
-            HepLorentzVector g1pippim =
-                kmfit->pfit(0) + kmfit->pfit(1) + kmfit->pfit(2);
-            HepLorentzVector g2pippim =
-                kmfit->pfit(0) + kmfit->pfit(1) + kmfit->pfit(3);
-            HepLorentzVector pippim = kmfit->pfit(0) + kmfit->pfit(1);
-            double ene_g1 = kmfit->pfit(2).e();
-            double ene_g2 = kmfit->pfit(3).e();
-            HepLorentzVector p4_pip = kmfit->pfit(0);
-            HepLorentzVector p4_pim = kmfit->pfit(1);
-            m_kmfit_lab_pip_e = p4_pip.e();
-            m_kmfit_lab_pip_px = p4_pip.px();
-            m_kmfit_lab_pip_py = p4_pip.py();
-            m_kmfit_lab_pip_pz = p4_pip.pz();
-            m_kmfit_lab_pim_e = p4_pim.e();
-            m_kmfit_lab_pim_px = p4_pim.px();
-            m_kmfit_lab_pim_py = p4_pim.py();
-            m_kmfit_lab_pim_pz = p4_pim.pz();
-
-            HepLorentzVector p4_eta, p4_ISRgam, p4_Etagam;
-            if (ene_g1 >= ene_g2) {
-              p4_eta = kmfit->pfit(3) + kmfit->pfit(0) + kmfit->pfit(1);
-              p4_ISRgam = kmfit->pfit(2);
-              p4_Etagam = kmfit->pfit(3);
-            } else {
-              p4_eta = kmfit->pfit(2) + kmfit->pfit(0) + kmfit->pfit(1);
-              p4_ISRgam = kmfit->pfit(3);
-              p4_Etagam = kmfit->pfit(2);
-            }
-            m_kmfit_lab_Etagam_e = p4_Etagam.e();
-            m_kmfit_lab_Etagam_px = p4_Etagam.px();
-            m_kmfit_lab_Etagam_py = p4_Etagam.py();
-            m_kmfit_lab_Etagam_pz = p4_Etagam.pz();
-            m_kmfit_lab_ISRgam_e = p4_ISRgam.e();
-            m_kmfit_lab_ISRgam_px = p4_ISRgam.px();
-            m_kmfit_lab_ISRgam_py = p4_ISRgam.py();
-            m_kmfit_lab_ISRgam_pz = p4_ISRgam.pz();
-
-            mg1pippim = g1pippim.m();
-            mg2pippim = g2pippim.m();
-            mpippim = pippim.m();
-            // boost the Etagam, pip, pim to eta center of mass frame
-            const Hep3Vector eta_cms = -p4_eta.boostVector();
-            p4_pip.boost(eta_cms);
-            p4_pim.boost(eta_cms);
-            p4_Etagam.boost(eta_cms);
-
-            m_kmfit_cms_pip_e = p4_pip.e();
-            m_kmfit_cms_pip_px = p4_pip.px();
-            m_kmfit_cms_pip_py = p4_pip.py();
-            m_kmfit_cms_pip_pz = p4_pip.pz();
-            m_kmfit_cms_pim_e = p4_pim.e();
-            m_kmfit_cms_pim_px = p4_pim.px();
-            m_kmfit_cms_pim_py = p4_pim.py();
-            m_kmfit_cms_pim_pz = p4_pim.pz();
-            m_kmfit_cms_Etagam_e = p4_Etagam.e();
-            m_kmfit_cms_Etagam_px = p4_Etagam.px();
-            m_kmfit_cms_Etagam_py = p4_Etagam.py();
-            m_kmfit_cms_Etagam_pz = p4_Etagam.pz();
-          }
-        }
-      }
-    }
-
-    // 2) perform the kinematic fit with the selected ig1, ig2, pi+, pi-
-    if (chisq_ggpippim < 200) {
-      // Inv.Masses[kmfit]
-      m_kmfit_mg1pippim = mg1pippim;
-      m_kmfit_mg2pippim = mg2pippim;
-      m_kmfit_mpippim = mpippim;
-      m_kmfit_chi2_ggpippim = chisq_ggpippim;
-
-      // 3) if nGam >=3
-      if (nGam >= 3) {
-        for (int i = 0; i < nGam - 2; i++) {
-          RecEmcShower *g1Trk =
-              (*(evtRecTrkCol->begin() + iGam[i]))->emcShower();
-          for (int j = i + 1; j < nGam - 1; j++) {
-            RecEmcShower *g2Trk =
-                (*(evtRecTrkCol->begin() + iGam[j]))->emcShower();
-            for (int k = j + 1; k < nGam; k++) {
-              RecEmcShower *g3Trk =
-                  (*(evtRecTrkCol->begin() + iGam[k]))->emcShower();
-              kmfit->init();
-              kmfit->AddTrack(0, wpip);
-              kmfit->AddTrack(1, wpim);
-              kmfit->AddTrack(2, 0.0, g1Trk);
-              kmfit->AddTrack(3, 0.0, g2Trk);
-              kmfit->AddTrack(4, 0.0, g3Trk);
-              kmfit->AddFourMomentum(0, ecms);
-              bool oksq = kmfit->Fit();
-              if (oksq) {
-                double chi2 = kmfit->chisq();
-                if (chi2 < chisq_ggpippim) {
-                  chisq_gggpippim = chi2;
-                }
-              } // if oksq
-            }   // end of loop for k
-          }     // end of loop for j
-        }       // end of loop for i
-      }
-      m_kmfit_chi2_gggpippim = chisq_gggpippim;
-
-      nCounter_PSL[7]++;
-      m_cutflow->Fill(7);
-    } // loop of chi_ggpippim <200
-  }   // if apply_4C
-
-  //
-  //  Kinematic 5C Fit
-  //
-  // find the best combination over all possible pi+ pi- gamma gamma pair
-  if (m_test5C == 1) {
-    //  double ecms = 3.097;
-    HepLorentzVector ecms(0.034, 0, 0, 3.097);
-    double chisq = 9999.;
-    int ig1 = -1;
-    int ig2 = -1;
-    for (int i = 0; i < nGam; i++) {
-      RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + iGam[i]))->emcShower();
-      for (int j = 0; j < nGam; j++) {
-        RecEmcShower *g2Trk = (*(evtRecTrkCol->begin() + iGam[j]))->emcShower();
-        if (i == j)
-          continue;
-        kmfit->init();
-        kmfit->AddTrack(0, wpip);
-        kmfit->AddTrack(1, wpim);
-        kmfit->AddTrack(2, 0.0, g1Trk);
-        kmfit->AddTrack(3, 0.0, g2Trk);
-        kmfit->AddResonance(0, 0.547, 0, 1, 2); // eta ->gamma pip  pim
-        kmfit->AddFourMomentum(1, ecms);
-        if (!kmfit->Fit(0))
-          continue;
-        if (!kmfit->Fit(1))
-          continue;
-        bool oksq = kmfit->Fit();
-        if (oksq) {
-          double chi2 = kmfit->chisq();
-          if (chi2 < chisq) {
-            chisq = chi2;
-            ig1 = iGam[i];
-            ig2 = iGam[j];
-          }
-        }
-      }
-    }
-
-    log << MSG::INFO << " chisq = " << chisq << endreq;
-
-    if (chisq < 200) {
-      RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + ig1))->emcShower();
-      RecEmcShower *g2Trk = (*(evtRecTrkCol->begin() + ig2))->emcShower();
-
-      kmfit->init();
-      kmfit->AddTrack(0, wpip);
-      kmfit->AddTrack(1, wpim);
-      kmfit->AddTrack(2, 0.0, g1Trk);
-      kmfit->AddTrack(3, 0.0, g2Trk);
-      kmfit->AddResonance(0, 0.547, 0, 1, 2);
-      kmfit->AddFourMomentum(1, ecms);
-      bool oksq = kmfit->Fit();
-      if (oksq) {
-        HepLorentzVector peta =
-            kmfit->pfit(0) + kmfit->pfit(1) + kmfit->pfit(2);
-
-        m_chi2 = kmfit->chisq();
-        m_meta = peta.m();
-        nCounter_PSL[8]++; // After 5C
-        m_cutflow->Fill(8);
-      } // oksq
-    }   // loop of chisq
-  }     // loop of m_test5C
-
-  m_anaTuple->write();
-
-  return StatusCode::SUCCESS;
-}
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-StatusCode eta2pipi::finalize() {
-  cout << "#Total run    :         " << nrun << endl;
-  cout << "#Total events :         " << nCounter_PSL[0] << endl;
-  cout << "#nChrgtrks>=2 :         " << nCounter_PSL[1] << endl;
-  cout << "#Load vertex  :         " << nCounter_PSL[2] << endl;
-  cout << "#nGood = 2||nCharge=0:  " << nCounter_PSL[3] << endl;
-  cout << "#nGam         :         " << nCounter_PSL[4] << endl;
-  cout << "#After PID    :         " << nCounter_PSL[5] << endl;
-  cout << "#After vertex Fit:      " << nCounter_PSL[6] << endl;
-  cout << "#After 4C     :         " << nCounter_PSL[7] << endl;
-  cout << "#After 5C     :         " << nCounter_PSL[8] << endl;
-  // cout<<"#Final events :         "<<nCounter_PSL[8]<<endl;
-  MsgStream log(msgSvc(), name());
-  log << MSG::INFO << "in finalize()" << endmsg;
-  return StatusCode::SUCCESS;
 }
