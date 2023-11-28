@@ -61,8 +61,8 @@ eta2pipi::eta2pipi(const std::string &name, ISvcLocator *pSvcLocator)
   declareProperty("chisq_4c_cut", m_chisq_4c_cut = 100);
   declareProperty("mgpippim_cut", m_mgpippim_cut = -1);
 
-  declareProperty("CheckDedx", m_checkDedx = 1);
-  declareProperty("CheckTof", m_checkTof = 1);
+  declareProperty("CheckDedx", m_checkDedx = 0);
+  declareProperty("CheckTof", m_checkTof = 0);
   // Declare the properties
 }
 
@@ -177,6 +177,8 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addItem("mc_py_pim_mom", py_pim_mom);
       status = m_anaTuple->addItem("mc_pz_pim_mom", pz_pim_mom);
       // kmfit4C Info.
+      status = m_anaTuple->addItem("kmfit_Jpsigam_index", m_kmfit_Jpsigam_index);
+      status = m_anaTuple->addItem("kmfit_Etagam_index", m_kmfit_Etagam_index);
       // lab_pip
       status = m_anaTuple->addItem("kmfit_lab_pip_e", m_kmfit_lab_pip_e);
       status = m_anaTuple->addItem("kmfit_lab_pip_px", m_kmfit_lab_pip_px);
@@ -218,12 +220,14 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addItem("kmfit_cms_pim_px", m_kmfit_cms_pim_px);
       status = m_anaTuple->addItem("kmfit_cms_pim_py", m_kmfit_cms_pim_py);
       status = m_anaTuple->addItem("kmfit_cms_pim_pz", m_kmfit_cms_pim_pz);
+      status = m_anaTuple->addItem("kmfit_cms_pim_mom", m_kmfit_cms_pim_mom);
 
       // cms_pip
       status = m_anaTuple->addItem("kmfit_cms_pip_e", m_kmfit_cms_pip_e);
       status = m_anaTuple->addItem("kmfit_cms_pip_px", m_kmfit_cms_pip_px);
       status = m_anaTuple->addItem("kmfit_cms_pip_py", m_kmfit_cms_pip_py);
       status = m_anaTuple->addItem("kmfit_cms_pip_pz", m_kmfit_cms_pip_pz);
+      status = m_anaTuple->addItem("kmfit_cms_pip_mom", m_kmfit_cms_pip_mom);
 
       // cms_Etagam
       status = m_anaTuple->addItem("kmfit_cms_Etagam_e", m_kmfit_cms_Etagam_e);
@@ -233,25 +237,23 @@ StatusCode eta2pipi::initialize() {
           m_anaTuple->addItem("kmfit_cms_Etagam_py", m_kmfit_cms_Etagam_py);
       status =
           m_anaTuple->addItem("kmfit_cms_Etagam_pz", m_kmfit_cms_Etagam_pz);
+      status =
+          m_anaTuple->addItem("kmfit_cms_Etagam_mom", m_kmfit_cms_Etagam_mom);
 
       // after 4C, Inv.Masses[kmfit]
       status = m_anaTuple->addItem("kmfit_mg1pippim", m_kmfit_mg1pippim);
       status = m_anaTuple->addItem("kmfit_mg2pippim", m_kmfit_mg2pippim);
       status = m_anaTuple->addItem("kmfit_mpippim", m_kmfit_mpippim);
-      status =
-          m_anaTuple->addItem("kmfit_mEtagampippim", m_kmfit_mEtagampippim);
+      status = m_anaTuple->addItem("kmfit_mEtagampippim", m_kmfit_mEtagampippim);
       // 4C Info.
-      status =
-          m_anaTuple->addItem("kmfit_chi2_ggpippim", m_kmfit_chi2_ggpippim);
-      status = m_anaTuple->addItem("kmfit_chi2_threegampippim",
-                                   m_kmfit_chi2_threegampippim);
+      status = m_anaTuple->addItem("kmfit_chi2_ggpippim", m_kmfit_chi2_ggpippim);
+      status = m_anaTuple->addItem("kmfit_chi2_threegampippim", m_kmfit_chi2_threegampippim);
       // 5C Info.
-      status = m_anaTuple->addItem("chi2", m_chi2);
-      status = m_anaTuple->addItem("meta", m_meta);
+      status = m_anaTuple->addItem("kmfit5C_chi2", m_kmfit5C_chi2);
       // kmfit5C, Inv.Masses
-      status = m_anaTuple->addItem("mEtagampippim5C", m_Etagampippim_5C);
-      status = m_anaTuple->addItem("mgam1pippim5C", m_gam1pippim_5C);
-      status = m_anaTuple->addItem("mpippim5C", m_pippim_5C);
+      status = m_anaTuple->addItem("kmfit5C_mEtagampippim", m_kmfit5C_mEtagampippim);
+      status = m_anaTuple->addItem("kmfit5C_mgam1pippim", m_kmfit5C_mgam1pippim);
+      status = m_anaTuple->addItem("kmfit5C_mpippim", m_kmfit5C_mpippim);
       // kmfit5C four lab mom
 
       status = m_anaTuple->addItem("kmfit5C_lab_pip_e", m_kmfit5C_lab_pip_e);
@@ -376,19 +378,31 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addIndexedItem("dedx_pid", m_nGood, m_dedx_pid);
       status = m_anaTuple->addIndexedItem("tof1_pid", m_nGood, m_tof1_pid);
       status = m_anaTuple->addIndexedItem("tof2_pid", m_nGood, m_tof2_pid);
-      status =
-          m_anaTuple->addIndexedItem("prob_pi_pid", m_nGood, m_prob_pi_pid);
+      status = m_anaTuple->addIndexedItem("prob_pi_pid", m_nGood, m_prob_pi_pid);
       status = m_anaTuple->addIndexedItem("prob_e_pid", m_nGood, m_prob_e_pid);
+      status = m_anaTuple->addIndexedItem("prob_mu_pid", m_nGood, m_prob_mu_pid);
       status = m_anaTuple->addIndexedItem("pi_pid", m_nGood, m_pi_pid);
+      status = m_anaTuple->addItem("pip_px", m_kalTrk_pip_px);
+      status = m_anaTuple->addItem("pip_py", m_kalTrk_pip_py);
+      status = m_anaTuple->addItem("pip_pz", m_kalTrk_pip_pz);
+      status = m_anaTuple->addItem("pip_e", m_kalTrk_pip_e);
+      status = m_anaTuple->addItem("pip_mom", m_kalTrk_pip_mom);
+      status = m_anaTuple->addItem("pim_px", m_kalTrk_pim_px);
+      status = m_anaTuple->addItem("pim_py", m_kalTrk_pim_py);
+      status = m_anaTuple->addItem("pim_pz", m_kalTrk_pim_pz);
+      status = m_anaTuple->addItem("pim_e", m_kalTrk_pim_e);
+      status = m_anaTuple->addItem("pim_mom", m_kalTrk_pim_mom);
       // photon
       status = m_anaTuple->addItem("nGam", m_nGam, 0, 200);
       status = m_anaTuple->addIndexedItem("dthe", m_nGam, m_dthe);
       status = m_anaTuple->addIndexedItem("dphi", m_nGam, m_dphi);
       status = m_anaTuple->addIndexedItem("dang", m_nGam, m_dang);
       status = m_anaTuple->addIndexedItem("eraw", m_nGam, m_eraw);
+      status = m_anaTuple->addIndexedItem("theta", m_nGam, m_theta);
+      status = m_anaTuple->addIndexedItem("phi", m_nGam, m_phi);
 
-      status = m_anaTuple->addIndexedItem("kmfit_ene_g1", m_nGam, m_ene_g1);
-      status = m_anaTuple->addIndexedItem("kmfit_ene_g2", m_nGam, m_ene_g2);
+      status = m_anaTuple->addItem("kmfit_ene_g1", m_ene_g1);
+      status = m_anaTuple->addItem("kmfit_ene_g2", m_ene_g2);
       //
 
     } else {
@@ -780,6 +794,8 @@ StatusCode eta2pipi::execute() {
       m_dphi[nGam] = dphi;
       m_dang[nGam] = dang;
       m_eraw[nGam] = eraw;
+      m_phi[nGam] = emcTrk->phi();
+      m_theta[nGam] = emcTrk->theta();
     }
     iGam.push_back(i);
     nGam++;
@@ -1022,7 +1038,7 @@ StatusCode eta2pipi::execute() {
     ptrk.setE(eraw);
 
     //    ptrk = ptrk.boost(-0.011,0,0);// boost to cms
-
+    
     pGam.push_back(ptrk);
   }
   if (debug)
@@ -1064,6 +1080,7 @@ StatusCode eta2pipi::execute() {
       m_tof2_pid[i] = -99;
       m_prob_pi_pid[i] = -99;
       m_prob_e_pid[i] = -99;
+      m_prob_mu_pid[i] = -99;
     } else {
       RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
       m_ptrk_pid[i] = mdcTrk->p();
@@ -1073,6 +1090,7 @@ StatusCode eta2pipi::execute() {
       m_tof2_pid[i] = pid->chiTof2(2);
       m_prob_pi_pid[i] = pid->probPion();
       m_prob_e_pid[i] = pid->probElectron();
+      m_prob_mu_pid[i] = pid->probMuon();
 
       //  if(pid->probPion() < 0.001 || (pid->probPion() < pid->probKaon()))
       // continue;
@@ -1102,6 +1120,11 @@ StatusCode eta2pipi::execute() {
       ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
       m_pip_index = i;
       m_pip_pi_pid = m_pi_pid[i];
+      m_kalTrk_pip_px = mdcKalTrk->px();
+      m_kalTrk_pip_py = mdcKalTrk->py();
+      m_kalTrk_pip_pz = mdcKalTrk->pz();
+      m_kalTrk_pip_mom = p3;
+      m_kalTrk_pip_e = sqrt(p3 * p3 + mpi * mpi);
       //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
 
       ppip.push_back(ptrk);
@@ -1115,6 +1138,11 @@ StatusCode eta2pipi::execute() {
       ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
       m_pim_index = i;
       m_pim_pi_pid = m_pi_pid[i];
+      m_kalTrk_pim_px = mdcKalTrk->px();
+      m_kalTrk_pim_py = mdcKalTrk->py();
+      m_kalTrk_pim_pz = mdcKalTrk->pz();
+      m_kalTrk_pim_mom = p3;
+      m_kalTrk_pim_e = sqrt(p3 * p3 + mpi * mpi);
 
       //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
 
@@ -1169,6 +1197,105 @@ StatusCode eta2pipi::execute() {
   m_cutflow->Fill(6);
   WTrackParameter wpip = vtxfit->wtrk(0);
   WTrackParameter wpim = vtxfit->wtrk(1);
+
+  ///////////////////////////////////////////
+  //start kinematic fit 
+  ///////////////////////////////////////////
+  m_kmfit_Etagam_index = -99;
+  m_kmfit_Jpsigam_index = -99;
+  m_kmfit_lab_pip_e = -99;
+  m_kmfit_lab_pip_px = -99;
+  m_kmfit_lab_pip_py = -99;
+  m_kmfit_lab_pip_pz = -99;
+  m_kmfit_lab_pip_mom = -99;
+  
+  m_kmfit_lab_pim_e = -99;
+  m_kmfit_lab_pim_px = -99;
+  m_kmfit_lab_pim_py = -99;
+  m_kmfit_lab_pim_pz = -99;
+  m_kmfit_lab_pim_mom = -99;
+
+  m_kmfit_lab_Jpsigam_e = -99.;
+  m_kmfit_lab_Jpsigam_px = -99.;
+  m_kmfit_lab_Jpsigam_py = -99.;
+  m_kmfit_lab_Jpsigam_pz = -99.;
+  m_kmfit_lab_Jpsigam_mom = -99.;
+
+  m_kmfit_lab_Etagam_e = -99.;
+  m_kmfit_lab_Etagam_px = -99.;
+  m_kmfit_lab_Etagam_py = -99.;
+  m_kmfit_lab_Etagam_pz = -99.;
+  m_kmfit_lab_Etagam_mom = -99.;
+
+  m_kmfit_cms_pip_e = -99.;
+  m_kmfit_cms_pip_px = -99.;
+  m_kmfit_cms_pip_py = -99.;
+  m_kmfit_cms_pip_pz = -99.;
+  m_kmfit_cms_pip_mom = -99.;
+
+  m_kmfit_cms_pim_e = -99.;
+  m_kmfit_cms_pim_px = -99.;
+  m_kmfit_cms_pim_py = -99.;
+  m_kmfit_cms_pim_pz = -99.;
+  m_kmfit_cms_pim_mom = -99.;
+
+  m_kmfit_cms_Etagam_e = -99.;
+  m_kmfit_cms_Etagam_px = -99.;
+  m_kmfit_cms_Etagam_py = -99.;
+  m_kmfit_cms_Etagam_pz = -99.;
+  m_kmfit_cms_Etagam_mom = -99.;
+ 
+
+  m_kmfit5C_Etagam_index = -99;
+  m_kmfit5C_Jpsigam_index = -99;
+
+  m_kmfit5C_lab_pip_e = -99.;
+  m_kmfit5C_lab_pip_px = -99.;
+  m_kmfit5C_lab_pip_py = -99.;
+  m_kmfit5C_lab_pip_pz = -99.;
+  m_kmfit5C_lab_pip_mom = -99.;
+
+  m_kmfit5C_lab_pim_e = -99.;
+  m_kmfit5C_lab_pim_px = -99.;
+  m_kmfit5C_lab_pim_py = -99.;
+  m_kmfit5C_lab_pim_pz = -99.;
+  m_kmfit5C_lab_pim_mom = -99.;
+
+  m_kmfit5C_lab_Jpsigam_e = -99.;
+  m_kmfit5C_lab_Jpsigam_px = -99.;
+  m_kmfit5C_lab_Jpsigam_py = -99.;
+  m_kmfit5C_lab_Jpsigam_pz = -99.;
+  m_kmfit5C_lab_Jpsigam_mom = -99.;
+
+  m_kmfit5C_lab_Etagam_e = -99.;
+  m_kmfit5C_lab_Etagam_px = -99.;
+  m_kmfit5C_lab_Etagam_py = -99.;
+  m_kmfit5C_lab_Etagam_pz = -99.;
+  m_kmfit5C_lab_Etagam_mom = -99.;
+
+  m_kmfit5C_cms_pip_e = -99.;
+  m_kmfit5C_cms_pip_px = -99.;
+  m_kmfit5C_cms_pip_py = -99.;
+  m_kmfit5C_cms_pip_pz = -99.;
+  m_kmfit5C_cms_pip_mom = -99.;
+
+  m_kmfit5C_cms_pim_e = -99.;
+  m_kmfit5C_cms_pim_px = -99.;
+  m_kmfit5C_cms_pim_py = -99.;
+  m_kmfit5C_cms_pim_pz = -99.;
+  m_kmfit5C_cms_pim_mom = -99.;
+
+  m_kmfit5C_cms_Etagam_e = -99.;
+  m_kmfit5C_cms_Etagam_px = -99.;
+  m_kmfit5C_cms_Etagam_py = -99.;
+  m_kmfit5C_cms_Etagam_pz = -99.;
+  m_kmfit5C_cms_Etagam_mom = -99.;
+
+  m_kmfit5C_chi2 = 9999.;
+  m_kmfit5C_mEtagampippim = -9999.;
+  m_kmfit5C_mgam1pippim = -9999.;
+  m_kmfit5C_mpippim = -9999.;
+  
 
   KinematicFit *kmfit = KinematicFit::instance();
   // KalmanKinematicFit * kmfit = KalmanKinematicFit::instance();
@@ -1229,10 +1356,14 @@ StatusCode eta2pipi::execute() {
               p4_eta = kmfit->pfit(3) + kmfit->pfit(0) + kmfit->pfit(1);
               p4_Jpsigam = kmfit->pfit(2);
               p4_Etagam = kmfit->pfit(3);
+              m_kmfit_Etagam_index = j; 
+              m_kmfit_Jpsigam_index = i; 
             } else {
               p4_eta = kmfit->pfit(2) + kmfit->pfit(0) + kmfit->pfit(1);
               p4_Jpsigam = kmfit->pfit(3);
               p4_Etagam = kmfit->pfit(2);
+              m_kmfit_Etagam_index = i; 
+              m_kmfit_Jpsigam_index = j; 
             }
             m_kmfit_lab_Etagam_e = p4_Etagam.e();
             m_kmfit_lab_Etagam_px = p4_Etagam.px();
@@ -1245,8 +1376,8 @@ StatusCode eta2pipi::execute() {
             m_kmfit_lab_Jpsigam_pz = p4_Jpsigam.pz();
             m_kmfit_lab_Jpsigam_mom = p4_Jpsigam.rho();
 
-            m_ene_g1[nGam] = ene_g1;
-            m_ene_g2[nGam] = ene_g2;
+            m_ene_g1 = ene_g1;
+            m_ene_g2 = ene_g2;
             mg1pippim = g1pippim.m();
             mg2pippim = g2pippim.m();
             mpippim = pippim.m();
@@ -1261,14 +1392,17 @@ StatusCode eta2pipi::execute() {
             m_kmfit_cms_pip_px = p4_pip.px();
             m_kmfit_cms_pip_py = p4_pip.py();
             m_kmfit_cms_pip_pz = p4_pip.pz();
+            m_kmfit_cms_pip_mom = p4_pip.rho();
             m_kmfit_cms_pim_e = p4_pim.e();
             m_kmfit_cms_pim_px = p4_pim.px();
             m_kmfit_cms_pim_py = p4_pim.py();
             m_kmfit_cms_pim_pz = p4_pim.pz();
+            m_kmfit_cms_pim_mom = p4_pim.rho();
             m_kmfit_cms_Etagam_e = p4_Etagam.e();
             m_kmfit_cms_Etagam_px = p4_Etagam.px();
             m_kmfit_cms_Etagam_py = p4_Etagam.py();
             m_kmfit_cms_Etagam_pz = p4_Etagam.pz();
+            m_kmfit_cms_Etagam_mom = p4_Etagam.rho();
           }
         }
       }
@@ -1332,52 +1466,6 @@ StatusCode eta2pipi::execute() {
   //
   //  Kinematic 5C Fit
 
-  m_kmfit5C_lab_pip_e = -99.;
-  m_kmfit5C_lab_pip_px = -99.;
-  m_kmfit5C_lab_pip_py = -99.;
-  m_kmfit5C_lab_pip_pz = -99.;
-  m_kmfit5C_lab_pip_mom = -99.;
-
-  m_kmfit5C_lab_pim_e = -99.;
-  m_kmfit5C_lab_pim_px = -99.;
-  m_kmfit5C_lab_pim_py = -99.;
-  m_kmfit5C_lab_pim_pz = -99.;
-  m_kmfit5C_lab_pim_mom = -99.;
-
-  m_kmfit5C_lab_Jpsigam_e = -99.;
-  m_kmfit5C_lab_Jpsigam_px = -99.;
-  m_kmfit5C_lab_Jpsigam_py = -99.;
-  m_kmfit5C_lab_Jpsigam_pz = -99.;
-  m_kmfit5C_lab_Jpsigam_mom = -99.;
-
-  m_kmfit5C_lab_Etagam_e = -99.;
-  m_kmfit5C_lab_Etagam_px = -99.;
-  m_kmfit5C_lab_Etagam_py = -99.;
-  m_kmfit5C_lab_Etagam_pz = -99.;
-  m_kmfit5C_lab_Etagam_mom = -99.;
-
-  m_kmfit5C_cms_pip_e = -99.;
-  m_kmfit5C_cms_pip_px = -99.;
-  m_kmfit5C_cms_pip_py = -99.;
-  m_kmfit5C_cms_pip_pz = -99.;
-  m_kmfit5C_cms_pip_mom = -99.;
-
-  m_kmfit5C_cms_pim_e = -99.;
-  m_kmfit5C_cms_pim_px = -99.;
-  m_kmfit5C_cms_pim_py = -99.;
-  m_kmfit5C_cms_pim_pz = -99.;
-  m_kmfit5C_cms_pim_mom = -99.;
-
-  m_kmfit5C_cms_Etagam_e = -99.;
-  m_kmfit5C_cms_Etagam_px = -99.;
-  m_kmfit5C_cms_Etagam_py = -99.;
-  m_kmfit5C_cms_Etagam_pz = -99.;
-  m_kmfit5C_cms_Etagam_mom = -99.;
-
-  m_chi2 = 9999.;
-  m_Etagampippim_5C = -9999.;
-  m_gam1pippim_5C = -9999.;
-  m_pippim_5C = -9999.;
 
   // find the best combination over all possible pi+ pi- gamma gamma pair
   if (m_test5C == 1) {
@@ -1410,12 +1498,14 @@ StatusCode eta2pipi::execute() {
             chisq = chi2;
             ig1 = iGam[i];
             ig2 = iGam[j];
+            m_kmfit5C_Etagam_index = i;
+            m_kmfit5C_Jpsigam_index = j;
           }
         }
       }
     }
 
-    log << MSG::INFO << " chisq = " << chisq << endreq;
+    log << MSG::INFO << "5C kinematic fit chisq = " << chisq << endreq;
 
     if (chisq < 200) {
       RecEmcShower *g1Trk = (*(evtRecTrkCol->begin() + ig1))->emcShower();
@@ -1488,10 +1578,10 @@ StatusCode eta2pipi::execute() {
         m_kmfit5C_cms_Etagam_pz = p4_Etagam_5C.pz();
         m_kmfit5C_cms_Etagam_mom = p4_Etagam_5C.rho();
 
-        m_chi2 = kmfit->chisq();
-        m_Etagampippim_5C = Etagampippim5C.m();
-        m_gam1pippim_5C = gam1pippim5C.m();
-        m_pippim_5C = pippim5C.m();
+        m_kmfit5C_chi2 = kmfit->chisq();
+        m_kmfit5C_mEtagampippim = Etagampippim5C.m();
+        m_kmfit5C_mgam1pippim = gam1pippim5C.m();
+        m_kmfit5C_mpippim = pippim5C.m();
         nCounter_PSL[9]++; // After 5C
         m_cutflow->Fill(9);
       } // oksq

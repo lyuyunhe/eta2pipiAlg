@@ -25,7 +25,8 @@ private:
   // Declare r0, z0 cut for charged tracks
   double m_vr0cut;
   double m_vz0cut;
-
+  double m_chisq_4c_cut;
+  double m_mgpippim_cut;
   // Declare energy, dphi, dthe cuts for fake gamma's
 
   //
@@ -79,6 +80,9 @@ private:
   NTuple::Array<double> m_dphi;
   NTuple::Array<double> m_dang;
   NTuple::Array<double> m_eraw;
+  NTuple::Array<double> m_phi;
+  NTuple::Array<double> m_theta;
+
   NTuple::Item<double> e_jpsi_mom;
   NTuple::Item<double> px_jpsi_mom;
   NTuple::Item<double> py_jpsi_mom;
@@ -114,50 +118,61 @@ private:
   NTuple::Item<double> py_pim_mom;
   NTuple::Item<double> pz_pim_mom;
 
-  // kmfit lab  Info.
+  // kmfit4C lab  Info.
+  NTuple::Item<double> m_kmfit_Jpsigam_index;
+  NTuple::Item<double> m_kmfit_Etagam_index;
+  
   NTuple::Item<double> m_kmfit_lab_pip_e;
   NTuple::Item<double> m_kmfit_lab_pip_px;
   NTuple::Item<double> m_kmfit_lab_pip_py;
   NTuple::Item<double> m_kmfit_lab_pip_pz;
+  NTuple::Item<double> m_kmfit_lab_pip_mom;
 
   NTuple::Item<double> m_kmfit_lab_pim_e;
   NTuple::Item<double> m_kmfit_lab_pim_px;
   NTuple::Item<double> m_kmfit_lab_pim_py;
   NTuple::Item<double> m_kmfit_lab_pim_pz;
+  NTuple::Item<double> m_kmfit_lab_pim_mom;
 
   NTuple::Item<double> m_kmfit_lab_Etagam_e;
   NTuple::Item<double> m_kmfit_lab_Etagam_px;
   NTuple::Item<double> m_kmfit_lab_Etagam_py;
   NTuple::Item<double> m_kmfit_lab_Etagam_pz;
+  NTuple::Item<double> m_kmfit_lab_Etagam_mom;
 
-  NTuple::Item<double> m_kmfit_lab_ISRgam_e;
-  NTuple::Item<double> m_kmfit_lab_ISRgam_px;
-  NTuple::Item<double> m_kmfit_lab_ISRgam_py;
-  NTuple::Item<double> m_kmfit_lab_ISRgam_pz;
+  NTuple::Item<double> m_kmfit_lab_Jpsigam_e;
+  NTuple::Item<double> m_kmfit_lab_Jpsigam_px;
+  NTuple::Item<double> m_kmfit_lab_Jpsigam_py;
+  NTuple::Item<double> m_kmfit_lab_Jpsigam_pz;
+  NTuple::Item<double> m_kmfit_lab_Jpsigam_mom;
 
   // kmfit cms Info.
   NTuple::Item<double> m_kmfit_cms_pim_e;
   NTuple::Item<double> m_kmfit_cms_pim_px;
   NTuple::Item<double> m_kmfit_cms_pim_py;
   NTuple::Item<double> m_kmfit_cms_pim_pz;
+  NTuple::Item<double> m_kmfit_cms_pim_mom;
   NTuple::Item<double> m_kmfit_cms_pip_e;
   NTuple::Item<double> m_kmfit_cms_pip_px;
   NTuple::Item<double> m_kmfit_cms_pip_py;
   NTuple::Item<double> m_kmfit_cms_pip_pz;
+  NTuple::Item<double> m_kmfit_cms_pip_mom;
   NTuple::Item<double> m_kmfit_cms_Etagam_e;
   NTuple::Item<double> m_kmfit_cms_Etagam_px;
   NTuple::Item<double> m_kmfit_cms_Etagam_py;
   NTuple::Item<double> m_kmfit_cms_Etagam_pz;
+  NTuple::Item<double> m_kmfit_cms_Etagam_mom;
   // Inv.Masses[kmfit]
   NTuple::Item<double> m_kmfit_mg1pippim;
   NTuple::Item<double> m_kmfit_mg2pippim;
   NTuple::Item<double> m_kmfit_mpippim;
+  NTuple::Item<double> m_kmfit_mEtagampippim;
 
   NTuple::Item<double> m_kmfit_chi2_ggpippim;
-  NTuple::Item<double> m_kmfit_chi2_gggpippim;
+  NTuple::Item<double> m_kmfit_chi2_threegampippim;
+  NTuple::Item<double> m_ene_g1;
+  NTuple::Item<double> m_ene_g2;
 
-  NTuple::Item<double> m_chi2;
-  NTuple::Item<double> m_meta;
 
   NTuple::Item<int> m_nGood;
   NTuple::Array<double> m_ptrk;
@@ -219,8 +234,69 @@ private:
   NTuple::Array<double> m_tof2_pid;
   NTuple::Array<double> m_prob_pi_pid;
   NTuple::Array<double> m_prob_e_pid;
+  NTuple::Array<double> m_prob_mu_pid;
   NTuple::Array<bool> m_pi_pid;
+  NTuple::Item<double> m_kalTrk_pip_px;
+  NTuple::Item<double> m_kalTrk_pip_py;
+  NTuple::Item<double> m_kalTrk_pip_pz;
+  NTuple::Item<double> m_kalTrk_pip_e;
+  NTuple::Item<double> m_kalTrk_pip_mom;
+  NTuple::Item<double> m_kalTrk_pim_px;
+  NTuple::Item<double> m_kalTrk_pim_py;
+  NTuple::Item<double> m_kalTrk_pim_pz;
+  NTuple::Item<double> m_kalTrk_pim_e;
+  NTuple::Item<double> m_kalTrk_pim_mom;
+  // after5C, Inv.Masses
+  NTuple::Item<double> m_kmfit5C_Jpsigam_index;
+  NTuple::Item<double> m_kmfit5C_Etagam_index;
 
+  NTuple::Item<double> m_kmfit5C_chi2;
+  NTuple::Item<double> m_kmfit5C_mEtagampippim;
+  NTuple::Item<double> m_kmfit5C_mgam1pippim;
+  NTuple::Item<double> m_kmfit5C_mpippim;
+  // kmfit5C four lab mom
+  NTuple::Item<double> m_kmfit5C_lab_pip_e;
+  NTuple::Item<double> m_kmfit5C_lab_pip_px;
+  NTuple::Item<double> m_kmfit5C_lab_pip_py;
+  NTuple::Item<double> m_kmfit5C_lab_pip_pz;
+  NTuple::Item<double> m_kmfit5C_lab_pip_mom;
+
+  NTuple::Item<double> m_kmfit5C_lab_pim_e;
+  NTuple::Item<double> m_kmfit5C_lab_pim_px;
+  NTuple::Item<double> m_kmfit5C_lab_pim_py;
+  NTuple::Item<double> m_kmfit5C_lab_pim_pz;
+  NTuple::Item<double> m_kmfit5C_lab_pim_mom;
+
+  NTuple::Item<double> m_kmfit5C_lab_Etagam_e;
+  NTuple::Item<double> m_kmfit5C_lab_Etagam_px;
+  NTuple::Item<double> m_kmfit5C_lab_Etagam_py;
+  NTuple::Item<double> m_kmfit5C_lab_Etagam_pz;
+  NTuple::Item<double> m_kmfit5C_lab_Etagam_mom;
+
+  NTuple::Item<double> m_kmfit5C_lab_Jpsigam_e;
+  NTuple::Item<double> m_kmfit5C_lab_Jpsigam_px;
+  NTuple::Item<double> m_kmfit5C_lab_Jpsigam_py;
+  NTuple::Item<double> m_kmfit5C_lab_Jpsigam_pz;
+  NTuple::Item<double> m_kmfit5C_lab_Jpsigam_mom;
+  // kmfit5C cms mom
+
+  NTuple::Item<double> m_kmfit5C_cms_pip_e;
+  NTuple::Item<double> m_kmfit5C_cms_pip_px;
+  NTuple::Item<double> m_kmfit5C_cms_pip_py;
+  NTuple::Item<double> m_kmfit5C_cms_pip_pz;
+  NTuple::Item<double> m_kmfit5C_cms_pip_mom;
+
+  NTuple::Item<double> m_kmfit5C_cms_pim_e;
+  NTuple::Item<double> m_kmfit5C_cms_pim_px;
+  NTuple::Item<double> m_kmfit5C_cms_pim_py;
+  NTuple::Item<double> m_kmfit5C_cms_pim_pz;
+  NTuple::Item<double> m_kmfit5C_cms_pim_mom;
+
+  NTuple::Item<double> m_kmfit5C_cms_Etagam_e;
+  NTuple::Item<double> m_kmfit5C_cms_Etagam_px;
+  NTuple::Item<double> m_kmfit5C_cms_Etagam_py;
+  NTuple::Item<double> m_kmfit5C_cms_Etagam_pz;
+  NTuple::Item<double> m_kmfit5C_cms_Etagam_mom;
   ITHistSvc *m_histSvc;
   // TH1F for cutflow
   TH1F *m_cutflow;
