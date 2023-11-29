@@ -174,6 +174,7 @@ private:
   NTuple::Item<double> m_kmfit_mg2pippim;
   NTuple::Item<double> m_kmfit_mpippim;
   NTuple::Item<double> m_kmfit_mEtagampippim;
+  NTuple::Item<double> m_kmfit_mgg;
 
   NTuple::Item<double> m_kmfit_chi2_ggpippim;
   NTuple::Item<double> m_kmfit_chi2_threegampippim;
@@ -243,16 +244,33 @@ private:
   NTuple::Array<double> m_prob_e_pid;
   NTuple::Array<double> m_prob_mu_pid;
   NTuple::Array<bool> m_pi_pid;
-  NTuple::Item<double> m_kalTrk_pip_px;
-  NTuple::Item<double> m_kalTrk_pip_py;
-  NTuple::Item<double> m_kalTrk_pip_pz;
-  NTuple::Item<double> m_kalTrk_pip_e;
-  NTuple::Item<double> m_kalTrk_pip_mom;
-  NTuple::Item<double> m_kalTrk_pim_px;
-  NTuple::Item<double> m_kalTrk_pim_py;
-  NTuple::Item<double> m_kalTrk_pim_pz;
-  NTuple::Item<double> m_kalTrk_pim_e;
-  NTuple::Item<double> m_kalTrk_pim_mom;
+  // More information about pip, pim 
+  NTuple::Item<double> m_pip_kalTrk_px;
+  NTuple::Item<double> m_pip_kalTrk_py;
+  NTuple::Item<double> m_pip_kalTrk_pz;
+  NTuple::Item<double> m_pip_kalTrk_e;
+  NTuple::Item<double> m_pip_kalTrk_mom;
+  NTuple::Item<double> m_pip_emc_e;
+  NTuple::Item<double> m_pip_emc_theta;
+  NTuple::Item<double> m_pip_emc_phi;
+  NTuple::Item<double> m_pip_epratio;
+  NTuple::Item<double> m_pip_muc_layers;
+  NTuple::Item<double> m_pip_muc_hits;
+  NTuple::Item<double> m_pip_muc_dep;
+  
+  NTuple::Item<double> m_pim_kalTrk_px;
+  NTuple::Item<double> m_pim_kalTrk_py;
+  NTuple::Item<double> m_pim_kalTrk_pz;
+  NTuple::Item<double> m_pim_kalTrk_e;
+  NTuple::Item<double> m_pim_kalTrk_mom;
+  NTuple::Item<double> m_pim_emc_e;
+  NTuple::Item<double> m_pim_emc_theta;
+  NTuple::Item<double> m_pim_emc_phi;
+  NTuple::Item<double> m_pim_epratio;
+  NTuple::Item<double> m_pim_muc_layers;
+  NTuple::Item<double> m_pim_muc_hits;
+  NTuple::Item<double> m_pim_muc_dep;
+
   // after5C, Inv.Masses
   NTuple::Item<int> m_kmfit5C_Jpsigam_index;
   NTuple::Item<int> m_kmfit5C_Etagam_index;
@@ -261,6 +279,7 @@ private:
   NTuple::Item<double> m_kmfit5C_mEtagampippim;
   NTuple::Item<double> m_kmfit5C_mgam1pippim;
   NTuple::Item<double> m_kmfit5C_mpippim;
+  NTuple::Item<double> m_kmfit5C_mgg;
   // kmfit5C four lab mom
   NTuple::Item<double> m_kmfit5C_lab_pip_e;
   NTuple::Item<double> m_kmfit5C_lab_pip_px;
