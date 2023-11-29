@@ -51,7 +51,7 @@ int nCounter_PSL[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 eta2pipi::eta2pipi(const std::string &name, ISvcLocator *pSvcLocator)
     : Algorithm(name, pSvcLocator) {
 
-  declareProperty("debug", m_debug = 1);
+  declareProperty("debug", m_debug = 0);
   declareProperty("Test4C", m_test4C = 1);
   declareProperty("Test5C", m_test5C = 1);
   declareProperty("chisq_4c_cut", m_chisq_4c_cut = 100);
@@ -240,6 +240,7 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addItem("kmfit_mg1pippim", m_kmfit_mg1pippim);
       status = m_anaTuple->addItem("kmfit_mg2pippim", m_kmfit_mg2pippim);
       status = m_anaTuple->addItem("kmfit_mpippim", m_kmfit_mpippim);
+      status = m_anaTuple->addItem("kmfit_mgg", m_kmfit_mgg);
       status = m_anaTuple->addItem("kmfit_mEtagampippim", m_kmfit_mEtagampippim);
       // 4C Info.
       status = m_anaTuple->addItem("kmfit_chi2_ggpippim", m_kmfit_chi2_ggpippim);
@@ -253,6 +254,7 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addItem("kmfit5C_mEtagampippim", m_kmfit5C_mEtagampippim);
       status = m_anaTuple->addItem("kmfit5C_mgam1pippim", m_kmfit5C_mgam1pippim);
       status = m_anaTuple->addItem("kmfit5C_mpippim", m_kmfit5C_mpippim);
+      status = m_anaTuple->addItem("kmfit5C_mgg", m_kmfit5C_mgg);
       // kmfit5C four lab mom
 
       status = m_anaTuple->addItem("kmfit5C_lab_pip_e", m_kmfit5C_lab_pip_e);
@@ -372,8 +374,8 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addItem("pim_index", m_pim_index);
       status = m_anaTuple->addItem("pip_pi_pid", m_pip_pi_pid);
       status = m_anaTuple->addItem("pim_pi_pid", m_pim_pi_pid);
-      status = m_anaTuple->addIndexedItem("ptrk_pid", m_nGood, m_ptrk_pid);
-      status = m_anaTuple->addIndexedItem("cost_pid", m_nGood, m_cost_pid);
+      status = m_anaTuple->addIndexedItem("mdcTrk_p", m_nGood, m_ptrk_pid);
+      status = m_anaTuple->addIndexedItem("mdcTrk_cost", m_nGood, m_cost_pid);
       status = m_anaTuple->addIndexedItem("dedx_pid", m_nGood, m_dedx_pid);
       status = m_anaTuple->addIndexedItem("tof1_pid", m_nGood, m_tof1_pid);
       status = m_anaTuple->addIndexedItem("tof2_pid", m_nGood, m_tof2_pid);
@@ -381,16 +383,33 @@ StatusCode eta2pipi::initialize() {
       status = m_anaTuple->addIndexedItem("prob_e_pid", m_nGood, m_prob_e_pid);
       status = m_anaTuple->addIndexedItem("prob_mu_pid", m_nGood, m_prob_mu_pid);
       status = m_anaTuple->addIndexedItem("pi_pid", m_nGood, m_pi_pid);
-      status = m_anaTuple->addItem("pip_px", m_kalTrk_pip_px);
-      status = m_anaTuple->addItem("pip_py", m_kalTrk_pip_py);
-      status = m_anaTuple->addItem("pip_pz", m_kalTrk_pip_pz);
-      status = m_anaTuple->addItem("pip_e", m_kalTrk_pip_e);
-      status = m_anaTuple->addItem("pip_mom", m_kalTrk_pip_mom);
-      status = m_anaTuple->addItem("pim_px", m_kalTrk_pim_px);
-      status = m_anaTuple->addItem("pim_py", m_kalTrk_pim_py);
-      status = m_anaTuple->addItem("pim_pz", m_kalTrk_pim_pz);
-      status = m_anaTuple->addItem("pim_e", m_kalTrk_pim_e);
-      status = m_anaTuple->addItem("pim_mom", m_kalTrk_pim_mom);
+      // More information about pip, pim 
+      status = m_anaTuple->addItem("pip_kalTrk_px", m_pip_kalTrk_px);
+      status = m_anaTuple->addItem("pip_kalTrk_py", m_pip_kalTrk_py);
+      status = m_anaTuple->addItem("pip_kalTrk_pz", m_pip_kalTrk_pz);
+      status = m_anaTuple->addItem("pip_kalTrk_e", m_pip_kalTrk_e);
+      status = m_anaTuple->addItem("pip_kalTrk_mom", m_pip_kalTrk_mom);
+      status = m_anaTuple->addItem("pip_emc_e", m_pip_emc_e);
+      status = m_anaTuple->addItem("pip_emc_theta", m_pip_emc_theta);
+      status = m_anaTuple->addItem("pip_emc_phi", m_pip_emc_phi);
+      status = m_anaTuple->addItem("pip_epratio", m_pip_epratio);
+      status = m_anaTuple->addItem("pip_muc_layers", m_pip_muc_layers);
+      status = m_anaTuple->addItem("pip_muc_hits", m_pip_muc_hits);
+      status = m_anaTuple->addItem("pip_muc_dep", m_pip_muc_dep);
+      
+      status = m_anaTuple->addItem("pim_kalTrk_px", m_pim_kalTrk_px);
+      status = m_anaTuple->addItem("pim_kalTrk_py", m_pim_kalTrk_py);
+      status = m_anaTuple->addItem("pim_kalTrk_pz", m_pim_kalTrk_pz);
+      status = m_anaTuple->addItem("pim_kalTrk_e", m_pim_kalTrk_e);
+      status = m_anaTuple->addItem("pim_kalTrk_mom", m_pim_kalTrk_mom);
+      status = m_anaTuple->addItem("pim_emc_e", m_pim_emc_e);
+      status = m_anaTuple->addItem("pim_emc_theta", m_pim_emc_theta);
+      status = m_anaTuple->addItem("pim_emc_phi", m_pim_emc_phi);
+      status = m_anaTuple->addItem("pim_epratio", m_pim_epratio);
+      status = m_anaTuple->addItem("pim_muc_layers", m_pim_muc_layers);
+      status = m_anaTuple->addItem("pim_muc_hits", m_pim_muc_hits);
+      status = m_anaTuple->addItem("pim_muc_dep", m_pim_muc_dep);
+
       // photon
       status = m_anaTuple->addItem("nGam", m_nGam, 0, 200);
       status = m_anaTuple->addIndexedItem("dthe", m_nGam, m_dthe);
@@ -850,9 +869,7 @@ StatusCode eta2pipi::execute() {
     ptrk.setPy(eraw * sin(the) * sin(phi));
     ptrk.setPz(eraw * cos(the));
     ptrk.setE(eraw);
-
     //    ptrk = ptrk.boost(-0.011,0,0);// boost to cms
-    
     pGam.push_back(ptrk);
   }
   if (m_debug)
@@ -866,15 +883,32 @@ StatusCode eta2pipi::execute() {
 
   ParticleID *pid = ParticleID::instance();
 
+  m_pip_emc_e = -99;
+  m_pip_emc_theta = -99;
+  m_pip_emc_phi = -99;
+  m_pip_epratio = -99;
+  m_pip_muc_dep = -99;
+  m_pip_muc_hits = -99;
+  m_pip_muc_layers = -99;
+
+  m_pim_emc_e = -99;
+  m_pim_emc_theta = -99;
+  m_pim_emc_phi = -99;
+  m_pim_epratio = -99;
+  m_pim_muc_dep = -99;
+  m_pim_muc_hits = -99;
+  m_pim_muc_layers = -99;
+
   if (m_debug)
     cout << __LINE__ << endl;
   for (int i = 0; i < nGood; i++) {
-    if (m_debug)
+    if (m_debug){
       std::cout << "Check pid info for good charged track " << i << std::endl;
-
+    }
     m_pi_pid[i] = false;
 
     EvtRecTrackIterator itTrk = evtRecTrkCol->begin() + iGood[i];
+    RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
     //    if(pid) delete pid;
     pid->init();
     pid->setMethod(pid->methodProbability());
@@ -896,7 +930,6 @@ StatusCode eta2pipi::execute() {
       m_prob_e_pid[i] = -99;
       m_prob_mu_pid[i] = -99;
     } else {
-      RecMdcTrack *mdcTrk = (*itTrk)->mdcTrack();
       m_ptrk_pid[i] = mdcTrk->p();
       m_cost_pid[i] = cos(mdcTrk->theta());
       m_dedx_pid[i] = pid->chiDedx(2);
@@ -923,7 +956,6 @@ StatusCode eta2pipi::execute() {
                                                       // kaon and proton;The
                                                       // default setting is
                                                       // pion
-
     if (mdcKalTrk->charge() > 0) {
       ipip.push_back(iGood[i]);
       HepLorentzVector ptrk;
@@ -934,14 +966,27 @@ StatusCode eta2pipi::execute() {
       ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
       m_pip_index = i;
       m_pip_pi_pid = m_pi_pid[i];
-      m_kalTrk_pip_px = mdcKalTrk->px();
-      m_kalTrk_pip_py = mdcKalTrk->py();
-      m_kalTrk_pip_pz = mdcKalTrk->pz();
-      m_kalTrk_pip_mom = p3;
-      m_kalTrk_pip_e = sqrt(p3 * p3 + mpi * mpi);
+      m_pip_kalTrk_px = mdcKalTrk->px();
+      m_pip_kalTrk_py = mdcKalTrk->py();
+      m_pip_kalTrk_pz = mdcKalTrk->pz();
+      m_pip_kalTrk_mom = p3;
+      m_pip_kalTrk_e = sqrt(p3 * p3 + mpi * mpi);
       //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
 
       ppip.push_back(ptrk);
+
+      if( (*itTrk)->isEmcShowerValid()){
+	 RecEmcShower *emcTrk = (*itTrk)->emcShower();
+         m_pip_emc_e=emcTrk->energy();
+         m_pip_emc_theta=emcTrk->theta();
+         m_pip_emc_phi=emcTrk->phi();
+         m_pip_epratio=emcTrk->energy()/mdcTrk->p();
+      }
+      if((*itTrk)->isMucTrackValid())   {
+          m_pip_muc_dep =  (*itTrk)->mucTrack()->depth();
+          m_pip_muc_hits = (*itTrk)->mucTrack()->numHits();
+          m_pip_muc_layers = (*itTrk)->mucTrack()->numLayers();
+      }
     } else {
       ipim.push_back(iGood[i]);
       HepLorentzVector ptrk;
@@ -952,15 +997,29 @@ StatusCode eta2pipi::execute() {
       ptrk.setE(sqrt(p3 * p3 + mpi * mpi));
       m_pim_index = i;
       m_pim_pi_pid = m_pi_pid[i];
-      m_kalTrk_pim_px = mdcKalTrk->px();
-      m_kalTrk_pim_py = mdcKalTrk->py();
-      m_kalTrk_pim_pz = mdcKalTrk->pz();
-      m_kalTrk_pim_mom = p3;
-      m_kalTrk_pim_e = sqrt(p3 * p3 + mpi * mpi);
+      m_pim_kalTrk_px = mdcKalTrk->px();
+      m_pim_kalTrk_py = mdcKalTrk->py();
+      m_pim_kalTrk_pz = mdcKalTrk->pz();
+      m_pim_kalTrk_mom = p3;
+      m_pim_kalTrk_e = sqrt(p3 * p3 + mpi * mpi);
 
       //      ptrk = ptrk.boost(-0.011,0,0);//boost to cms
 
       ppim.push_back(ptrk);
+
+      if( (*itTrk)->isEmcShowerValid()){
+         RecEmcShower *emcTrk = (*itTrk)->emcShower();
+         m_pim_emc_e=emcTrk->energy();
+         m_pim_emc_theta=emcTrk->theta();
+         m_pim_emc_phi=emcTrk->phi();
+         m_pim_epratio=emcTrk->energy()/mdcTrk->p();
+      }
+      if((*itTrk)->isMucTrackValid())   {
+          m_pim_muc_dep =  (*itTrk)->mucTrack()->depth();
+          m_pim_muc_hits = (*itTrk)->mucTrack()->numHits();
+          m_pim_muc_layers = (*itTrk)->mucTrack()->numLayers();
+      }
+
     }
     if (m_debug)
       cout << __LINE__ << endl;
@@ -1131,6 +1190,7 @@ StatusCode eta2pipi::execute() {
     int ig2 = -1;
     double mg1pippim = -9999;
     double mg2pippim = -9999;
+    double mgg = -9999;
     double mpippim = -9999;
     double mEtagampippim = -9999;
     for (int i = 0; i < nGam - 1; i++) {
@@ -1199,6 +1259,7 @@ StatusCode eta2pipi::execute() {
             m_ene_g2 = ene_g2;
             mg1pippim = g1pippim.m();
             mg2pippim = g2pippim.m();
+            mgg = (kmfit->pfit(2)+kmfit->pfit(3)).m();
             mpippim = pippim.m();
             mEtagampippim = p4_eta.m();
             // boost the Etagam, pip, pim to eta center of mass frame
@@ -1239,6 +1300,7 @@ StatusCode eta2pipi::execute() {
     // Inv.Masses[kmfit]
     m_kmfit_mg1pippim = mg1pippim;
     m_kmfit_mg2pippim = mg2pippim;
+    m_kmfit_mgg = mgg;
     m_kmfit_mpippim = mpippim;
     m_kmfit_chi2_ggpippim = chisq_ggpippim;
     m_kmfit_mEtagampippim = mEtagampippim;
@@ -1402,6 +1464,7 @@ StatusCode eta2pipi::execute() {
         m_kmfit5C_chi2 = kmfit->chisq();
         m_kmfit5C_mEtagampippim = Etagampippim5C.m();
         m_kmfit5C_mgam1pippim = gam1pippim5C.m();
+        m_kmfit5C_mgg = (kmfit->pfit(2) + kmfit->pfit(3)).m();
         m_kmfit5C_mpippim = pippim5C.m();
         nCounter_PSL[9]++; // After 5C
         m_cutflow->Fill(9);
