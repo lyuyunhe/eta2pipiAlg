@@ -175,6 +175,8 @@ StatusCode eta2pipi::initialize() {
       // kmfit4C Info.
       status = m_anaTuple->addItem("kmfit_Jpsigam_index", m_kmfit_Jpsigam_index);
       status = m_anaTuple->addItem("kmfit_Etagam_index", m_kmfit_Etagam_index);
+      status = m_anaTuple->addItem("kmfit_Jpsigam_eraw", m_kmfit_Jpsigam_eraw);
+      status = m_anaTuple->addItem("kmfit_Etagam_eraw", m_kmfit_Etagam_eraw);
       // lab_pip
       status = m_anaTuple->addItem("kmfit_lab_pip_e", m_kmfit_lab_pip_e);
       status = m_anaTuple->addItem("kmfit_lab_pip_px", m_kmfit_lab_pip_px);
@@ -249,6 +251,8 @@ StatusCode eta2pipi::initialize() {
       // 5C Info.
       status = m_anaTuple->addItem("kmfit5C_Jpsigam_index", m_kmfit5C_Jpsigam_index);
       status = m_anaTuple->addItem("kmfit5C_Etagam_index", m_kmfit5C_Etagam_index);
+      status = m_anaTuple->addItem("kmfit5C_Jpsigam_eraw", m_kmfit5C_Jpsigam_eraw);
+      status = m_anaTuple->addItem("kmfit5C_Etagam_eraw", m_kmfit5C_Etagam_eraw);
       status = m_anaTuple->addItem("kmfit5C_chi2", m_kmfit5C_chi2);
       // kmfit5C, Inv.Masses
       status = m_anaTuple->addItem("kmfit5C_mEtagampippim", m_kmfit5C_mEtagampippim);
@@ -1079,6 +1083,9 @@ StatusCode eta2pipi::execute() {
   }
   m_kmfit_Etagam_index = -99;
   m_kmfit_Jpsigam_index = -99;
+  m_kmfit_Etagam_eraw = -99;
+  m_kmfit_Jpsigam_eraw = -99;
+
   m_kmfit_lab_pip_e = -99;
   m_kmfit_lab_pip_px = -99;
   m_kmfit_lab_pip_py = -99;
@@ -1124,6 +1131,9 @@ StatusCode eta2pipi::execute() {
 
   m_kmfit5C_Etagam_index = -99;
   m_kmfit5C_Jpsigam_index = -99;
+  m_kmfit5C_Etagam_eraw = -99;
+  m_kmfit5C_Jpsigam_eraw = -99;
+
 
   m_kmfit5C_lab_pip_e = -99.;
   m_kmfit5C_lab_pip_px = -99.;
@@ -1236,13 +1246,17 @@ StatusCode eta2pipi::execute() {
               p4_Jpsigam = kmfit->pfit(2);
               p4_Etagam = kmfit->pfit(3);
               m_kmfit_Etagam_index = j; 
-              m_kmfit_Jpsigam_index = i; 
+              m_kmfit_Jpsigam_index = i;
+	      m_kmfit_Etagam_eraw = g2Trk->energy();  
+	      m_kmfit_Jpsigam_eraw = g1Trk->energy();  
             } else {
               p4_eta = kmfit->pfit(2) + kmfit->pfit(0) + kmfit->pfit(1);
               p4_Jpsigam = kmfit->pfit(3);
               p4_Etagam = kmfit->pfit(2);
               m_kmfit_Etagam_index = i; 
               m_kmfit_Jpsigam_index = j; 
+	      m_kmfit_Etagam_eraw = g1Trk->energy();  
+	      m_kmfit_Jpsigam_eraw = g2Trk->energy();  
             }
             m_kmfit_lab_Etagam_e = p4_Etagam.e();
             m_kmfit_lab_Etagam_px = p4_Etagam.px();
@@ -1383,6 +1397,8 @@ StatusCode eta2pipi::execute() {
             ig2 = iGam[j];
             m_kmfit5C_Etagam_index = i;
             m_kmfit5C_Jpsigam_index = j;
+	    m_kmfit5C_Etagam_eraw = g1Trk->energy();
+	    m_kmfit5C_Jpsigam_eraw = g2Trk->energy();
           }
         }
       }
