@@ -128,6 +128,8 @@ private:
   // kmfit4C lab  Info.
   NTuple::Item<int> m_kmfit_Jpsigam_index;
   NTuple::Item<int> m_kmfit_Etagam_index;
+  NTuple::Item<double> m_kmfit_Jpsigam_eraw;
+  NTuple::Item<double> m_kmfit_Etagam_eraw;
   
   NTuple::Item<double> m_kmfit_lab_pip_e;
   NTuple::Item<double> m_kmfit_lab_pip_px;
@@ -274,6 +276,8 @@ private:
   // after5C, Inv.Masses
   NTuple::Item<int> m_kmfit5C_Jpsigam_index;
   NTuple::Item<int> m_kmfit5C_Etagam_index;
+  NTuple::Item<double> m_kmfit5C_Jpsigam_eraw;
+  NTuple::Item<double> m_kmfit5C_Etagam_eraw;
 
   NTuple::Item<double> m_kmfit5C_chi2;
   NTuple::Item<double> m_kmfit5C_mEtagampippim;
